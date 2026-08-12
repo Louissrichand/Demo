@@ -13,3 +13,9 @@ dist/
 .env
 .env.*
 .dev.vars
+
+# Local source materials (large / confidential — not needed to build the site)
+Materials for Website/
+
+# Local dev helper (hardcoded machine paths)
+serve.ps1
