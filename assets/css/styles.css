@@ -245,7 +245,7 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 /* ---------- Ingredient spotlight ---------- */
 .spot { position: relative; overflow: hidden; }
 .spot__track { display: flex; transition: transform .7s var(--ease); }
-.spot__slide { min-width: 100%; flex: 0 0 100%; }
+.spot__slide { min-width: 100%; flex: 0 0 100%; overflow: hidden; padding: 6px; }
 .spot__arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: var(--ink); border: 1.5px solid var(--line); background: var(--cream); box-shadow: 0 6px 18px rgba(11,11,13,.14); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
 .spot__arrow:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 .spot__arrow:active { transform: translateY(-50%) scale(.92); }
