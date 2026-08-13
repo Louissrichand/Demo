@@ -228,12 +228,6 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .pcard:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
 .pcard__media { background: transparent; position: relative; padding: 1.5rem 1.5rem .5rem; display: flex; align-items: center; justify-content: center; }
 .pcard__media img { width: 100%; filter: drop-shadow(0 2px 5px rgba(11,11,13,.12)) drop-shadow(0 16px 30px rgba(11,11,13,.16)); }
-.pcard__tag {
-  position: absolute; top: 1rem; left: 1rem;
-  background: rgba(11,11,13,.6); color: var(--cream); backdrop-filter: blur(4px);
-  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  padding: .4em .8em; border-radius: 999px;
-}
 .pcard__body { padding: 1.5rem 1.5rem 1.75rem; display: flex; flex-direction: column; flex: 1; }
 .pcard__kicker { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .pcard__name { font-size: 1.6rem; margin: .2rem 0 .5rem; }
