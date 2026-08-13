@@ -95,11 +95,17 @@
       track.style.transform = "translateX(-" + idx * 100 + "%)";
       dots.forEach(function (d, k) { d.classList.toggle("active", k === idx); });
     }
-    function play() { stop(); timer = setInterval(function () { show(idx + 1); }, 3000); }
+    function play() { stop(); timer = setInterval(function () { show(idx + 1); }, 5000); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
 
     dots.forEach(function (d, k) {
       d.addEventListener("click", function () { show(k); play(); });
+    });
+    spot.querySelectorAll(".spot__arrow").forEach(function (a) {
+      a.addEventListener("click", function () {
+        show(idx + parseInt(a.getAttribute("data-dir"), 10));
+        play();
+      });
     });
     spot.addEventListener("mouseenter", stop);
     spot.addEventListener("mouseleave", play);
