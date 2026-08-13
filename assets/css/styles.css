@@ -246,8 +246,8 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .spot { position: relative; overflow: hidden; }
 .spot__track { display: flex; transition: transform .7s var(--ease); }
 .spot__slide { min-width: 100%; flex: 0 0 100%; }
-.spot__controls { display: flex; align-items: center; justify-content: center; gap: clamp(1rem, 3vw, 1.5rem); margin-top: clamp(2rem, 4vw, 3rem); }
-.spot__dots { display: flex; gap: .55rem; justify-content: center; }
+.spot__controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: clamp(2rem, 4vw, 3rem); }
+.spot__dots { display: flex; gap: .55rem; justify-content: center; flex: 1; }
 .spot__dot { width: 10px; height: 10px; border-radius: 999px; background: var(--taupe); opacity: .4; transition: opacity .3s, width .3s var(--ease), background .3s; padding: 0; cursor: pointer; }
 .spot__dot.active { opacity: 1; width: 28px; background: var(--ink); }
 .spot__arrow { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: var(--ink); border: 1.5px solid var(--line); background: transparent; cursor: pointer; transition: background .2s, color .2s, border-color .2s, transform .15s; }
