@@ -81,6 +81,35 @@
     });
   });
 
+  /* Ingredient spotlight — auto-rotate every 3s, pause on hover */
+  var spot = document.getElementById("spotSlider");
+  if (spot) {
+    var track = spot.querySelector(".spot__track");
+    var dots = spot.querySelectorAll(".spot__dot");
+    var count = track.children.length;
+    var idx = 0;
+    var timer = null;
+
+    function show(n) {
+      idx = (n + count) % count;
+      track.style.transform = "translateX(-" + idx * 100 + "%)";
+      dots.forEach(function (d, k) { d.classList.toggle("active", k === idx); });
+    }
+    function play() { stop(); timer = setInterval(function () { show(idx + 1); }, 3000); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    dots.forEach(function (d, k) {
+      d.addEventListener("click", function () { show(k); play(); });
+    });
+    spot.addEventListener("mouseenter", stop);
+    spot.addEventListener("mouseleave", play);
+    spot.addEventListener("focusin", stop);
+    spot.addEventListener("focusout", play);
+
+    show(0);
+    play();
+  }
+
   /* Waitlist form — demo only (no backend yet) */
   var form = document.getElementById("waitForm");
   var ok = document.getElementById("formOk");

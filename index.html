@@ -217,38 +217,74 @@
       </div>
     </section>
 
-    <!-- Ingredient spotlight -->
+    <!-- Ingredient spotlight (auto-rotating carousel, all 3 products) -->
     <section class="bg-cream" id="science">
-      <div class="wrap spotlight__grid">
-        <div class="spotlight__media reveal">
-          <img src="assets/img/product-balance.png" alt="root+ Balance Probiotic packaging detail" />
-        </div>
-        <div class="reveal">
-          <p class="eyebrow">Ingredient Spotlight · Balance</p>
-          <h2 class="h2">Rooted in science. Backed by proof.</h2>
-          <p class="lead" style="margin-top:1rem;">Balance targets the root cause of gut discomfort — a stomach-first synbiotic built on three clinically-backed actives, fully dosed and fully disclosed.</p>
-          <div class="actives">
-            <div class="active">
-              <div class="active__dot">P</div>
-              <div>
-                <h4>Pylopass® <span>L. reuteri DSM 17648 · 200mg</span></h4>
-                <p>Binds and clears H. pylori to help restore a balanced stomach environment.</p>
+      <div class="wrap">
+        <div class="spot reveal" id="spotSlider">
+          <div class="spot__track">
+
+            <!-- Balance -->
+            <div class="spot__slide">
+              <div class="spotlight__grid">
+                <div class="spotlight__media">
+                  <img src="assets/img/product-balance.png" alt="root+ Balance Probiotic" />
+                </div>
+                <div class="spot__content">
+                  <p class="eyebrow">Ingredient Spotlight · Balance</p>
+                  <h2 class="h2">The stomach-first synbiotic.</h2>
+                  <p class="lead" style="margin-top:1rem;">Balance targets the root cause of gut discomfort — three clinically-backed actives, fully dosed and fully disclosed.</p>
+                  <div class="actives">
+                    <div class="active"><div class="active__dot">P</div><div><h4>Pylopass® <span>L. reuteri DSM 17648 · 200mg</span></h4><p>Binds and clears H. pylori to help restore a balanced stomach environment.</p></div></div>
+                    <div class="active"><div class="active__dot">B</div><div><h4>B. lactis Bl-04® <span>immune strain</span></h4><p>A well-studied probiotic strain that backs everyday immune resilience.</p></div></div>
+                    <div class="active"><div class="active__dot">T</div><div><h4>TCI711 <span>metabolic support</span></h4><p>Proprietary multi-strain support (ProBio-Ark + prebiotic fiber) for metabolic health.</p></div></div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="active">
-              <div class="active__dot">B</div>
-              <div>
-                <h4>B. lactis Bl-04® <span>immune strain</span></h4>
-                <p>A well-studied probiotic strain that backs everyday immune resilience.</p>
+
+            <!-- Refresh -->
+            <div class="spot__slide">
+              <div class="spotlight__grid">
+                <div class="spotlight__media">
+                  <img src="assets/img/product-refresh.png" alt="root+ Refresh Probiotic" />
+                </div>
+                <div class="spot__content">
+                  <p class="eyebrow">Ingredient Spotlight · Refresh</p>
+                  <h2 class="h2">Lighter gut, brighter mood.</h2>
+                  <p class="lead" style="margin-top:1rem;">Refresh works along the gut-brain axis — psychobiotic strains plus calming botanicals for everyday freshness.</p>
+                  <div class="actives">
+                    <div class="active"><div class="active__dot">P</div><div><h4>Psychobiotic strains <span>L. plantarum / B. longum</span></h4><p>Gut-brain axis strains that support daily mood and freshness.</p></div></div>
+                    <div class="active"><div class="active__dot">D</div><div><h4>Delight™ TS <span>Passiflora edulis seed extract</span></h4><p>Botanical support to help you feel lighter and brighter.</p></div></div>
+                    <div class="active"><div class="active__dot">M</div><div><h4>Magnesium + GABA <span>calm support</span></h4><p>Backs a calm, balanced nervous system for everyday ease.</p></div></div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="active">
-              <div class="active__dot">T</div>
-              <div>
-                <h4>TCI711 <span>metabolic support</span></h4>
-                <p>Proprietary multi-strain support (ProBio-Ark + prebiotic fiber) for metabolic health.</p>
+
+            <!-- Skin Radiance -->
+            <div class="spot__slide">
+              <div class="spotlight__grid">
+                <div class="spotlight__media">
+                  <img src="assets/img/product-radiance.png" alt="root+ Skin Radiance Probiotic" />
+                </div>
+                <div class="spot__content">
+                  <p class="eyebrow">Ingredient Spotlight · Skin Radiance</p>
+                  <h2 class="h2">Glow from within.</h2>
+                  <p class="lead" style="margin-top:1rem;">Skin starts in the gut. Radiance's skin-axis strains support clarity and glow from the inside out — with added Biotin.</p>
+                  <div class="actives">
+                    <div class="active"><div class="active__dot">33</div><div><h4>TCK33 <span>HA producer</span></h4><p>Skin-axis strain supporting hyaluronic acid for hydration and bounce.</p></div></div>
+                    <div class="active"><div class="active__dot">53</div><div><h4>TCK53 <span>sialic acid / EGF</span></h4><p>Supports skin-renewal factors for a brighter, smoother look.</p></div></div>
+                    <div class="active"><div class="active__dot">77</div><div><h4>TCK77 <span>Antrodia cinnamomea</span></h4><p>Helps calm blemish-prone skin from within.</p></div></div>
+                  </div>
+                </div>
               </div>
             </div>
+
+          </div>
+          <div class="spot__dots">
+            <button class="spot__dot active" type="button" aria-label="Show Balance"></button>
+            <button class="spot__dot" type="button" aria-label="Show Refresh"></button>
+            <button class="spot__dot" type="button" aria-label="Show Skin Radiance"></button>
           </div>
         </div>
       </div>

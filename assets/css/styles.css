@@ -243,6 +243,12 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .pcard[data-accent="radiance"] .pcard__accent { background: var(--stone); }
 
 /* ---------- Ingredient spotlight ---------- */
+.spot { position: relative; overflow: hidden; }
+.spot__track { display: flex; transition: transform .7s var(--ease); }
+.spot__slide { min-width: 100%; flex: 0 0 100%; }
+.spot__dots { display: flex; gap: .55rem; justify-content: center; margin-top: clamp(2rem, 4vw, 3rem); }
+.spot__dot { width: 10px; height: 10px; border-radius: 999px; background: var(--taupe); opacity: .4; transition: opacity .3s, width .3s var(--ease), background .3s; padding: 0; cursor: pointer; }
+.spot__dot.active { opacity: 1; width: 28px; background: var(--ink); }
 .spotlight__grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem,5vw,4rem); align-items: center; }
 .spotlight__media { background: var(--stone); border-radius: var(--radius-lg); padding: clamp(1.5rem, 3vw, 2.5rem); box-shadow: var(--shadow); }
 .spotlight__media img { filter: drop-shadow(0 16px 28px rgba(11,11,13,.22)); }
