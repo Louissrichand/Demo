@@ -19,3 +19,6 @@ Materials for Website/
 
 # Local dev helper (hardcoded machine paths)
 serve.ps1
+
+# Text-editing worksheets (working files, not part of the site)
+*.xlsx
