@@ -127,14 +127,6 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .btn--sm { padding: .7em 1.15em; font-size: .88rem; }
 .btn--block { display: flex; width: 100%; justify-content: center; }
 
-/* ---------- Announcement bar ---------- */
-.announce {
-  background: var(--ink); color: var(--cream);
-  font-size: .8rem; letter-spacing: .04em;
-  text-align: center; padding: .55rem 1rem;
-}
-.announce strong { color: var(--stone); font-weight: 700; }
-
 /* ---------- Header ---------- */
 .header {
   position: sticky; top: 0; z-index: 60;
