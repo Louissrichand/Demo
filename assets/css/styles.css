@@ -28,8 +28,8 @@
   --cta-fg:      var(--cream);
 
   /* Type */
-  --serif: "Fraunces", Georgia, "Times New Roman", serif;
-  --sans:  "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif: "Fraunces", "Noto Serif Thai", Georgia, "Times New Roman", serif;
+  --sans:  "Manrope", "Noto Sans Thai", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   /* Layout */
   --header-h: 62px;
@@ -80,6 +80,11 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; let
 }
 .lead { font-size: clamp(1.05rem, 1.7vw, 1.3rem); color: var(--muted); }
 .serif-i { font-style: italic; }
+
+/* Thai typography adjustments (Thai script needs more line height, less tracking) */
+body.lang-th .display, body.lang-th .h2, body.lang-th .h3, body.lang-th h1, body.lang-th h2, body.lang-th h3, body.lang-th h4 { line-height: 1.3; letter-spacing: 0; }
+body.lang-th .eyebrow { letter-spacing: .1em; }
+body.lang-th .statement blockquote { line-height: 1.35; }
 
 /* ---------- Layout helpers ---------- */
 .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }

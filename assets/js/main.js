@@ -145,21 +145,29 @@
     }, 3000);
   }
 
-  /* Language switch (EN / TH) */
+  /* Language switch (EN / TH) — full content translation */
   var langOpts = document.querySelectorAll(".lang__opt");
   if (langOpts.length) {
+    var TH = (window.I18N && window.I18N.th) || {};
+    var i18nEls = document.querySelectorAll("[data-i18n]");
+    i18nEls.forEach(function (el) { el.__i18nEN = el.innerHTML; });
     var savedLang = "en";
     try { savedLang = localStorage.getItem("rootplus-lang") || "en"; } catch (e) {}
-    applyLang(savedLang, false);
+    applyLang(savedLang);
     langOpts.forEach(function (o) {
-      o.addEventListener("click", function () { applyLang(o.getAttribute("data-lang"), true); });
+      o.addEventListener("click", function () { applyLang(o.getAttribute("data-lang")); });
     });
-    function applyLang(lang, notify) {
+    function applyLang(lang) {
       document.documentElement.setAttribute("lang", lang);
+      document.body.classList.toggle("lang-th", lang === "th");
+      i18nEls.forEach(function (el) {
+        var k = el.getAttribute("data-i18n");
+        el.innerHTML = (lang === "th" && TH[k] != null) ? TH[k] : el.__i18nEN;
+      });
       langOpts.forEach(function (o) { o.classList.toggle("is-active", o.getAttribute("data-lang") === lang); });
+      var si = document.getElementById("searchInput");
+      if (si) si.placeholder = (lang === "th" && TH["search.placeholder"]) ? TH["search.placeholder"] : "Search root+…";
       try { localStorage.setItem("rootplus-lang", lang); } catch (e) {}
-      // Full Thai content is wired once the Thai copy is finalised.
-      if (notify && lang === "th") { toast("ฉบับภาษาไทยกำลังจัดทำ — เร็ว ๆ นี้ 🌱"); }
     }
   }
 
@@ -170,7 +178,7 @@
     var input = document.getElementById("searchInput");
     var results = document.getElementById("searchResults");
     var closeBtn = document.getElementById("searchClose");
-    var index = buildSearchIndex();
+    var index = [];
 
     searchToggle.addEventListener("click", openSearch);
     closeBtn.addEventListener("click", closeSearch);
@@ -178,7 +186,7 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !overlay.hidden) closeSearch(); });
     input.addEventListener("input", function () { renderResults(input.value.trim()); });
 
-    function openSearch() { overlay.hidden = false; input.value = ""; renderResults(""); setTimeout(function () { input.focus(); }, 40); }
+    function openSearch() { index = buildSearchIndex(); overlay.hidden = false; input.value = ""; renderResults(""); setTimeout(function () { input.focus(); }, 40); }
     function closeSearch() { overlay.hidden = true; }
 
     function buildSearchIndex() {
