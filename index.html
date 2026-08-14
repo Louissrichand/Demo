@@ -42,12 +42,30 @@
         <a href="#faq">FAQ</a>
       </nav>
       <div class="header__cta">
+        <button class="icon-btn" id="searchToggle" type="button" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+        <div class="lang" role="group" aria-label="Language">
+          <button class="lang__opt is-active" type="button" data-lang="en">EN</button>
+          <span class="lang__div">/</span>
+          <button class="lang__opt" type="button" data-lang="th">ไทย</button>
+        </div>
         <a href="#waitlist" class="btn btn--ghost btn--sm">Join the list</a>
         <a href="https://srichand.com/" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">Shop the range</a>
         <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
       </div>
     </div>
   </header>
+
+  <!-- Search overlay -->
+  <div class="search" id="searchOverlay" hidden>
+    <div class="search__bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" id="searchInput" placeholder="Search root+…" autocomplete="off" aria-label="Search the site" />
+      <button class="search__close" id="searchClose" type="button" aria-label="Close search">&times;</button>
+    </div>
+    <div class="search__results" id="searchResults"></div>
+  </div>
 
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
@@ -63,6 +81,11 @@
       <a href="#faq">FAQ</a>
     </nav>
     <a href="#waitlist" class="btn btn--primary btn--block">Join the founding list</a>
+    <div class="lang lang--menu" role="group" aria-label="Language">
+      <button class="lang__opt is-active" type="button" data-lang="en">EN</button>
+      <span class="lang__div">/</span>
+      <button class="lang__opt" type="button" data-lang="th">ไทย</button>
+    </div>
   </div>
 
   <main id="top">

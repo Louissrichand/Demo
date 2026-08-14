@@ -131,4 +131,106 @@
       form.reset();
     });
   }
+
+  /* Tiny toast helper */
+  function toast(msg) {
+    var t = document.createElement("div");
+    t.className = "toast";
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.classList.add("show"); });
+    setTimeout(function () {
+      t.classList.remove("show");
+      setTimeout(function () { t.remove(); }, 300);
+    }, 3000);
+  }
+
+  /* Language switch (EN / TH) */
+  var langOpts = document.querySelectorAll(".lang__opt");
+  if (langOpts.length) {
+    var savedLang = "en";
+    try { savedLang = localStorage.getItem("rootplus-lang") || "en"; } catch (e) {}
+    applyLang(savedLang, false);
+    langOpts.forEach(function (o) {
+      o.addEventListener("click", function () { applyLang(o.getAttribute("data-lang"), true); });
+    });
+    function applyLang(lang, notify) {
+      document.documentElement.setAttribute("lang", lang);
+      langOpts.forEach(function (o) { o.classList.toggle("is-active", o.getAttribute("data-lang") === lang); });
+      try { localStorage.setItem("rootplus-lang", lang); } catch (e) {}
+      // Full Thai content is wired once the Thai copy is finalised.
+      if (notify && lang === "th") { toast("ฉบับภาษาไทยกำลังจัดทำ — เร็ว ๆ นี้ 🌱"); }
+    }
+  }
+
+  /* Search overlay — in-page search */
+  var searchToggle = document.getElementById("searchToggle");
+  var overlay = document.getElementById("searchOverlay");
+  if (searchToggle && overlay) {
+    var input = document.getElementById("searchInput");
+    var results = document.getElementById("searchResults");
+    var closeBtn = document.getElementById("searchClose");
+    var index = buildSearchIndex();
+
+    searchToggle.addEventListener("click", openSearch);
+    closeBtn.addEventListener("click", closeSearch);
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) closeSearch(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !overlay.hidden) closeSearch(); });
+    input.addEventListener("input", function () { renderResults(input.value.trim()); });
+
+    function openSearch() { overlay.hidden = false; input.value = ""; renderResults(""); setTimeout(function () { input.focus(); }, 40); }
+    function closeSearch() { overlay.hidden = true; }
+
+    function buildSearchIndex() {
+      var items = [];
+      document.querySelectorAll("main section[id]").forEach(function (sec) {
+        var h = sec.querySelector(".h2");
+        var ey = sec.querySelector(".eyebrow");
+        if (h) items.push({ title: h.textContent.trim(), sub: ey ? ey.textContent.trim() : "Section", el: sec });
+      });
+      document.querySelectorAll(".pcard").forEach(function (c) {
+        var n = c.querySelector(".pcard__name");
+        var d = c.querySelector(".pcard__desc");
+        if (n) items.push({ title: n.textContent.trim(), sub: "Product · " + (d ? d.textContent.trim() : ""), el: document.getElementById("collection") });
+      });
+      document.querySelectorAll(".faq__item").forEach(function (it) {
+        var q = it.querySelector(".faq__q");
+        if (q) items.push({ title: q.textContent.trim(), sub: "FAQ", el: it, faq: it });
+      });
+      return items;
+    }
+
+    function renderResults(q) {
+      results.innerHTML = "";
+      var ql = q.toLowerCase();
+      var matches = ql
+        ? index.filter(function (i) { return (i.title + " " + i.sub).toLowerCase().indexOf(ql) > -1; })
+        : index.slice(0, 6);
+      if (!matches.length) {
+        results.innerHTML = '<p class="search__empty">No results for “' + escapeHtml(q) + '”.</p>';
+        return;
+      }
+      matches.slice(0, 8).forEach(function (m) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "search__result";
+        b.innerHTML = "<b>" + escapeHtml(m.title) + "</b><span>" + escapeHtml(m.sub) + "</span>";
+        b.addEventListener("click", function () { goToResult(m); });
+        results.appendChild(b);
+      });
+    }
+
+    function goToResult(m) {
+      closeSearch();
+      if (m.faq) { m.faq.open = true; }
+      var y = m.el.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      m.el.classList.add("search-flash");
+      setTimeout(function () { m.el.classList.remove("search-flash"); }, 1600);
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+    }
+  }
 })();
