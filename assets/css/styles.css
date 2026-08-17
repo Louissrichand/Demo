@@ -213,7 +213,7 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 /* ---------- Hero ---------- */
 .hero {
   color: var(--cream);
-  background: linear-gradient(rgba(14,35,45,.62), rgba(14,35,45,.72)), url("../img/hero-bg.webp") center 30% / cover no-repeat;
+  background: linear-gradient(rgba(14,35,45,.62), rgba(14,35,45,.72)), url("../img/hero-bg.webp") center 55% / cover no-repeat;
   margin-top: calc(-1 * var(--header-h));
   padding-top: calc(var(--header-h) + clamp(2rem, 6vw, 4.5rem));
   min-height: min(90vh, 880px);
