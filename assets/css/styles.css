@@ -318,6 +318,11 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .pillar__k { font-family: var(--serif); font-size: 1.5rem; color: var(--brand); }
 .pillar h3 { font-size: 1.05rem; font-family: var(--sans); font-weight: 800; margin: .8rem 0 .5rem; letter-spacing: .04em; }
 .pillar p { font-size: .92rem; color: var(--muted); }
+/* Pillars on the green Why section */
+.bg-navy .pillar { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
+.bg-navy .pillar__k { color: #a9cdc1; }
+.bg-navy .pillar h3 { color: #ffffff; }
+.bg-navy .pillar p { color: rgba(244,247,245,.72); }
 
 /* ---------- Credibility band ---------- */
 .creds { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; text-align: center; }
