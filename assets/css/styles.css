@@ -13,10 +13,10 @@
   --taupe:       #a89c8f;  /* Taupe       */
   --charcoal:    #2b2e31;  /* Charcoal    */
 
-  /* Brand accent — AG1-style green (single source of truth, easy to tweak) */
-  --brand:       #124a3f;  /* deep teal-green */
-  --brand-700:   #0d3a31;  /* darker green for hovers / gradients */
-  --brand-tint:  #eef4f1;  /* very light green wash */
+  /* Brand accent (single source of truth, easy to tweak) */
+  --brand:       #0e232d;  /* deep navy-teal */
+  --brand-700:   #081820;  /* darker for hovers / gradients */
+  --brand-tint:  #e9eef0;  /* very light cool wash */
 
   /* Derived tones */
   --cream-soft:  #fbf9f5;  /* whisper-warm off-white */
@@ -99,7 +99,7 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .center { text-align: center; margin-inline: auto; }
 
 .bg-navy  { background: var(--brand); color: #f4f7f5; }
-.bg-navy .eyebrow { color: #a9cdc1; }
+.bg-navy .eyebrow { color: #9db9c2; }
 .bg-navy .lead, .bg-navy .muted { color: rgba(244,247,245,.78); }
 .bg-cream { background: #ffffff; }
 .bg-soft  { background: var(--cream-soft); }
@@ -236,7 +236,7 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .marquee { background: var(--brand); color: #f4f7f5; padding-block: .95rem; overflow: hidden; }
 .marquee__track { display: flex; gap: 2.5rem; width: max-content; animation: scroll 32s linear infinite; }
 .marquee__track span { font-size: .82rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; opacity: .82; display: inline-flex; align-items: center; gap: 2.5rem; }
-.marquee__track span::after { content: "✦"; color: #8fbfb0; }
+.marquee__track span::after { content: "✦"; color: #7fa8b5; }
 @keyframes scroll { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; } }
 
@@ -252,7 +252,7 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 /* ---------- Belief statement ---------- */
 .statement { text-align: center; }
 .statement blockquote { font-family: var(--serif); font-size: clamp(1.8rem, 4.2vw, 3.2rem); line-height: 1.18; font-weight: 400; max-width: 20ch; margin-inline: auto; letter-spacing: -.01em; }
-.statement blockquote em { font-style: italic; color: #a9cdc1; }
+.statement blockquote em { font-style: italic; color: #9db9c2; }
 .statement .attrib { margin-top: 1.8rem; font-size: .82rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(250,239,231,.6); font-weight: 700; }
 
 /* ---------- Products ---------- */
@@ -320,7 +320,7 @@ section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
 .pillar p { font-size: .92rem; color: var(--muted); }
 /* Pillars on the green Why section */
 .bg-navy .pillar { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.16); }
-.bg-navy .pillar__k { color: #a9cdc1; }
+.bg-navy .pillar__k { color: #9db9c2; }
 .bg-navy .pillar h3 { color: #ffffff; }
 .bg-navy .pillar p { color: rgba(244,247,245,.72); }
 
