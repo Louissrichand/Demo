@@ -94,6 +94,7 @@ body.lang-th .statement blockquote { line-height: 1.35; }
 /* ---------- Layout helpers ---------- */
 .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
 section { padding-block: clamp(4rem, 9vw, 8rem); position: relative; }
+main section[id] { scroll-margin-top: calc(var(--header-h) + 14px); }
 .section-head { max-width: 720px; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 .section-head .lead { margin-top: 1rem; }
 .center { text-align: center; margin-inline: auto; }
