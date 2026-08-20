@@ -227,7 +227,7 @@ window.I18N = {
     "pf.guard.cta": "ไปหน้าเข้าสู่ระบบ",
     "pf.photo.change": "เปลี่ยนรูป",
     "pf.photo.remove": "ลบรูป",
-    "pf.photo.hint": "JPG, PNG หรือ WebP · ไม่เกิน 2 MB",
+    "pf.photo.hint": "JPG, PNG หรือ WebP · ไม่เกิน 1 MB",
     "pf.email.note": "อีเมลเปลี่ยนไม่ได้",
     "pf.save": "บันทึกการเปลี่ยนแปลง",
     "pf.saving": "กำลังบันทึก…",
@@ -236,7 +236,7 @@ window.I18N = {
     "pf.photo.uploaded": "อัปโหลดรูปแล้ว — กด บันทึก เพื่อยืนยัน",
     "pf.photo.removed": "ลบรูปแล้ว — กด บันทึก เพื่อยืนยัน",
     "pf.photo.type": "กรุณาเลือกไฟล์รูป JPG, PNG หรือ WebP",
-    "pf.photo.big": "ไฟล์ใหญ่เกินไป (สูงสุด 2 MB)",
+    "pf.photo.big": "ไฟล์ใหญ่เกินไป (สูงสุด 1 MB)",
 
     /* UI strings (set via JS) */
     "search.placeholder": "ค้นหา root+…",

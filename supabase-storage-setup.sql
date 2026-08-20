@@ -5,9 +5,13 @@
 -- ============================================================
 
 -- 1) Public "avatars" bucket (anyone can READ; writes are restricted below)
-insert into storage.buckets (id, name, public)
-values ('avatars', 'avatars', true)
-on conflict (id) do nothing;
+--    file_size_limit = 1 MB (1048576 bytes); only image types allowed.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('avatars', 'avatars', true, 1048576, array['image/jpeg','image/png','image/webp'])
+on conflict (id) do update
+  set public = true,
+      file_size_limit = 1048576,
+      allowed_mime_types = array['image/jpeg','image/png','image/webp'];
 
 -- 2) Each user may upload / change / delete files ONLY inside a folder
 --    named after their own user id:  avatars/<uid>/<file>

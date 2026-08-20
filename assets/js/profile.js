@@ -105,7 +105,7 @@
     var file = e.target.files && e.target.files[0];
     if (!file || !sb || !user) return;
     if (!/^image\/(png|jpe?g|webp)$/.test(file.type)) { setMsg(t("pf.photo.type", "Please choose a JPG, PNG or WebP image."), "err"); return; }
-    if (file.size > 2 * 1024 * 1024) { setMsg(t("pf.photo.big", "Image is too large (max 2 MB)."), "err"); return; }
+    if (file.size > 1024 * 1024) { setMsg(t("pf.photo.big", "Image is too large (max 1 MB)."), "err"); return; }
     setMsg(t("pf.photo.uploading", "Uploading…"));
     var ext = (file.name.split(".").pop() || "jpg").toLowerCase();
     var path = user.id + "/avatar_" + Date.now() + "." + ext;
