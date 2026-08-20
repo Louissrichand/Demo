@@ -15,6 +15,7 @@ window.I18N = {
     "btn.shop": "ดูสินค้าทั้งหมด",
     "btn.joinFounding": "ลงชื่อเป็นสมาชิกผู้ก่อตั้ง",
     "btn.notify": "แจ้งเตือนฉัน",
+    "btn.signup": "สมัครสมาชิก",
 
     /* Hero */
     "hero.eyebrow": "แพลตฟอร์มสุขภาพ ดูแลจากต้นเหตุ",
@@ -155,6 +156,33 @@ window.I18N = {
     "foot.disclaimer": "ข้อความเหล่านี้ยังไม่ได้รับการประเมินโดยสำนักงานคณะกรรมการอาหารและยา ผลิตภัณฑ์นี้ไม่ได้มีวัตถุประสงค์เพื่อวินิจฉัย บำบัด บรรเทา รักษา หรือป้องกันโรคใด ๆ สูตร รสชาติ สารสำคัญ และกำหนดการเปิดตัวที่แสดงเป็นเพียงข้อมูลเบื้องต้น และอาจเปลี่ยนแปลงได้ก่อนวางจำหน่ายจริง",
     "foot.rights": "สงวนลิขสิทธิ์",
     "foot.tagline": "หยั่งรากในงานวิจัย ยืนยันด้วยหลักฐาน",
+
+    /* Signup modal */
+    "signup.eyebrow": "สมาชิก root+",
+    "signup.title": "สมัครสมาชิก root+",
+    "signup.sub": "เข้าร่วมคอมมูนิตี้ root+ — รับสิทธิ์ก่อนใคร ราคาสมาชิก และเคล็ดลับสุขภาพ",
+    "signup.name": "ชื่อ-นามสกุล",
+    "signup.email": "อีเมล",
+    "signup.phone": "เบอร์โทรศัพท์",
+    "signup.dob": "วันเกิด <span class=\"opt\">(ไม่บังคับ)</span>",
+    "signup.gender": "เพศ <span class=\"opt\">(ไม่บังคับ)</span>",
+    "signup.interests": "คุณสนใจด้านไหน? <span class=\"opt\">(ไม่บังคับ)</span>",
+    "signup.optional": "(ไม่บังคับ)",
+    "signup.gender.choose": "เลือก…",
+    "signup.gender.f": "หญิง",
+    "signup.gender.m": "ชาย",
+    "signup.gender.o": "ไม่ระบุ",
+    "signup.int.gut": "สุขภาพลำไส้",
+    "signup.int.sleep": "การนอน &amp; อารมณ์",
+    "signup.int.skin": "ผิว &amp; ความงาม",
+    "signup.pdpa": "ฉันยินยอมให้ root+ จัดเก็บและใช้ข้อมูลส่วนบุคคลตามนโยบายความเป็นส่วนตัว",
+    "signup.marketing": "ส่งข่าวสาร เคล็ดลับ และสิทธิพิเศษสมาชิกให้ฉัน",
+    "signup.submit": "สมัครสมาชิก",
+    "signup.err.name": "กรุณากรอกชื่อ",
+    "signup.err.email": "กรุณากรอกอีเมลให้ถูกต้อง",
+    "signup.err.phone": "กรุณากรอกเบอร์โทรให้ถูกต้อง",
+    "signup.err.pdpa": "กรุณายอมรับเพื่อดำเนินการต่อ",
+    "signup.ok": "ยินดีต้อนรับสู่ root+! สมัครสมาชิกสำเร็จ 🌱",
 
     /* UI strings (set via JS) */
     "search.placeholder": "ค้นหา root+…",

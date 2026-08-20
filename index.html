@@ -59,8 +59,8 @@
           <span class="lang__div">/</span>
           <button class="lang__opt" type="button" data-lang="th">ไทย</button>
         </div>
-        <a href="#waitlist" class="btn btn--ghost btn--sm" data-i18n="btn.join">Join the list</a>
-        <a href="https://srichand.com/" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm" data-i18n="btn.shop">Shop the range</a>
+        <a href="https://srichand.com/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--sm" data-i18n="btn.shop">Shop the range</a>
+        <button class="btn btn--primary btn--sm" id="signupOpen" type="button" data-i18n="btn.signup">Sign up</button>
         <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
       </div>
     </div>
@@ -89,7 +89,8 @@
       <a href="#why" data-i18n="nav.why">Why root+</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
-    <a href="#waitlist" class="btn btn--primary btn--block" data-i18n="btn.joinFounding">Join the founding list</a>
+    <button class="btn btn--primary btn--block" id="signupOpenM" type="button" data-i18n="btn.signup">Sign up</button>
+    <a href="#waitlist" class="btn btn--ghost btn--block" data-i18n="btn.joinFounding">Join the founding list</a>
     <div class="lang lang--menu" role="group" aria-label="Language">
       <button class="lang__opt is-active" type="button" data-lang="en">EN</button>
       <span class="lang__div">/</span>
@@ -456,6 +457,66 @@
       </div>
     </div>
   </footer>
+
+  <!-- Membership signup modal -->
+  <div class="modal" id="signupModal" hidden role="dialog" aria-modal="true" aria-labelledby="signupTitle">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel">
+      <button class="modal__close" id="signupClose" type="button" aria-label="Close" data-close>&times;</button>
+      <p class="eyebrow" data-i18n="signup.eyebrow">Membership</p>
+      <h2 class="modal__title" id="signupTitle" data-i18n="signup.title">Create your root+ account</h2>
+      <p class="modal__sub" data-i18n="signup.sub">Join the root+ community — early access, member pricing and wellness tips.</p>
+      <form id="signupForm" novalidate>
+        <div class="field">
+          <label for="su-name" data-i18n="signup.name">Full name</label>
+          <input id="su-name" name="name" type="text" autocomplete="name" required />
+          <span class="field__err" data-i18n="signup.err.name">Please enter your name.</span>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="su-email" data-i18n="signup.email">Email</label>
+            <input id="su-email" name="email" type="email" autocomplete="email" required />
+            <span class="field__err" data-i18n="signup.err.email">Please enter a valid email.</span>
+          </div>
+          <div class="field">
+            <label for="su-phone" data-i18n="signup.phone">Phone</label>
+            <input id="su-phone" name="phone" type="tel" autocomplete="tel" required />
+            <span class="field__err" data-i18n="signup.err.phone">Please enter a valid phone number.</span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="su-dob" data-i18n="signup.dob">Date of birth <span class="opt">(optional)</span></label>
+            <input id="su-dob" name="dob" type="date" />
+          </div>
+          <div class="field">
+            <label for="su-gender" data-i18n="signup.gender">Gender <span class="opt">(optional)</span></label>
+            <select id="su-gender" name="gender">
+              <option value="" data-i18n="signup.gender.choose">Choose…</option>
+              <option value="female" data-i18n="signup.gender.f">Female</option>
+              <option value="male" data-i18n="signup.gender.m">Male</option>
+              <option value="na" data-i18n="signup.gender.o">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend data-i18n="signup.interests">What are you interested in? <span class="opt">(optional)</span></legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="interest" value="gut" /> <span data-i18n="signup.int.gut">Gut health</span></label>
+            <label class="check"><input type="checkbox" name="interest" value="sleep" /> <span data-i18n="signup.int.sleep">Sleep &amp; mood</span></label>
+            <label class="check"><input type="checkbox" name="interest" value="skin" /> <span data-i18n="signup.int.skin">Skin &amp; beauty</span></label>
+          </div>
+        </fieldset>
+        <div class="field field--consent">
+          <label class="check check--consent"><input type="checkbox" id="su-pdpa" name="pdpa" required /> <span data-i18n="signup.pdpa">I consent to root+ collecting and using my personal data as described in the Privacy Policy.</span></label>
+          <span class="field__err" data-i18n="signup.err.pdpa">Please accept to continue.</span>
+        </div>
+        <label class="check"><input type="checkbox" name="marketing" /> <span data-i18n="signup.marketing">Send me news, tips and member offers.</span></label>
+        <button type="submit" class="btn btn--primary btn--block" data-i18n="signup.submit">Create account</button>
+        <p class="modal__ok" id="signupOk" role="status"></p>
+      </form>
+    </div>
+  </div>
 
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/main.js"></script>

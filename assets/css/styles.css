@@ -211,6 +211,36 @@ main section[id] { scroll-margin-top: calc(var(--header-h) + 14px); }
 .toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(18px); background: var(--ink); color: var(--cream); padding: .7rem 1.15rem; border-radius: 999px; font-size: .9rem; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; z-index: 95; box-shadow: 0 10px 30px rgba(11,11,13,.3); }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+/* ---------- Signup modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: clamp(.75rem, 4vw, 2rem); }
+.modal[hidden] { display: none; }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(11,11,13,.55); backdrop-filter: blur(4px); animation: fadeIn .2s ease; }
+.modal__panel { position: relative; width: 100%; max-width: 560px; max-height: 94vh; overflow-y: auto; background: #fff; color: var(--ink); border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); box-shadow: 0 30px 80px -20px rgba(11,11,13,.5); animation: modalIn .28s var(--ease); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modalIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.modal__close { position: absolute; top: .7rem; right: .8rem; width: 40px; height: 40px; border-radius: 50%; font-size: 1.8rem; line-height: 1; color: var(--ink); background: transparent; cursor: pointer; transition: background .2s; }
+.modal__close:hover { background: rgba(11,11,13,.06); }
+.modal__title { font-size: clamp(1.5rem, 3vw, 2rem); margin: .3rem 0 .4rem; }
+.modal__sub { color: var(--muted); font-size: .95rem; margin-bottom: 1.4rem; }
+.field { margin-bottom: 1rem; display: flex; flex-direction: column; min-width: 0; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+.field label, .field legend { font-size: .82rem; font-weight: 700; margin-bottom: .35rem; color: var(--charcoal); padding: 0; }
+.field .opt { font-weight: 500; color: var(--taupe); }
+.field input, .field select { padding: .7em .9em; border: 1.5px solid var(--line); border-radius: 10px; font: inherit; font-size: .95rem; color: var(--ink); background: #fff; width: 100%; transition: border-color .2s; }
+.field input:focus, .field select:focus { outline: none; border-color: var(--brand); }
+.field.invalid input, .field.invalid select { border-color: #d64d3f; }
+.field__err { display: none; color: #d64d3f; font-size: .78rem; margin-top: .3rem; }
+.field.invalid .field__err { display: block; }
+fieldset.field { border: none; padding: 0; margin-bottom: 1rem; }
+.checks { display: flex; flex-wrap: wrap; gap: .5rem .9rem; }
+.check { display: flex; align-items: flex-start; gap: .5rem; font-size: .9rem; color: var(--charcoal); cursor: pointer; font-weight: 500; margin-bottom: .55rem; }
+.check input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--brand); flex: none; }
+.check--consent { margin: .2rem 0 .1rem; }
+.field--consent { margin-bottom: .6rem; }
+.modal .btn--block { margin-top: 1.2rem; }
+.modal__ok { margin-top: .8rem; text-align: center; font-weight: 700; color: var(--brand); min-height: 1.2em; }
+@media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
 /* ---------- Hero ---------- */
 .hero {
   color: var(--cream);

@@ -241,4 +241,88 @@
       return s.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
     }
   }
+
+  /* Membership signup modal */
+  var suModal = document.getElementById("signupModal");
+  if (suModal) {
+    var suForm = document.getElementById("signupForm");
+    var suOk = document.getElementById("signupOk");
+    var suLastFocus = null;
+
+    function openSignup() {
+      suLastFocus = document.activeElement;
+      var mm = document.getElementById("mobileMenu");
+      if (mm) { mm.classList.remove("open"); mm.setAttribute("aria-hidden", "true"); }
+      suModal.hidden = false;
+      document.body.style.overflow = "hidden";
+      setTimeout(function () { var f = document.getElementById("su-name"); if (f) f.focus(); }, 40);
+    }
+    function closeSignup() {
+      suModal.hidden = true;
+      document.body.style.overflow = "";
+      if (suLastFocus && suLastFocus.focus) suLastFocus.focus();
+    }
+
+    document.querySelectorAll("#signupOpen, #signupOpenM").forEach(function (b) {
+      b.addEventListener("click", openSignup);
+    });
+    suModal.querySelectorAll("[data-close]").forEach(function (c) {
+      c.addEventListener("click", closeSignup);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !suModal.hidden) closeSignup();
+    });
+
+    function mark(id, bad) {
+      var el = document.getElementById(id);
+      var field = el.closest(".field");
+      if (field) field.classList.toggle("invalid", bad);
+      return bad;
+    }
+
+    suForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var nameEl = document.getElementById("su-name");
+      var emailEl = document.getElementById("su-email");
+      var phoneEl = document.getElementById("su-phone");
+      var pdpaEl = document.getElementById("su-pdpa");
+
+      var bad = false;
+      bad = mark("su-name", nameEl.value.trim().length < 2) || bad;
+      bad = mark("su-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) || bad;
+      bad = mark("su-phone", (phoneEl.value || "").replace(/\D/g, "").length < 9) || bad;
+      bad = mark("su-pdpa", !pdpaEl.checked) || bad;
+
+      if (bad) {
+        var firstBad = suForm.querySelector(".field.invalid input, .field.invalid select");
+        if (firstBad) firstBad.focus();
+        return;
+      }
+
+      var interests = [].map.call(suForm.querySelectorAll('input[name="interest"]:checked'), function (i) { return i.value; });
+      var record = {
+        name: nameEl.value.trim(),
+        email: emailEl.value.trim(),
+        phone: phoneEl.value.trim(),
+        dob: (document.getElementById("su-dob") || {}).value || "",
+        gender: (document.getElementById("su-gender") || {}).value || "",
+        interests: interests,
+        marketing: !!(suForm.querySelector('input[name="marketing"]') || {}).checked,
+        pdpa: true,
+        ts: new Date().toISOString()
+      };
+      try {
+        var arr = JSON.parse(localStorage.getItem("rootplus-members") || "[]");
+        arr.push(record);
+        localStorage.setItem("rootplus-members", JSON.stringify(arr));
+      } catch (err) {}
+
+      var lang = document.documentElement.getAttribute("lang") || "en";
+      var msg = (window.I18N && window.I18N[lang] && window.I18N[lang]["signup.ok"]) || "Welcome to root+! Your membership is created. 🌱";
+      suOk.textContent = msg;
+      suForm.reset();
+      suForm.querySelectorAll(".field.invalid").forEach(function (f) { f.classList.remove("invalid"); });
+      setTimeout(closeSignup, 2400);
+    });
+  }
 })();
