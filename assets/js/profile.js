@@ -117,7 +117,8 @@
     if (!sb || !user) return;
     setMsg(t("pf.photo.uploading", "Uploading…"));
     var path = user.id + "/avatar_" + Date.now() + ".jpg";
-    sb.storage.from("avatars").upload(path, blob, { upsert: true, contentType: "image/jpeg" }).then(function (up) {
+    /* unique filename each time -> plain insert (upsert needs a SELECT policy we don't grant, which trips RLS) */
+    sb.storage.from("avatars").upload(path, blob, { contentType: "image/jpeg" }).then(function (up) {
       if (up.error) { setMsg(friendlyErr(up.error.message), "err"); return; }
       var pub = sb.storage.from("avatars").getPublicUrl(path);
       avatarUrl = (pub.data && pub.data.publicUrl) || "";
