@@ -537,6 +537,16 @@ details.faq__item summary::-webkit-details-marker { display: none; }
 .pf-guard__title { font-family: var(--serif); font-weight: 600; font-size: 1.8rem; margin-bottom: .5rem; }
 .pf-guard__sub { color: var(--muted); margin-bottom: 1.5rem; }
 
+/* ---------- Avatar crop modal ---------- */
+.modal__panel--crop { max-width: 360px; text-align: center; }
+.cropper { position: relative; width: 260px; height: 260px; margin: 1.1rem auto; border-radius: 14px; overflow: hidden; background: #0b0b0d; touch-action: none; cursor: grab; user-select: none; }
+.cropper:active { cursor: grabbing; }
+.cropper img { position: absolute; top: 0; left: 0; transform-origin: 0 0; max-width: none; pointer-events: none; -webkit-user-drag: none; }
+.cropper__ring { position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 999px rgba(11,11,13,.45); pointer-events: none; }
+.crop-zoom { display: flex; align-items: center; gap: .8rem; font-size: .82rem; font-weight: 700; color: var(--muted); margin: 0 auto 1.2rem; max-width: 260px; }
+.crop-zoom input[type="range"] { flex: 1; accent-color: var(--brand); }
+.crop-actions { display: flex; gap: .6rem; justify-content: center; }
+
 /* ============================================================
    Founding-list product chip
    Shows which product the visitor tapped "Notify me" on, so the

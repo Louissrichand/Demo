@@ -46,7 +46,7 @@
           <input type="file" id="pfPhoto" accept="image/png,image/jpeg,image/webp" hidden />
           <button type="button" class="btn btn--ghost btn--sm" id="pfPhotoBtn" data-i18n="pf.photo.change">Change photo</button>
           <button type="button" class="btn btn--text btn--sm" id="pfPhotoRemove" data-i18n="pf.photo.remove">Remove</button>
-          <p class="avatar-edit__hint" data-i18n="pf.photo.hint">JPG, PNG or WebP · up to 1 MB</p>
+          <p class="avatar-edit__hint" data-i18n="pf.photo.hint">JPG, PNG or WebP · you can crop it</p>
         </div>
       </div>
 
@@ -107,6 +107,27 @@
       </form>
     </div>
   </main>
+
+  <!-- Crop photo modal -->
+  <div class="modal" id="cropModal" hidden role="dialog" aria-modal="true" aria-label="Crop photo">
+    <div class="modal__backdrop" data-cropclose></div>
+    <div class="modal__panel modal__panel--crop">
+      <button class="modal__close" type="button" data-cropclose aria-label="Close">&times;</button>
+      <h2 class="modal__title" data-i18n="pf.crop.title">Crop your photo</h2>
+      <div class="cropper" id="cropStage">
+        <img id="cropImg" alt="" draggable="false" />
+        <div class="cropper__ring"></div>
+      </div>
+      <label class="crop-zoom">
+        <span data-i18n="pf.crop.zoom">Zoom</span>
+        <input type="range" id="cropZoom" min="1" max="3" step="0.01" value="1" />
+      </label>
+      <div class="crop-actions">
+        <button type="button" class="btn btn--ghost btn--sm" data-cropclose data-i18n="pf.crop.cancel">Cancel</button>
+        <button type="button" class="btn btn--primary btn--sm" id="cropUse" data-i18n="pf.crop.use">Use photo</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/config.js"></script>

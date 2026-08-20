@@ -54,11 +54,13 @@
 
   /* ---------- state ---------- */
   var user = null;
-  var avatarUrl = "";   // "" = none/removed, string = current/new
+  var avatarUrl = "";    // persisted value ("" = none/removed, else a public URL)
+  var previewSrc = null; // local (data:) preview shown before/instead of upload
 
   function renderAvatar(name) {
     var el = $("pfAvatar"); if (!el) return;
-    if (avatarUrl) { el.innerHTML = '<img src="' + avatarUrl + '" alt="" referrerpolicy="no-referrer" />'; }
+    var src = previewSrc || avatarUrl;
+    if (src) { el.innerHTML = '<img src="' + src + '" alt="" referrerpolicy="no-referrer" />'; }
     else { el.textContent = initials(name, user && user.email); }
   }
 
@@ -97,27 +99,94 @@
   var photoBtn = $("pfPhotoBtn"), photoInput = $("pfPhoto"), photoRemove = $("pfPhotoRemove");
   if (photoBtn) photoBtn.addEventListener("click", function () { photoInput.click(); });
   if (photoRemove) photoRemove.addEventListener("click", function () {
-    avatarUrl = "";
+    avatarUrl = ""; previewSrc = null;
     renderAvatar($("pf-first").value + " " + $("pf-last").value);
     setMsg(t("pf.photo.removed", "Photo removed — click Save to apply."), "ok");
   });
-  if (photoInput) photoInput.addEventListener("change", function (e) {
-    var file = e.target.files && e.target.files[0];
-    if (!file || !sb || !user) return;
-    if (!/^image\/(png|jpe?g|webp)$/.test(file.type)) { setMsg(t("pf.photo.type", "Please choose a JPG, PNG or WebP image."), "err"); return; }
-    if (file.size > 1024 * 1024) { setMsg(t("pf.photo.big", "Image is too large (max 1 MB)."), "err"); return; }
+  /* ---- pick -> crop (square/circle) -> upload ---- */
+  var FRAME = 260, OUT = 400;
+  var cropModal = $("cropModal"), cropStage = $("cropStage"), cropImg = $("cropImg"), cropZoom = $("cropZoom");
+  var natW = 0, natH = 0, scale = 1, tx = 0, ty = 0;
+
+  function friendlyErr(m) {
+    if (/Bucket not found/i.test(m)) return t("pf.photo.nobucket", "Photo uploads aren't switched on yet — please try again later.");
+    if (/maximum|too large|Payload too large|exceeded/i.test(m)) return t("pf.photo.big", "Image is too large (max 1 MB).");
+    return m;
+  }
+  function uploadAvatar(blob) {
+    if (!sb || !user) return;
     setMsg(t("pf.photo.uploading", "Uploading…"));
-    var ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-    var path = user.id + "/avatar_" + Date.now() + "." + ext;
-    sb.storage.from("avatars").upload(path, file, { upsert: true, contentType: file.type }).then(function (up) {
-      if (up.error) { setMsg(up.error.message, "err"); return; }
+    var path = user.id + "/avatar_" + Date.now() + ".jpg";
+    sb.storage.from("avatars").upload(path, blob, { upsert: true, contentType: "image/jpeg" }).then(function (up) {
+      if (up.error) { setMsg(friendlyErr(up.error.message), "err"); return; }
       var pub = sb.storage.from("avatars").getPublicUrl(path);
       avatarUrl = (pub.data && pub.data.publicUrl) || "";
+      previewSrc = null;
       renderAvatar($("pf-first").value + " " + $("pf-last").value);
       setMsg(t("pf.photo.uploaded", "Photo uploaded — click Save to apply."), "ok");
     });
+  }
+
+  if (photoInput) photoInput.addEventListener("change", function (e) {
+    var file = e.target.files && e.target.files[0];
     photoInput.value = "";
+    if (!file) return;
+    if (!/^image\/(png|jpe?g|webp)$/.test(file.type)) { setMsg(t("pf.photo.type", "Please choose a JPG, PNG or WebP image."), "err"); return; }
+    if (file.size > 10 * 1024 * 1024) { setMsg(t("pf.photo.big2", "Image is too large (max 10 MB)."), "err"); return; }
+    var reader = new FileReader();
+    reader.onload = function (ev) { if (cropImg) openCropper(ev.target.result); };
+    reader.readAsDataURL(file);
   });
+
+  function applyTransform() {
+    cropImg.style.width = (natW * scale) + "px";
+    cropImg.style.height = (natH * scale) + "px";
+    cropImg.style.transform = "translate(" + tx + "px," + ty + "px)";
+  }
+  function clampXY() {
+    tx = Math.min(0, Math.max(FRAME - natW * scale, tx));
+    ty = Math.min(0, Math.max(FRAME - natH * scale, ty));
+  }
+  function setZoom(z, keepCenter) {
+    var base = Math.max(FRAME / natW, FRAME / natH), old = scale;
+    var cx = (FRAME / 2 - tx) / old, cy = (FRAME / 2 - ty) / old;
+    scale = base * z;
+    if (keepCenter) { tx = FRAME / 2 - cx * scale; ty = FRAME / 2 - cy * scale; }
+    clampXY(); applyTransform();
+  }
+  function openCropper(dataUrl) {
+    cropImg.onload = function () {
+      natW = cropImg.naturalWidth; natH = cropImg.naturalHeight;
+      scale = Math.max(FRAME / natW, FRAME / natH);
+      tx = (FRAME - natW * scale) / 2; ty = (FRAME - natH * scale) / 2;
+      if (cropZoom) cropZoom.value = 1;
+      clampXY(); applyTransform();
+      cropModal.hidden = false; document.body.style.overflow = "hidden";
+    };
+    cropImg.src = dataUrl;
+  }
+  function closeCropper() { if (cropModal) cropModal.hidden = true; document.body.style.overflow = ""; }
+
+  if (cropZoom) cropZoom.addEventListener("input", function () { setZoom(parseFloat(cropZoom.value) || 1, true); });
+  if (cropStage) {
+    var drag = false, lx = 0, ly = 0;
+    cropStage.addEventListener("pointerdown", function (e) { drag = true; lx = e.clientX; ly = e.clientY; try { cropStage.setPointerCapture(e.pointerId); } catch (x) {} });
+    cropStage.addEventListener("pointermove", function (e) { if (!drag) return; tx += e.clientX - lx; ty += e.clientY - ly; lx = e.clientX; ly = e.clientY; clampXY(); applyTransform(); });
+    cropStage.addEventListener("pointerup", function () { drag = false; });
+    cropStage.addEventListener("pointercancel", function () { drag = false; });
+  }
+  var cropUse = $("cropUse");
+  if (cropUse) cropUse.addEventListener("click", function () {
+    var canvas = document.createElement("canvas");
+    canvas.width = OUT; canvas.height = OUT;
+    var s = FRAME / scale;
+    canvas.getContext("2d").drawImage(cropImg, -tx / scale, -ty / scale, s, s, 0, 0, OUT, OUT);
+    previewSrc = canvas.toDataURL("image/jpeg", 0.9);
+    renderAvatar($("pf-first").value + " " + $("pf-last").value);
+    closeCropper();
+    canvas.toBlob(function (blob) { if (blob) uploadAvatar(blob); }, "image/jpeg", 0.9);
+  });
+  document.querySelectorAll("[data-cropclose]").forEach(function (c) { c.addEventListener("click", closeCropper); });
 
   /* ---------- save ---------- */
   function mark(id, bad) { var el = $(id); if (!el) return bad; var f = el.closest(".field"); if (f) f.classList.toggle("invalid", bad); return bad; }

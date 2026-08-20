@@ -234,7 +234,7 @@ window.I18N = {
     "pf.guard.cta": "ไปหน้าเข้าสู่ระบบ",
     "pf.photo.change": "เปลี่ยนรูป",
     "pf.photo.remove": "ลบรูป",
-    "pf.photo.hint": "JPG, PNG หรือ WebP · ไม่เกิน 1 MB",
+    "pf.photo.hint": "JPG, PNG หรือ WebP · ครอปได้",
     "pf.email.note": "อีเมลเปลี่ยนไม่ได้",
     "pf.save": "บันทึกการเปลี่ยนแปลง",
     "pf.saving": "กำลังบันทึก…",
@@ -244,6 +244,12 @@ window.I18N = {
     "pf.photo.removed": "ลบรูปแล้ว — กด บันทึก เพื่อยืนยัน",
     "pf.photo.type": "กรุณาเลือกไฟล์รูป JPG, PNG หรือ WebP",
     "pf.photo.big": "ไฟล์ใหญ่เกินไป (สูงสุด 1 MB)",
+    "pf.photo.big2": "ไฟล์ใหญ่เกินไป (สูงสุด 10 MB)",
+    "pf.photo.nobucket": "ยังเปิดใช้อัปโหลดรูปไม่ได้ — กรุณาลองใหม่ภายหลัง",
+    "pf.crop.title": "ครอปรูปของคุณ",
+    "pf.crop.zoom": "ซูม",
+    "pf.crop.cancel": "ยกเลิก",
+    "pf.crop.use": "ใช้รูปนี้",
 
     /* UI strings (set via JS) */
     "search.placeholder": "ค้นหา root+…",
