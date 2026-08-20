@@ -474,3 +474,44 @@ details.faq__item summary::-webkit-details-marker { display: none; }
   .footer__grid { grid-template-columns: 1fr; }
   body { font-size: 16px; }
 }
+
+/* ---------- Auth modal (tabs, Google, panes) ---------- */
+.authtabs { display: flex; gap: .35rem; background: var(--brand-tint); padding: .3rem; border-radius: 12px; margin: .7rem 0 1.2rem; }
+.authtab { flex: 1; padding: .62em 1em; border-radius: 9px; font: inherit; font-weight: 700; font-size: .9rem; color: var(--muted); background: transparent; cursor: pointer; transition: background .2s, color .2s; }
+.authtab.is-active { background: #fff; color: var(--brand); box-shadow: var(--shadow-sm); }
+.btn--google { background: #fff; color: #3c4043; border: 1.5px solid var(--line); box-shadow: var(--shadow-sm); gap: .6rem; font-weight: 700; }
+.btn--google:hover { background: #f6f7f8; border-color: rgba(11,11,13,.2); }
+.gicon { flex: none; }
+.oauth-note { text-align: center; font-size: .77rem; color: var(--muted); margin-top: .55rem; }
+.oauth-note a { color: var(--brand); font-weight: 600; }
+.authdiv { display: flex; align-items: center; gap: .8rem; margin: 1.15rem 0; color: var(--taupe); font-size: .74rem; text-transform: uppercase; letter-spacing: .1em; }
+.authdiv::before, .authdiv::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+.authlink { color: var(--brand); font-weight: 600; text-decoration: none; font-size: .82rem; }
+.authlink:hover { text-decoration: underline; }
+.authlink--right { display: block; text-align: right; margin: -.35rem 0 .85rem; }
+.authswitch { text-align: center; font-size: .88rem; color: var(--muted); margin-top: 1rem; }
+.authswitch a { color: var(--brand); font-weight: 700; text-decoration: none; }
+.authswitch a:hover { text-decoration: underline; }
+.modal__ok--err { color: #d64d3f; }
+.modal__ok--ok { color: var(--brand); }
+
+/* ---------- Header account chip ---------- */
+.account { position: relative; }
+.account[hidden] { display: none; }
+.account__btn { display: flex; align-items: center; gap: .5rem; padding: .22rem .55rem .22rem .3rem; border-radius: 999px; background: transparent; cursor: pointer; color: inherit; font: inherit; border: 1.5px solid transparent; transition: background .2s; }
+.account__btn:hover { background: rgba(11,11,13,.06); }
+.header--over .account__btn:hover { background: rgba(255,255,255,.16); }
+.account__avatar { width: 32px; height: 32px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--brand); color: #fff; font-size: .8rem; font-weight: 800; overflow: hidden; }
+.account__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.account__name { font-size: .9rem; font-weight: 700; max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account__caret { opacity: .6; transition: transform .2s; }
+.account.is-open .account__caret { transform: rotate(180deg); }
+.account__menu { position: absolute; top: calc(100% + .5rem); right: 0; min-width: 230px; background: #fff; color: var(--ink); border-radius: 14px; box-shadow: var(--shadow); border: 1px solid var(--line); padding: .85rem; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .18s, transform .18s, visibility .18s; z-index: 120; }
+.account.is-open .account__menu { opacity: 1; visibility: visible; transform: none; }
+.account__hello { font-size: .7rem; color: var(--taupe); text-transform: uppercase; letter-spacing: .07em; }
+.account__email { font-size: .9rem; font-weight: 700; color: var(--ink); margin: .1rem 0 .7rem; word-break: break-all; }
+.account__item { display: block; width: 100%; text-align: left; padding: .6em .7em; border-radius: 9px; font: inherit; font-size: .9rem; font-weight: 600; color: var(--ink); background: transparent; cursor: pointer; text-decoration: none; border: none; }
+.account__item:hover { background: var(--brand-tint); }
+.account__item--danger { color: #c23822; }
+.account__item--danger:hover { background: rgba(194,56,34,.08); }
+@media (max-width: 520px) { .account__name { display: none; } }

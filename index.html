@@ -60,7 +60,19 @@
           <button class="lang__opt" type="button" data-lang="th">ไทย</button>
         </div>
         <a href="https://srichand.com/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--sm" data-i18n="btn.shop">Shop the range</a>
-        <button class="btn btn--primary btn--sm" id="signupOpen" type="button" data-i18n="btn.signup">Sign up</button>
+        <button class="btn btn--primary btn--sm" id="signupOpen" type="button" data-tab="signin" data-i18n="btn.signin">Sign in</button>
+        <div class="account" id="accountChip" hidden>
+          <button class="account__btn" id="acctToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Account menu">
+            <span class="account__avatar" id="acctAvatar"></span>
+            <span class="account__name" id="acctName"></span>
+            <svg class="account__caret" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+          <div class="account__menu" role="menu">
+            <p class="account__hello" data-i18n="acct.hello">Signed in as</p>
+            <p class="account__email" id="acctEmail"></p>
+            <button class="account__item account__item--danger" id="signOutBtn" type="button" role="menuitem" data-i18n="acct.signout">Sign out</button>
+          </div>
+        </div>
         <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span></button>
       </div>
     </div>
@@ -89,7 +101,7 @@
       <a href="#why" data-i18n="nav.why">Why root+</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
-    <button class="btn btn--primary btn--block" id="signupOpenM" type="button" data-i18n="btn.signup">Sign up</button>
+    <button class="btn btn--primary btn--block" id="signupOpenM" type="button" data-tab="signin" data-i18n="btn.signin">Sign in</button>
     <a href="#waitlist" class="btn btn--ghost btn--block" data-i18n="btn.joinFounding">Join the founding list</a>
     <div class="lang lang--menu" role="group" aria-label="Language">
       <button class="lang__opt is-active" type="button" data-lang="en">EN</button>
@@ -459,74 +471,122 @@
   </footer>
 
   <!-- Membership signup modal -->
-  <div class="modal" id="signupModal" hidden role="dialog" aria-modal="true" aria-labelledby="signupTitle">
+  <div class="modal" id="signupModal" hidden role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <div class="modal__backdrop" data-close></div>
     <div class="modal__panel">
       <button class="modal__close" id="signupClose" type="button" aria-label="Close" data-close>&times;</button>
       <p class="eyebrow" data-i18n="signup.eyebrow">Membership</p>
-      <h2 class="modal__title" id="signupTitle" data-i18n="signup.title">Create your root+ account</h2>
-      <p class="modal__sub" data-i18n="signup.sub">Join the root+ community — early access, member pricing and wellness tips.</p>
-      <form id="signupForm" novalidate>
-        <div class="field-row">
+      <h2 class="modal__title" id="authTitle" data-i18n="auth.title">Welcome to root+</h2>
+
+      <div class="authtabs" role="tablist">
+        <button class="authtab is-active" id="tabSignin" type="button" role="tab" data-i18n="auth.tab.signin">Sign in</button>
+        <button class="authtab" id="tabSignup" type="button" role="tab" data-i18n="auth.tab.signup">Create account</button>
+      </div>
+
+      <button class="btn btn--google btn--block js-google" type="button">
+        <svg class="gicon" viewBox="0 0 18 18" width="18" height="18" aria-hidden="true">
+          <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.02-3.7H.96v2.34A9 9 0 0 0 9 18z"/>
+          <path fill="#FBBC05" d="M3.98 10.72a5.4 5.4 0 0 1 0-3.44V4.94H.96a9 9 0 0 0 0 8.12l3.02-2.34z"/>
+          <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.46 3.44 1.35l2.58-2.58C13.47.9 11.43 0 9 0A9 9 0 0 0 .96 4.94l3.02 2.34C4.68 5.16 6.66 3.58 9 3.58z"/>
+        </svg>
+        <span data-i18n="auth.google">Continue with Google</span>
+      </button>
+      <p class="oauth-note"><span data-i18n="auth.oauthnote">By continuing you agree to our</span> <a href="privacy.html" target="_blank" rel="noopener" data-i18n="foot.privacy">Privacy Policy</a>.</p>
+      <div class="authdiv"><span data-i18n="auth.or">or</span></div>
+
+      <!-- Sign in -->
+      <div class="authpane" id="paneSignin">
+        <form id="signinForm" novalidate>
           <div class="field">
-            <label for="su-name" data-i18n="signup.firstname">First name</label>
-            <input id="su-name" name="name" type="text" autocomplete="given-name" required />
-            <span class="field__err" data-i18n="signup.err.name">Please enter your first name.</span>
-          </div>
-          <div class="field">
-            <label for="su-surname" data-i18n="signup.lastname">Surname</label>
-            <input id="su-surname" name="surname" type="text" autocomplete="family-name" required />
-            <span class="field__err" data-i18n="signup.err.surname">Please enter your surname.</span>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="su-email" data-i18n="signup.email">Email</label>
-            <input id="su-email" name="email" type="email" autocomplete="email" required />
+            <label for="si-email" data-i18n="signup.email">Email</label>
+            <input id="si-email" type="email" autocomplete="email" required />
             <span class="field__err" data-i18n="signup.err.email">Please enter a valid email.</span>
           </div>
           <div class="field">
-            <label for="su-phone" data-i18n="signup.phone">Phone</label>
-            <input id="su-phone" name="phone" type="tel" autocomplete="tel" required />
-            <span class="field__err" data-i18n="signup.err.phone">Please enter a valid phone number.</span>
+            <label for="si-password" data-i18n="auth.password">Password</label>
+            <input id="si-password" type="password" autocomplete="current-password" required />
+            <span class="field__err" data-i18n="auth.err.pwreq">Please enter your password.</span>
           </div>
-        </div>
-        <div class="field-row">
+          <a href="#" id="forgotLink" class="authlink authlink--right" data-i18n="auth.forgot">Forgot password?</a>
+          <button type="submit" class="btn btn--primary btn--block" data-i18n="auth.tab.signin">Sign in</button>
+          <p class="authswitch"><span data-i18n="auth.noacct">New to root+?</span> <a href="#" data-goto-tab="signup" data-i18n="auth.tab.signup">Create account</a></p>
+        </form>
+      </div>
+
+      <!-- Sign up -->
+      <div class="authpane" id="paneSignup" hidden>
+        <form id="signupForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="su-name" data-i18n="signup.firstname">First name</label>
+              <input id="su-name" name="name" type="text" autocomplete="given-name" required />
+              <span class="field__err" data-i18n="signup.err.name">Please enter your first name.</span>
+            </div>
+            <div class="field">
+              <label for="su-surname" data-i18n="signup.lastname">Surname</label>
+              <input id="su-surname" name="surname" type="text" autocomplete="family-name" required />
+              <span class="field__err" data-i18n="signup.err.surname">Please enter your surname.</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="su-email" data-i18n="signup.email">Email</label>
+              <input id="su-email" name="email" type="email" autocomplete="email" required />
+              <span class="field__err" data-i18n="signup.err.email">Please enter a valid email.</span>
+            </div>
+            <div class="field">
+              <label for="su-phone" data-i18n="signup.phone">Phone</label>
+              <input id="su-phone" name="phone" type="tel" autocomplete="tel" required />
+              <span class="field__err" data-i18n="signup.err.phone">Please enter a valid phone number.</span>
+            </div>
+          </div>
           <div class="field">
-            <label for="su-dob" data-i18n="signup.dob">Date of birth <span class="opt">(optional)</span></label>
-            <input id="su-dob" name="dob" type="date" />
+            <label for="su-password" data-i18n="auth.password">Password <span class="opt" data-i18n="auth.pwhint">(at least 6 characters)</span></label>
+            <input id="su-password" type="password" autocomplete="new-password" required minlength="6" />
+            <span class="field__err" data-i18n="auth.err.pwshort">Password must be at least 6 characters.</span>
           </div>
-          <div class="field">
-            <label for="su-gender" data-i18n="signup.gender">Gender <span class="opt">(optional)</span></label>
-            <select id="su-gender" name="gender">
-              <option value="" data-i18n="signup.gender.choose">Choose…</option>
-              <option value="female" data-i18n="signup.gender.f">Female</option>
-              <option value="male" data-i18n="signup.gender.m">Male</option>
-              <option value="na" data-i18n="signup.gender.o">Prefer not to say</option>
-            </select>
+          <div class="field-row">
+            <div class="field">
+              <label for="su-dob" data-i18n="signup.dob">Date of birth <span class="opt">(optional)</span></label>
+              <input id="su-dob" name="dob" type="date" />
+            </div>
+            <div class="field">
+              <label for="su-gender" data-i18n="signup.gender">Gender <span class="opt">(optional)</span></label>
+              <select id="su-gender" name="gender">
+                <option value="" data-i18n="signup.gender.choose">Choose…</option>
+                <option value="female" data-i18n="signup.gender.f">Female</option>
+                <option value="male" data-i18n="signup.gender.m">Male</option>
+                <option value="na" data-i18n="signup.gender.o">Prefer not to say</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <fieldset class="field">
-          <legend data-i18n="signup.interests">What are you interested in? <span class="opt">(optional)</span></legend>
-          <div class="checks">
-            <label class="check"><input type="checkbox" name="interest" value="gut" /> <span data-i18n="signup.int.gut">Gut health</span></label>
-            <label class="check"><input type="checkbox" name="interest" value="sleep" /> <span data-i18n="signup.int.sleep">Sleep &amp; mood</span></label>
-            <label class="check"><input type="checkbox" name="interest" value="skin" /> <span data-i18n="signup.int.skin">Skin &amp; beauty</span></label>
+          <fieldset class="field">
+            <legend data-i18n="signup.interests">What are you interested in? <span class="opt">(optional)</span></legend>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="interest" value="gut" /> <span data-i18n="signup.int.gut">Gut health</span></label>
+              <label class="check"><input type="checkbox" name="interest" value="sleep" /> <span data-i18n="signup.int.sleep">Sleep &amp; mood</span></label>
+              <label class="check"><input type="checkbox" name="interest" value="skin" /> <span data-i18n="signup.int.skin">Skin &amp; beauty</span></label>
+            </div>
+          </fieldset>
+          <div class="field field--consent">
+            <label class="check check--consent"><input type="checkbox" id="su-pdpa" name="pdpa" required /> <span data-i18n="signup.pdpa">I consent to root+ collecting and using my personal data as described in the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
+            <span class="field__err" data-i18n="signup.err.pdpa">Please accept to continue.</span>
           </div>
-        </fieldset>
-        <div class="field field--consent">
-          <label class="check check--consent"><input type="checkbox" id="su-pdpa" name="pdpa" required /> <span data-i18n="signup.pdpa">I consent to root+ collecting and using my personal data as described in the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
-          <span class="field__err" data-i18n="signup.err.pdpa">Please accept to continue.</span>
-        </div>
-        <label class="check"><input type="checkbox" name="marketing" /> <span data-i18n="signup.marketing">Send me news, tips and member offers.</span></label>
-        <button type="submit" class="btn btn--primary btn--block" data-i18n="signup.submit">Create account</button>
-        <p class="modal__ok" id="signupOk" role="status"></p>
-      </form>
+          <label class="check"><input type="checkbox" name="marketing" /> <span data-i18n="signup.marketing">Send me news, tips and member offers.</span></label>
+          <button type="submit" class="btn btn--primary btn--block" data-i18n="signup.submit">Create account</button>
+          <p class="authswitch"><span data-i18n="auth.haveacct">Already a member?</span> <a href="#" data-goto-tab="signin" data-i18n="auth.tab.signin">Sign in</a></p>
+        </form>
+      </div>
+
+      <p class="modal__ok" id="authMsg" role="status"></p>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/auth.js"></script>
 </body>
 </html>
