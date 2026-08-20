@@ -283,12 +283,14 @@
     suForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var nameEl = document.getElementById("su-name");
+      var surnameEl = document.getElementById("su-surname");
       var emailEl = document.getElementById("su-email");
       var phoneEl = document.getElementById("su-phone");
       var pdpaEl = document.getElementById("su-pdpa");
 
       var bad = false;
-      bad = mark("su-name", nameEl.value.trim().length < 2) || bad;
+      bad = mark("su-name", nameEl.value.trim().length < 1) || bad;
+      bad = mark("su-surname", surnameEl.value.trim().length < 1) || bad;
       bad = mark("su-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) || bad;
       bad = mark("su-phone", (phoneEl.value || "").replace(/\D/g, "").length < 9) || bad;
       bad = mark("su-pdpa", !pdpaEl.checked) || bad;
@@ -301,7 +303,8 @@
 
       var interests = [].map.call(suForm.querySelectorAll('input[name="interest"]:checked'), function (i) { return i.value; });
       var record = {
-        name: nameEl.value.trim(),
+        firstName: nameEl.value.trim(),
+        lastName: surnameEl.value.trim(),
         email: emailEl.value.trim(),
         phone: phoneEl.value.trim(),
         dob: (document.getElementById("su-dob") || {}).value || "",

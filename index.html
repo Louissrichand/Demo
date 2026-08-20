@@ -467,10 +467,17 @@
       <h2 class="modal__title" id="signupTitle" data-i18n="signup.title">Create your root+ account</h2>
       <p class="modal__sub" data-i18n="signup.sub">Join the root+ community — early access, member pricing and wellness tips.</p>
       <form id="signupForm" novalidate>
-        <div class="field">
-          <label for="su-name" data-i18n="signup.name">Full name</label>
-          <input id="su-name" name="name" type="text" autocomplete="name" required />
-          <span class="field__err" data-i18n="signup.err.name">Please enter your name.</span>
+        <div class="field-row">
+          <div class="field">
+            <label for="su-name" data-i18n="signup.firstname">First name</label>
+            <input id="su-name" name="name" type="text" autocomplete="given-name" required />
+            <span class="field__err" data-i18n="signup.err.name">Please enter your first name.</span>
+          </div>
+          <div class="field">
+            <label for="su-surname" data-i18n="signup.lastname">Surname</label>
+            <input id="su-surname" name="surname" type="text" autocomplete="family-name" required />
+            <span class="field__err" data-i18n="signup.err.surname">Please enter your surname.</span>
+          </div>
         </div>
         <div class="field-row">
           <div class="field">
