@@ -7,6 +7,6 @@
    Leave blank to keep demo mode (stores to the browser's localStorage).
    ============================================================ */
 window.ROOTPLUS = {
-  supabaseUrl: "",   // e.g. https://abcdefgh.supabase.co
-  supabaseKey: ""    // the "anon public" API key
+  supabaseUrl: "https://vumqbxlorsemfvrxxkmj.supabase.co",   // ROOT+ CRM
+  supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1bXFieGxvcnNlbWZ2cnh4a21qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyMDM2ODYsImV4cCI6MjEwMjc3OTY4Nn0.o3SiOSdC_6LPl9HAMCClF0CsaVd7TmXOHnlV-zY25yk"    // anon public key
 };
