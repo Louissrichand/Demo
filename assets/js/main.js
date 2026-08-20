@@ -8,6 +8,61 @@
   var yr = document.getElementById("year");
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ============================================================
+     Config-driven links (config.js)
+     A social icon, the shop link and the location only render when
+     they actually point somewhere — no more dead "#" links.
+     ============================================================ */
+  (function applyConfigLinks() {
+    var cfg = window.ROOTPLUS || {};
+    var social = cfg.social || {};
+
+    var socialWrap = document.querySelector(".footer__social");
+    if (socialWrap) {
+      var live = 0;
+      socialWrap.querySelectorAll("[data-social]").forEach(function (a) {
+        var url = social[a.getAttribute("data-social")];
+        if (url) {
+          a.href = url;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.hidden = false;
+          live++;
+          a.addEventListener("click", function () {
+            if (window.rpTrack) window.rpTrack("social_click", { network: a.getAttribute("data-social") });
+          });
+        } else {
+          a.hidden = true;              /* nothing to link to → don't show it */
+        }
+      });
+      socialWrap.hidden = live === 0;
+    }
+
+    /* Contact email */
+    document.querySelectorAll("[data-contact-email]").forEach(function (a) {
+      var mail = cfg.contactEmail || "itd@srichand.co.th";
+      a.href = "mailto:" + mail;
+      a.textContent = mail;
+    });
+
+    /* Location: a link only if there's a map URL, otherwise plain text */
+    var loc = document.getElementById("footLocation");
+    if (loc && cfg.locationUrl) {
+      var a = document.createElement("a");
+      a.href = cfg.locationUrl;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.setAttribute("data-i18n", loc.getAttribute("data-i18n") || "");
+      a.textContent = loc.textContent;
+      loc.replaceWith(a);
+    }
+
+    /* "Shop the range" points at the parent brand — hidden by default
+       while root+ itself isn't on sale. */
+    var shop = document.getElementById("shopLink");
+    if (shop) shop.hidden = !cfg.showShopLink;
+  })();
+
   /* Sticky header: transparent over hero, solid once scrolled past it */
   var header = document.getElementById("header");
   var hero = document.getElementById("hero");
@@ -81,54 +136,236 @@
     });
   });
 
-  /* Ingredient spotlight — auto-rotate every 3s, pause on hover */
+  /* ============================================================
+     Ingredient spotlight carousel
+     Auto-rotates, but: stops for prefers-reduced-motion, exposes a real
+     pause/play control (WCAG 2.2.2 — moving content must be stoppable),
+     and shows dots so people can see there are three slides at all.
+     ============================================================ */
   var spot = document.getElementById("spotSlider");
   if (spot) {
     var track = spot.querySelector(".spot__track");
-    var count = track.children.length;
+    var slides = track.children;
+    var count = slides.length;
     var idx = 0;
     var timer = null;
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var paused = reduceMotion;
+
+    var dotsWrap = document.getElementById("spotDots");
+    var playBtn = document.getElementById("spotPlay");
+
+    /* Dots — built from the slide count so they can't drift out of sync. */
+    var dots = [];
+    if (dotsWrap) {
+      for (var i = 0; i < count; i++) {
+        (function (n) {
+          var d = document.createElement("button");
+          d.type = "button";
+          d.className = "spot__dot";
+          d.setAttribute("aria-label", "Slide " + (n + 1) + " of " + count);
+          d.addEventListener("click", function () { show(n); restart(); });
+          dotsWrap.appendChild(d);
+          dots.push(d);
+        })(i);
+      }
+    }
 
     function show(n) {
       idx = (n + count) % count;
       track.style.transform = "translateX(-" + idx * 100 + "%)";
+      dots.forEach(function (d, i) {
+        d.classList.toggle("is-active", i === idx);
+        d.setAttribute("aria-current", i === idx ? "true" : "false");
+      });
+      /* Keep hidden slides out of the tab order and off screen readers. */
+      for (var s = 0; s < count; s++) {
+        slides[s].setAttribute("aria-hidden", s === idx ? "false" : "true");
+        slides[s].querySelectorAll("a,button,input").forEach(function (el) {
+          if (s === idx) el.removeAttribute("tabindex"); else el.setAttribute("tabindex", "-1");
+        });
+      }
     }
-    function play() { stop(); timer = setInterval(function () { show(idx + 1); }, 5000); }
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function play() { stop(); if (!paused) timer = setInterval(function () { show(idx + 1); }, 5000); }
+    function restart() { if (!paused) play(); }
+
+    function setPaused(v) {
+      paused = v;
+      if (playBtn) {
+        playBtn.setAttribute("aria-pressed", v ? "true" : "false");
+        playBtn.setAttribute("aria-label", v ? "Play slideshow" : "Pause slideshow");
+        playBtn.classList.toggle("is-paused", v);
+      }
+      if (v) stop(); else play();
+    }
+    if (playBtn) playBtn.addEventListener("click", function () { setPaused(!paused); });
 
     spot.querySelectorAll(".spot__arrow").forEach(function (a) {
       a.addEventListener("click", function () {
         show(idx + parseInt(a.getAttribute("data-dir"), 10));
-        play();
+        restart();
       });
     });
+
+    /* Hover / keyboard focus suspends rotation without changing the
+       user's explicit pause choice. */
     spot.addEventListener("mouseenter", stop);
-    spot.addEventListener("mouseleave", play);
+    spot.addEventListener("mouseleave", restart);
     spot.addEventListener("focusin", stop);
-    spot.addEventListener("focusout", play);
+    spot.addEventListener("focusout", restart);
+
+    /* Arrow keys when the carousel has focus. */
+    spot.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { show(idx + 1); restart(); }
+      if (e.key === "ArrowLeft") { show(idx - 1); restart(); }
+    });
 
     show(0);
-    play();
+    setPaused(paused);
   }
 
-  /* Waitlist form — demo only (no backend yet) */
+  /* ============================================================
+     Founding list — real capture
+     Writes to the Supabase `waitlist` table (see supabase-waitlist-setup.sql)
+     and always keeps a localStorage backup. Carries the product the visitor
+     clicked "Notify me" on, plus language and UTM attribution.
+     ============================================================ */
+
+  function tr(key, en) {
+    var L = document.documentElement.getAttribute("lang") || "en";
+    if (L === "th" && window.I18N && window.I18N.th && window.I18N.th[key] != null) return window.I18N.th[key];
+    return en;
+  }
+
+  var PRODUCT_LABELS = { balance: "Balance", goodnight: "Goodnight", radiance: "Skin Radiance" };
+
+  /* Which product sent them here — set by the "Notify me" buttons. */
+  var pickedProduct = null;
+  var waitProductInput = document.getElementById("waitProduct");
+  var waitChip = document.getElementById("waitChip");
+
+  function setProduct(key) {
+    pickedProduct = key || null;
+    if (waitProductInput) waitProductInput.value = pickedProduct || "";
+    if (!waitChip) return;
+    if (pickedProduct) {
+      waitChip.querySelector(".waitchip__label").textContent = tr("wait.interested", "You're joining for");
+      waitChip.querySelector(".waitchip__name").textContent = PRODUCT_LABELS[pickedProduct] || pickedProduct;
+      waitChip.hidden = false;
+    } else {
+      waitChip.hidden = true;
+    }
+  }
+
+  /* "Notify me" on a product card → remember the product, show it on the
+     form, and record the intent even if they never finish the form. */
+  document.querySelectorAll("[data-product]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var p = btn.getAttribute("data-product");
+      setProduct(p);
+      if (window.rpTrack) window.rpTrack("notify_me_click", { product: p });
+      var em = document.getElementById("email");
+      /* Focus the field once the smooth scroll has landed. */
+      if (em) setTimeout(function () { em.focus({ preventScroll: true }); }, 700);
+    });
+  });
+
+  /* Deep link support: ?product=balance#waitlist — usable straight from an ad. */
+  try {
+    var qp = (new URLSearchParams(location.search).get("product") || "").toLowerCase();
+    if (PRODUCT_LABELS[qp]) setProduct(qp);
+  } catch (e) {}
+
   var form = document.getElementById("waitForm");
   var ok = document.getElementById("formOk");
+
+  function saveLocalBackup(row) {
+    try {
+      var list = JSON.parse(localStorage.getItem("rootplus-waitlist") || "[]");
+      list.push(row);
+      localStorage.setItem("rootplus-waitlist", JSON.stringify(list));
+    } catch (e) {}
+  }
+
   if (form) {
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var sending = false;
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (sending) return;
+
       var email = document.getElementById("email");
       var val = (email.value || "").trim();
-      var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-      if (!valid) {
-        ok.style.color = "#ffb4a1";
-        ok.textContent = "Please enter a valid email address.";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        ok.className = "form__ok form__ok--err";
+        ok.textContent = tr("wait.invalid", "Please enter a valid email address.");
         email.focus();
         return;
       }
-      ok.style.color = "";
-      ok.textContent = "You're on the list — welcome to the roots. 🌱";
-      form.reset();
+
+      var cfg = window.ROOTPLUS || {};
+      var row = {
+        email: val,
+        product: pickedProduct,
+        lang: document.documentElement.getAttribute("lang") || "en",
+        source: "landing",
+        referrer: document.referrer || null,
+        utm: (window.rpAttribution && Object.keys(window.rpAttribution).length) ? window.rpAttribution : null
+      };
+
+      saveLocalBackup({ at: new Date().toISOString(), email: row.email, product: row.product, lang: row.lang });
+
+      var submitLabel = submitBtn ? submitBtn.textContent : "";
+      function done(message, kind) {
+        sending = false;
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitLabel; }
+        ok.className = "form__ok" + (kind === "err" ? " form__ok--err" : "");
+        ok.textContent = message;
+      }
+      function succeed(key, en, event) {
+        done(tr(key, en));
+        form.reset();
+        setProduct(null);
+        if (window.rpTrack) window.rpTrack(event, { product: row.product });
+      }
+
+      /* No backend configured → keep the local copy only. */
+      if (!cfg.supabaseUrl || !cfg.supabaseKey) {
+        succeed("wait.ok", "You're on the list — welcome to the roots. 🌱", "waitlist_submit");
+        return;
+      }
+
+      sending = true;
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = tr("wait.sending", "Joining…"); }
+      ok.className = "form__ok";
+      ok.textContent = "";
+
+      fetch(cfg.supabaseUrl + "/rest/v1/waitlist", {
+        method: "POST",
+        headers: {
+          "apikey": cfg.supabaseKey,
+          "Authorization": "Bearer " + cfg.supabaseKey,
+          "Content-Type": "application/json",
+          /* return=minimal is required: the anon key has INSERT but no SELECT. */
+          "Prefer": "return=minimal"
+        },
+        body: JSON.stringify(row)
+      }).then(function (res) {
+        /* 409 = the unique email index fired. They already joined; not an error. */
+        if (res.status === 409) {
+          succeed("wait.already", "You're already on the founding list — see you at launch. 🌱", "waitlist_duplicate");
+          return;
+        }
+        if (!res.ok) return res.text().then(function (t) { throw new Error(res.status + " " + t); });
+        succeed("wait.ok", "You're on the list — welcome to the roots. 🌱", "waitlist_submit");
+      }).catch(function (err) {
+        console.error("[waitlist] insert failed:", err);
+        done(tr("wait.err", "Something went wrong on our side. Please try again, or email ") +
+             (cfg.contactEmail || "itd@srichand.co.th"), "err");
+        if (window.rpTrack) window.rpTrack("waitlist_error", { product: row.product });
+      });
     });
   }
 

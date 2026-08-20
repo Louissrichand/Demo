@@ -77,7 +77,31 @@
     b.addEventListener("click", function () { openModal(b.getAttribute("data-tab") || "signin"); });
   });
   modal.querySelectorAll("[data-close]").forEach(function (c) { c.addEventListener("click", closeModal); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !modal.hidden) closeModal(); });
+  /* Escape closes; Tab stays inside. Without the trap, focus walks out
+     behind the backdrop and keyboard users get lost on the page below. */
+  var FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  function visibleFocusable() {
+    return [].filter.call(modal.querySelectorAll(FOCUSABLE), function (el) {
+      return el.offsetParent !== null && !el.closest("[hidden]");
+    });
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (modal.hidden) return;
+    if (e.key === "Escape") { closeModal(); return; }
+    if (e.key !== "Tab") return;
+
+    var f = visibleFocusable();
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+
+    if (e.shiftKey && (document.activeElement === first || !modal.contains(document.activeElement))) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
   var tS = $("tabSignin"), tU = $("tabSignup");
   if (tS) tS.addEventListener("click", function () { switchTab("signin"); });
   if (tU) tU.addEventListener("click", function () { switchTab("signup"); });
@@ -141,12 +165,33 @@
     });
   }
 
-  /* ---------- Social OAuth (Google, Facebook) ---------- */
+  /* ---------- Social OAuth (Google, Facebook) ----------
+     A provider's button only renders once it's switched on in config.js —
+     which should happen only after it's actually enabled in Supabase
+     (AUTH-SETUP.md steps 4-5). Otherwise the button errors on click. */
+  (function gateOauth() {
+    var flags = cfg.oauth || {};
+    var live = 0;
+    document.querySelectorAll(".js-oauth").forEach(function (btn) {
+      var on = !!flags[btn.getAttribute("data-provider")];
+      btn.hidden = !on;
+      if (on) live++;
+    });
+    if (!live) {
+      /* Nothing to show — drop the "or" divider and the OAuth footnote too. */
+      var div = modal.querySelector(".authdiv");
+      var note = modal.querySelector(".oauth-note");
+      if (div) div.hidden = true;
+      if (note) note.hidden = true;
+    }
+  })();
+
   document.querySelectorAll(".js-oauth").forEach(function (btn) {
     btn.addEventListener("click", function () {
       if (!requireSb()) return;
       var provider = btn.getAttribute("data-provider") || "google";
       setMsg(t("auth.redirecting", "Redirecting…"));
+      if (window.rpTrack) window.rpTrack("oauth_start", { provider: provider });
       sb.auth.signInWithOAuth({ provider: provider, options: { redirectTo: redirectTo() } })
         .then(function (res) { if (res.error) setMsg(mapErr(res.error), "err"); });
     });
@@ -228,6 +273,7 @@
         }
       }).then(function (res) {
         if (res.error) { setMsg(mapErr(res.error), "err"); return; }
+        if (window.rpTrack) window.rpTrack("signup_complete", { provider: "email", interests: interests.join(",") });
         if (res.data && res.data.session) {
           /* email confirmation is OFF → logged in now; onAuthStateChange closes it */
           syncProfile(res.data.session);
@@ -282,7 +328,14 @@
       renderAuth(session);
       if (event === "SIGNED_IN") {
         syncProfile(session);
-        if (!modal.hidden) { setMsg(""); closeModal(); }
+        if (!modal.hidden) {
+          /* Only a sign-in that happened in the modal is a conversion —
+             a restored session on page load isn't. */
+          var provider = (session.user.app_metadata || {}).provider || "email";
+          if (window.rpTrack) window.rpTrack("signin_complete", { provider: provider });
+          setMsg("");
+          closeModal();
+        }
       }
       if (event === "PASSWORD_RECOVERY") { openModal("signin"); }
     });

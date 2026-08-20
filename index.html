@@ -26,6 +26,67 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="canonical" href="https://louissrichand.github.io/Demo/" />
+
+  <!-- Structured data: lets Google show the brand panel and the FAQ
+       as a rich result. Keep in sync with the visible FAQ copy. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://louissrichand.github.io/Demo/#org",
+        "name": "root+",
+        "alternateName": "Root Plus",
+        "description": "Root-Cause Wellness Platform — premium synbiotic sachets built on Right Ingredient x Right Dose x Right Delivery.",
+        "url": "https://louissrichand.github.io/Demo/",
+        "logo": "https://louissrichand.github.io/Demo/assets/img/logo.png",
+        "email": "itd@srichand.co.th",
+        "parentOrganization": { "@type": "Organization", "name": "Srichand" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Bangkok", "addressCountry": "TH" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://louissrichand.github.io/Demo/#website",
+        "url": "https://louissrichand.github.io/Demo/",
+        "name": "root+",
+        "inLanguage": ["en", "th"],
+        "publisher": { "@id": "https://louissrichand.github.io/Demo/#org" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What exactly is a synbiotic?",
+            "acceptedAnswer": { "@type": "Answer", "text": "A synbiotic combines prebiotics (fiber that feeds good bacteria), probiotics (the live beneficial strains) and postbiotics (their beneficial by-products) in one formula — so every root+ stick supports your microbiome from multiple angles." }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I take it?",
+            "acceptedAnswer": { "@type": "Answer", "text": "One 3g sachet a day, poured directly onto the tongue. No water, no mixing, no shaker — take it anywhere, anytime as part of your daily ritual." }
+          },
+          {
+            "@type": "Question",
+            "name": "What's the CFU count?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Goodnight and Skin Radiance are formulated to deliver a total of 30 billion CFU per serving, at clinically meaningful, fully-disclosed doses. Balance leads with Pylopass at 200mg plus B. lactis Bl-04 and TCI711." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it third-party tested, vegan and non-GMO?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every formula is backed by COA / lab verification with guaranteed CFU, and made to clean, non-GMO, vegan-friendly standards. No proprietary blends — you see exactly what's inside and how much." }
+          },
+          {
+            "@type": "Question",
+            "name": "When can I buy root+?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Balance and Goodnight debut in Q2 2027, with Skin Radiance following in Q4 2028. Join the founding list for early access and launch pricing." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -41,7 +102,7 @@
   <header class="header header--over" id="header">
     <div class="wrap header__inner">
       <a href="#top" class="brand" aria-label="root+ home">
-        <img src="assets/img/logo.png" alt="root+" />
+        <img src="assets/img/logo.png" width="600" height="260" alt="root+" />
       </a>
       <nav class="nav" aria-label="Primary">
         <a href="#collection" data-i18n="nav.collection">Collection</a>
@@ -59,8 +120,8 @@
           <span class="lang__div">/</span>
           <button class="lang__opt" type="button" data-lang="th">ไทย</button>
         </div>
-        <a href="https://srichand.com/" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--sm" data-i18n="btn.shop">Shop the range</a>
-        <button class="btn btn--primary btn--sm" id="signupOpen" type="button" data-tab="signin" data-i18n="btn.signin">Sign in</button>
+        <a href="https://srichand.com/" id="shopLink" hidden target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--sm" data-i18n="btn.shop">Shop the range</a>
+        <button class="btn btn--primary btn--sm" id="signupOpen" type="button" data-tab="signup" data-i18n="btn.join.account">Join root+</button>
         <div class="account" id="accountChip" hidden>
           <button class="account__btn" id="acctToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Account menu">
             <span class="account__avatar" id="acctAvatar"></span>
@@ -92,7 +153,7 @@
   <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <div class="mobile-menu__top">
-      <img src="assets/img/logo.png" alt="root+" />
+      <img src="assets/img/logo.png" width="600" height="260" alt="root+" />
       <button class="mobile-menu__close" id="menuClose" aria-label="Close menu">&times;</button>
     </div>
     <nav>
@@ -102,7 +163,7 @@
       <a href="#why" data-i18n="nav.why">Why root+</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
     </nav>
-    <button class="btn btn--primary btn--block" id="signupOpenM" type="button" data-tab="signin" data-i18n="btn.signin">Sign in</button>
+    <button class="btn btn--primary btn--block" id="signupOpenM" type="button" data-tab="signup" data-i18n="btn.join.account">Join root+</button>
     <a href="#waitlist" class="btn btn--ghost btn--block" data-i18n="btn.joinFounding">Join the founding list</a>
     <div class="lang lang--menu" role="group" aria-label="Language">
       <button class="lang__opt is-active" type="button" data-lang="en">EN</button>
@@ -184,7 +245,7 @@
           <!-- Balance -->
           <article class="pcard reveal" data-accent="balance">
             <div class="pcard__media">
-              <img src="assets/img/product-balance.png" alt="root+ Balance Probiotic — Yogurt flavor sachet" loading="lazy" />
+              <img src="assets/img/product-balance.png" width="570" height="534" alt="root+ Balance Probiotic — Yogurt flavor sachet" loading="lazy" />
             </div>
             <div class="pcard__accent"></div>
             <div class="pcard__body">
@@ -199,7 +260,7 @@
               </div>
               <div class="pcard__meta">
                 <div class="pcard__price"><b>฿890</b><small data-i18n="price.note">15 sachets · ~฿59/day</small></div>
-                <a href="#waitlist" class="btn btn--dark btn--sm" data-i18n="btn.notify">Notify me</a>
+                <a href="#waitlist" data-product="balance" class="btn btn--dark btn--sm" data-i18n="btn.notify">Notify me</a>
               </div>
             </div>
           </article>
@@ -207,7 +268,7 @@
           <!-- Goodnight -->
           <article class="pcard reveal" data-accent="refresh">
             <div class="pcard__media">
-              <img src="assets/img/product-refresh.png" alt="root+ Goodnight Probiotic — Grape flavor sachet" loading="lazy" />
+              <img src="assets/img/product-refresh.png" width="568" height="535" alt="root+ Goodnight Probiotic — Grape flavor sachet" loading="lazy" />
             </div>
             <div class="pcard__accent"></div>
             <div class="pcard__body">
@@ -222,7 +283,7 @@
               </div>
               <div class="pcard__meta">
                 <div class="pcard__price"><b>฿890</b><small data-i18n="price.note">15 sachets · ~฿59/day</small></div>
-                <a href="#waitlist" class="btn btn--dark btn--sm" data-i18n="btn.notify">Notify me</a>
+                <a href="#waitlist" data-product="goodnight" class="btn btn--dark btn--sm" data-i18n="btn.notify">Notify me</a>
               </div>
             </div>
           </article>
@@ -230,7 +291,7 @@
           <!-- Radiance -->
           <article class="pcard reveal" data-accent="radiance">
             <div class="pcard__media">
-              <img src="assets/img/product-radiance.png" alt="root+ Skin Radiance Probiotic — Mixed Berry flavor sachet" loading="lazy" />
+              <img src="assets/img/product-radiance.png" width="570" height="534" alt="root+ Skin Radiance Probiotic — Mixed Berry flavor sachet" loading="lazy" />
             </div>
             <div class="pcard__accent"></div>
             <div class="pcard__body">
@@ -245,7 +306,7 @@
               </div>
               <div class="pcard__meta">
                 <div class="pcard__price"><b>฿890</b><small data-i18n="price.note">15 sachets · ~฿59/day</small></div>
-                <a href="#waitlist" class="btn btn--dark btn--sm" data-i18n="btn.notify">Notify me</a>
+                <a href="#waitlist" data-product="radiance" class="btn btn--dark btn--sm" data-i18n="btn.notify">Notify me</a>
               </div>
             </div>
           </article>
@@ -264,7 +325,7 @@
             <div class="spot__slide">
               <div class="spotlight__grid">
                 <div class="spotlight__media">
-                  <img src="assets/img/product-balance.png" alt="root+ Balance Probiotic" />
+                  <img src="assets/img/product-balance.png" width="570" height="534" alt="root+ Balance Probiotic" />
                 </div>
                 <div class="spot__content">
                   <p class="eyebrow" data-i18n="spotB.eyebrow">Ingredient Spotlight · Balance</p>
@@ -283,7 +344,7 @@
             <div class="spot__slide">
               <div class="spotlight__grid">
                 <div class="spotlight__media">
-                  <img src="assets/img/product-refresh.png" alt="root+ Goodnight Probiotic" />
+                  <img src="assets/img/product-refresh.png" width="568" height="535" alt="root+ Goodnight Probiotic" />
                 </div>
                 <div class="spot__content">
                   <p class="eyebrow" data-i18n="spotR.eyebrow">Ingredient Spotlight · Goodnight</p>
@@ -302,7 +363,7 @@
             <div class="spot__slide">
               <div class="spotlight__grid">
                 <div class="spotlight__media">
-                  <img src="assets/img/product-radiance.png" alt="root+ Skin Radiance Probiotic" />
+                  <img src="assets/img/product-radiance.png" width="570" height="534" alt="root+ Skin Radiance Probiotic" />
                 </div>
                 <div class="spot__content">
                   <p class="eyebrow" data-i18n="spotS.eyebrow">Ingredient Spotlight · Skin Radiance</p>
@@ -324,6 +385,16 @@
           <button class="spot__arrow spot__arrow--next" type="button" data-dir="1" aria-label="Next product">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4 L18 12 L8 20 Z"/></svg>
           </button>
+
+          <!-- Slide indicators + a real stop control (WCAG 2.2.2).
+               Dots are generated in main.js from the slide count. -->
+          <div class="spot__controls">
+            <div class="spot__dots" id="spotDots" role="tablist" aria-label="Choose product"></div>
+            <button class="spot__play" id="spotPlay" type="button" aria-pressed="false" aria-label="Pause slideshow">
+              <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></svg>
+              <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 L19 12 L8 19 Z"/></svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -340,28 +411,28 @@
         </div>
         <div class="icards">
           <article class="icard reveal">
-            <div class="icard__media"><img src="assets/img/why-1.webp" alt="Woman meditating in a yoga pose on the beach at sunset" loading="lazy" /></div>
+            <div class="icard__media"><img src="assets/img/why-1.webp" width="2000" height="1335" alt="Woman meditating in a yoga pose on the beach at sunset" loading="lazy" /></div>
             <div class="icard__body">
               <h3 data-i18n="why.t1">ROOTED</h3>
               <p data-i18n="why.d1">Grounded in the body's foundational systems — we solve for the why, not just the what.</p>
             </div>
           </article>
           <article class="icard reveal">
-            <div class="icard__media"><img src="assets/img/why-2.webp" alt="Scientist in a lab reviewing a third-party certificate of analysis" loading="lazy" style="object-position:42% 50%" /></div>
+            <div class="icard__media"><img src="assets/img/why-2.webp" width="1680" height="900" alt="Scientist in a lab reviewing a third-party certificate of analysis" loading="lazy" style="object-position:42% 50%" /></div>
             <div class="icard__body">
               <h3 data-i18n="why.t2">PROVEN</h3>
               <p data-i18n="why.d2">Clinical doses, COA / lab verification and guaranteed CFU. Full transparency, nothing to hide.</p>
             </div>
           </article>
           <article class="icard reveal">
-            <div class="icard__media"><img src="assets/img/why-3.jpg" alt="" loading="lazy" /></div>
+            <div class="icard__media"><img src="assets/img/why-3.jpg" width="800" height="1000" alt="Ocean waves breaking over a dark rocky shoreline" loading="lazy" /></div>
             <div class="icard__body">
               <h3 data-i18n="why.t3">FELT</h3>
               <p data-i18n="why.d3">Designed to feel good, look good and stay active — benefits you notice in daily life.</p>
             </div>
           </article>
           <article class="icard reveal">
-            <div class="icard__media"><img src="assets/img/why-4.jpg" alt="" loading="lazy" /></div>
+            <div class="icard__media"><img src="assets/img/why-4.jpg" width="800" height="1000" alt="Almond biscuits in a ceramic bowl beside fresh daffodils" loading="lazy" /></div>
             <div class="icard__body">
               <h3 data-i18n="why.t4">CURATED</h3>
               <p data-i18n="why.d4">Only root+ worthy formulas. Premium materials and a considered experience, hype cut out.</p>
@@ -379,8 +450,14 @@
           <p class="eyebrow" style="color:var(--stone)" data-i18n="wait.eyebrow">Founding list</p>
           <h2 class="h2" style="max-width:18ch;margin-inline:auto;" data-i18n="wait.head">Nourished root, feel alive.</h2>
           <p class="lead" style="color:rgba(247,242,232,.78);max-width:46ch;margin:1rem auto 0;" data-i18n="wait.sub">Be first when root+ launches. Founding members get early access and launch pricing.</p>
+          <p class="waitchip" id="waitChip" hidden>
+            <span class="waitchip__label">You're joining for</span>
+            <b class="waitchip__name"></b>
+          </p>
           <form class="form" id="waitForm" novalidate>
-            <input type="email" id="email" name="email" placeholder="you@email.com" aria-label="Email address" required />
+            <input type="hidden" id="waitProduct" name="product" value="" />
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email"
+                   placeholder="you@email.com" aria-label="Email address" required />
             <button type="submit" class="btn btn--primary" data-i18n="btn.join">Join the list</button>
           </form>
           <p class="form__ok" id="formOk" role="status"></p>
@@ -428,13 +505,16 @@
     <div class="wrap">
       <div class="footer__grid">
         <div class="footer__brand">
-          <img src="assets/img/logo.png" alt="root+" />
+          <img src="assets/img/logo.png" width="600" height="260" alt="root+" />
           <p data-i18n="foot.blurb">Root-Cause Wellness Platform. Nourish from the root — to unlock your body's true potential.</p>
-          <div class="footer__social">
-            <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-            <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-            <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4c.5 2.5 2 4 5 4"/></svg></a>
-            <a href="#" aria-label="LINE"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0-4-3.6-7-8-7s-8 3-8 7c0 3.6 2.9 6.5 7 7v3l4-3c3-.7 5-3 5-7z"/></svg></a>
+          <!-- Each icon renders only when config.js has a URL for it,
+               so the footer can never show a dead "#" link. -->
+          <div class="footer__social" hidden>
+            <a data-social="instagram" hidden aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a data-social="facebook" hidden aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a data-social="tiktok" hidden aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12a4 4 0 1 0 4 4V4c.5 2.5 2 4 5 4"/></svg></a>
+            <a data-social="line" hidden aria-label="LINE"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0-4-3.6-7-8-7s-8 3-8 7c0 3.6 2.9 6.5 7 7v3l4-3c3-.7 5-3 5-7z"/></svg></a>
+            <a data-social="youtube" hidden aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.5 L15.5 12 L10 14.5 Z" fill="currentColor" stroke="none"/></svg></a>
           </div>
         </div>
         <div>
@@ -458,8 +538,8 @@
         <div>
           <h4 data-i18n="foot.col3">Contact</h4>
           <ul>
-            <li><a href="mailto:itd@srichand.co.th">itd@srichand.co.th</a></li>
-            <li><a href="#" data-i18n="foot.location">Bangkok, Thailand</a></li>
+            <li><a data-contact-email href="mailto:itd@srichand.co.th">itd@srichand.co.th</a></li>
+            <li><span id="footLocation" data-i18n="foot.location">Bangkok, Thailand</span></li>
           </ul>
         </div>
       </div>
@@ -515,9 +595,9 @@
             <input id="si-password" type="password" autocomplete="current-password" required />
             <span class="field__err" data-i18n="auth.err.pwreq">Please enter your password.</span>
           </div>
-          <a href="#" id="forgotLink" class="authlink authlink--right" data-i18n="auth.forgot">Forgot password?</a>
+          <button type="button" id="forgotLink" class="authlink authlink--right" data-i18n="auth.forgot">Forgot password?</button>
           <button type="submit" class="btn btn--primary btn--block" data-i18n="auth.tab.signin">Sign in</button>
-          <p class="authswitch"><span data-i18n="auth.noacct">New to root+?</span> <a href="#" data-goto-tab="signup" data-i18n="auth.tab.signup">Create account</a></p>
+          <p class="authswitch"><span data-i18n="auth.noacct">New to root+?</span> <button type="button" data-goto-tab="signup" data-i18n="auth.tab.signup">Create account</button></p>
         </form>
       </div>
 
@@ -582,7 +662,7 @@
           </div>
           <label class="check"><input type="checkbox" name="marketing" /> <span data-i18n="signup.marketing">Send me news, tips and member offers.</span></label>
           <button type="submit" class="btn btn--primary btn--block" data-i18n="signup.submit">Create account</button>
-          <p class="authswitch"><span data-i18n="auth.haveacct">Already a member?</span> <a href="#" data-goto-tab="signin" data-i18n="auth.tab.signin">Sign in</a></p>
+          <p class="authswitch"><span data-i18n="auth.haveacct">Already a member?</span> <button type="button" data-goto-tab="signin" data-i18n="auth.tab.signin">Sign in</button></p>
         </form>
       </div>
 
@@ -592,6 +672,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/config.js"></script>
+  <script src="assets/js/analytics.js"></script>
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/auth.js"></script>

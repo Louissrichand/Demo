@@ -1,0 +1,5 @@
+# root+ — https://louissrichand.github.io/Demo/
+User-agent: *
+Allow: /
+
+Sitemap: https://louissrichand.github.io/Demo/sitemap.xml
