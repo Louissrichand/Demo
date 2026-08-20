@@ -320,6 +320,34 @@
         localStorage.setItem("rootplus-members", JSON.stringify(arr));
       } catch (err) {}
 
+      // Send to Supabase when configured (localStorage above is the guaranteed backup)
+      var cfg = window.ROOTPLUS || {};
+      if (cfg.supabaseUrl && cfg.supabaseKey) {
+        var payload = {
+          first_name: record.firstName,
+          last_name: record.lastName,
+          email: record.email,
+          phone: record.phone,
+          dob: record.dob || null,
+          gender: record.gender || null,
+          interests: record.interests,
+          marketing: record.marketing,
+          pdpa_consent: true,
+          source: "landing",
+          lang: document.documentElement.getAttribute("lang") || "en"
+        };
+        fetch(cfg.supabaseUrl.replace(/\/+$/, "") + "/rest/v1/members", {
+          method: "POST",
+          headers: {
+            "apikey": cfg.supabaseKey,
+            "Authorization": "Bearer " + cfg.supabaseKey,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(payload)
+        }).catch(function () { /* kept in localStorage as backup */ });
+      }
+
       var lang = document.documentElement.getAttribute("lang") || "en";
       var msg = (window.I18N && window.I18N[lang] && window.I18N[lang]["signup.ok"]) || "Welcome to root+! Your membership is created. 🌱";
       suOk.textContent = msg;
