@@ -256,7 +256,7 @@
     var name = meta.full_name || meta.name || (user.email || "").split("@")[0];
     var avatar = meta.avatar_url || meta.picture || "";
     var av = $("acctAvatar"), nm = $("acctName"), em = $("acctEmail");
-    if (nm) nm.textContent = name;
+    if (nm) nm.textContent = (name || "").trim().split(/\s+/)[0] || name;
     if (em) em.textContent = user.email || "";
     if (av) {
       if (avatar) { av.innerHTML = '<img src="' + avatar + '" alt="" referrerpolicy="no-referrer" />'; }
