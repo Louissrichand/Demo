@@ -216,7 +216,27 @@ window.I18N = {
     "auth.reset.sent": "ส่งลิงก์รีเซ็ตรหัสผ่านแล้ว — เช็คอีเมลของคุณ",
     "auth.unavailable": "ระบบเข้าสู่ระบบใช้ไม่ได้ในตัวอย่างนี้ กรุณาเปิดจากเว็บจริง",
     "acct.hello": "เข้าสู่ระบบในชื่อ",
+    "acct.editprofile": "แก้ไขโปรไฟล์",
     "acct.signout": "ออกจากระบบ",
+
+    /* Edit profile page */
+    "pf.back": "← กลับหน้าหลัก",
+    "pf.title": "โปรไฟล์ของฉัน",
+    "pf.guard.title": "กรุณาเข้าสู่ระบบ",
+    "pf.guard.sub": "ต้องเข้าสู่ระบบก่อนจึงจะแก้ไขโปรไฟล์ได้",
+    "pf.guard.cta": "ไปหน้าเข้าสู่ระบบ",
+    "pf.photo.change": "เปลี่ยนรูป",
+    "pf.photo.remove": "ลบรูป",
+    "pf.photo.hint": "JPG, PNG หรือ WebP · ไม่เกิน 2 MB",
+    "pf.email.note": "อีเมลเปลี่ยนไม่ได้",
+    "pf.save": "บันทึกการเปลี่ยนแปลง",
+    "pf.saving": "กำลังบันทึก…",
+    "pf.saved": "บันทึกแล้ว ✓",
+    "pf.photo.uploading": "กำลังอัปโหลด…",
+    "pf.photo.uploaded": "อัปโหลดรูปแล้ว — กด บันทึก เพื่อยืนยัน",
+    "pf.photo.removed": "ลบรูปแล้ว — กด บันทึก เพื่อยืนยัน",
+    "pf.photo.type": "กรุณาเลือกไฟล์รูป JPG, PNG หรือ WebP",
+    "pf.photo.big": "ไฟล์ใหญ่เกินไป (สูงสุด 2 MB)",
 
     /* UI strings (set via JS) */
     "search.placeholder": "ค้นหา root+…",

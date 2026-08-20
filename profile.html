@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile | root+</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0e232d" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&family=Noto+Serif+Thai:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="header header--solid">
+    <div class="wrap header__inner">
+      <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="root+" /></a>
+      <div class="header__cta">
+        <div class="lang" role="group" aria-label="Language">
+          <button class="lang__opt is-active" type="button" data-lang="en">EN</button>
+          <span class="lang__div">/</span>
+          <button class="lang__opt" type="button" data-lang="th">ไทย</button>
+        </div>
+        <a href="index.html" class="btn btn--ghost btn--sm" data-i18n="pf.back">← Back to site</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="pfpage">
+    <!-- shown while checking / when signed out -->
+    <div class="pf-guard" id="authGuard" hidden>
+      <h1 class="pf-guard__title" data-i18n="pf.guard.title">Please sign in</h1>
+      <p class="pf-guard__sub" data-i18n="pf.guard.sub">You need to be signed in to edit your profile.</p>
+      <a href="index.html" class="btn btn--primary" data-i18n="pf.guard.cta">Go to sign in</a>
+    </div>
+
+    <!-- profile editor -->
+    <div class="pf-card" id="profileCard" hidden>
+      <p class="eyebrow" data-i18n="signup.eyebrow">Membership</p>
+      <h1 class="pf-title" data-i18n="pf.title">My profile</h1>
+
+      <div class="avatar-edit">
+        <span class="pf-avatar" id="pfAvatar" aria-hidden="true"></span>
+        <div class="avatar-edit__actions">
+          <input type="file" id="pfPhoto" accept="image/png,image/jpeg,image/webp" hidden />
+          <button type="button" class="btn btn--ghost btn--sm" id="pfPhotoBtn" data-i18n="pf.photo.change">Change photo</button>
+          <button type="button" class="btn btn--text btn--sm" id="pfPhotoRemove" data-i18n="pf.photo.remove">Remove</button>
+          <p class="avatar-edit__hint" data-i18n="pf.photo.hint">JPG, PNG or WebP · up to 2 MB</p>
+        </div>
+      </div>
+
+      <form id="profileForm" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="pf-first" data-i18n="signup.firstname">First name</label>
+            <input id="pf-first" type="text" autocomplete="given-name" required />
+            <span class="field__err" data-i18n="signup.err.name">Please enter your first name.</span>
+          </div>
+          <div class="field">
+            <label for="pf-last" data-i18n="signup.lastname">Surname</label>
+            <input id="pf-last" type="text" autocomplete="family-name" required />
+            <span class="field__err" data-i18n="signup.err.surname">Please enter your surname.</span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="pf-email" data-i18n="signup.email">Email</label>
+            <input id="pf-email" type="email" readonly disabled />
+            <span class="field__note" data-i18n="pf.email.note">Email can't be changed</span>
+          </div>
+          <div class="field">
+            <label for="pf-phone" data-i18n="signup.phone">Phone</label>
+            <input id="pf-phone" type="tel" autocomplete="tel" required />
+            <span class="field__err" data-i18n="signup.err.phone">Please enter a valid phone number.</span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="pf-dob" data-i18n="signup.dob">Date of birth <span class="opt">(optional)</span></label>
+            <input id="pf-dob" type="date" />
+          </div>
+          <div class="field">
+            <label for="pf-gender" data-i18n="signup.gender">Gender <span class="opt">(optional)</span></label>
+            <select id="pf-gender">
+              <option value="" data-i18n="signup.gender.choose">Choose…</option>
+              <option value="female" data-i18n="signup.gender.f">Female</option>
+              <option value="male" data-i18n="signup.gender.m">Male</option>
+              <option value="na" data-i18n="signup.gender.o">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend data-i18n="signup.interests">What are you interested in? <span class="opt">(optional)</span></legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="pf-interest" value="gut" /> <span data-i18n="signup.int.gut">Gut health</span></label>
+            <label class="check"><input type="checkbox" name="pf-interest" value="sleep" /> <span data-i18n="signup.int.sleep">Sleep &amp; mood</span></label>
+            <label class="check"><input type="checkbox" name="pf-interest" value="skin" /> <span data-i18n="signup.int.skin">Skin &amp; beauty</span></label>
+          </div>
+        </fieldset>
+        <label class="check"><input type="checkbox" id="pf-marketing" /> <span data-i18n="signup.marketing">Send me news, tips and member offers.</span></label>
+
+        <div class="pf-actions">
+          <button type="submit" class="btn btn--primary" id="pfSave" data-i18n="pf.save">Save changes</button>
+          <p class="modal__ok" id="pfMsg" role="status"></p>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/profile.js"></script>
+</body>
+</html>
