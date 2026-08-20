@@ -39,6 +39,20 @@ Supabase → **Authentication → Providers → Email** → ปิด/uncheck **
 ### 4.2 ใส่ลง Supabase
 Supabase → **Authentication → Providers → Google** → เปิด (toggle) → วาง **Client ID** + **Client Secret** → **Save**
 
+## ขั้น 5 — ตั้งค่า Facebook Login
+### 5.1 สร้าง App ใน Meta for Developers
+1. เข้า https://developers.facebook.com/apps → **Create App**
+2. ประเภท: **Consumer** (หรือ "Authenticate and request data from users with Facebook Login")
+3. เพิ่ม product **Facebook Login** → **Settings**
+   - **Valid OAuth Redirect URIs:** `https://vumqbxlorsemfvrxxkmj.supabase.co/auth/v1/callback`
+4. **Settings → Basic:** คัดลอก **App ID** + **App Secret**
+   - ใส่ **Privacy Policy URL:** `https://louissrichand.github.io/Demo/privacy.html` (จำเป็นตอนขึ้น Live)
+5. สลับ App เป็น **Live** (สวิตช์บนสุด) เพื่อให้คนทั่วไปใช้ได้
+   > โหมด Development จะให้เฉพาะ admin/tester ของ App เท่านั้นที่ login ได้
+
+### 5.2 ใส่ลง Supabase
+Supabase → **Authentication → Providers → Facebook** → เปิด → วาง **App ID** (=Client ID) + **App Secret** (=Client Secret) → **Save**
+
 ---
 
 ## เสร็จแล้วทดสอบ

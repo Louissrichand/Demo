@@ -141,12 +141,13 @@
     });
   }
 
-  /* ---------- Google OAuth ---------- */
-  document.querySelectorAll(".js-google").forEach(function (btn) {
+  /* ---------- Social OAuth (Google, Facebook) ---------- */
+  document.querySelectorAll(".js-oauth").forEach(function (btn) {
     btn.addEventListener("click", function () {
       if (!requireSb()) return;
-      setMsg(t("auth.redirecting", "Redirecting to Google…"));
-      sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: redirectTo() } })
+      var provider = btn.getAttribute("data-provider") || "google";
+      setMsg(t("auth.redirecting", "Redirecting…"));
+      sb.auth.signInWithOAuth({ provider: provider, options: { redirectTo: redirectTo() } })
         .then(function (res) { if (res.error) setMsg(mapErr(res.error), "err"); });
     });
   });

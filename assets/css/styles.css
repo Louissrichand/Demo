@@ -479,9 +479,10 @@ details.faq__item summary::-webkit-details-marker { display: none; }
 .authtabs { display: flex; gap: .35rem; background: var(--brand-tint); padding: .3rem; border-radius: 12px; margin: .7rem 0 1.2rem; }
 .authtab { flex: 1; padding: .62em 1em; border-radius: 9px; font: inherit; font-weight: 700; font-size: .9rem; color: var(--muted); background: transparent; cursor: pointer; transition: background .2s, color .2s; }
 .authtab.is-active { background: #fff; color: var(--brand); box-shadow: var(--shadow-sm); }
-.btn--google { background: #fff; color: #3c4043; border: 1.5px solid var(--line); box-shadow: var(--shadow-sm); gap: .6rem; font-weight: 700; }
-.btn--google:hover { background: #f6f7f8; border-color: rgba(11,11,13,.2); }
-.gicon { flex: none; }
+.btn--google, .btn--facebook { background: #fff; color: #3c4043; border: 1.5px solid var(--line); box-shadow: var(--shadow-sm); gap: .6rem; font-weight: 700; }
+.btn--google:hover, .btn--facebook:hover { background: #f6f7f8; border-color: rgba(11,11,13,.2); }
+.btn--google + .btn--facebook { margin-top: .55rem; }
+.gicon, .ficon { flex: none; }
 .oauth-note { text-align: center; font-size: .77rem; color: var(--muted); margin-top: .55rem; }
 .oauth-note a { color: var(--brand); font-weight: 600; }
 .authdiv { display: flex; align-items: center; gap: .8rem; margin: 1.15rem 0; color: var(--taupe); font-size: .74rem; text-transform: uppercase; letter-spacing: .1em; }
