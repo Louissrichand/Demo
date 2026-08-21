@@ -7,6 +7,9 @@ window.I18N = {
   th: {
     /* Nav + buttons */
     "nav.collection": "คอลเลกชัน",
+    "nav.shop": "ช้อป",
+    "mega.shop": "ช้อป root+",
+    "mega.all": "ดูคอลเลกชันทั้งหมด →",
     "nav.principle": "หลักการ",
     "nav.science": "งานวิจัย",
     "nav.why": "ทำไมต้อง root+",

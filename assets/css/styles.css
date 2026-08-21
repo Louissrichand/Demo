@@ -648,6 +648,29 @@ a.pcard__media { display: block; }
 @media (max-width: 860px) { .pdp__grid { grid-template-columns: 1fr; } .pdp__stage { position: static; } }
 @media (max-width: 560px) { .pdp__more-grid { grid-template-columns: 1fr; } }
 
+/* ---------- Shop mega-menu ---------- */
+.nav-drop { position: relative; display: inline-flex; align-items: center; }
+.megamenu { position: absolute; top: 100%; left: 0; margin-top: .7rem; width: min(600px, 92vw); background: #fff; color: var(--ink); border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); padding: 1.1rem; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s, transform .2s, visibility .2s; z-index: 90; }
+.megamenu::before { content: ""; position: absolute; left: 0; right: 0; top: -.7rem; height: .7rem; }
+.nav-drop:hover .megamenu, .nav-drop:focus-within .megamenu { opacity: 1; visibility: visible; transform: none; }
+.megamenu__grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 1rem; }
+.megamenu__label { font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--taupe); margin: .2rem 0 .5rem .55rem; }
+.megamenu a { opacity: 1; }
+.megamenu__item { display: flex; align-items: center; gap: .8rem; padding: .5rem .55rem; border-radius: 12px; transition: background .2s; }
+.megamenu__item:hover { background: var(--brand-tint); }
+.megamenu__thumb { width: 54px; height: 54px; flex: none; border-radius: 10px; display: grid; place-items: center; padding: 6px; }
+.megamenu__thumb[data-accent="balance"] { background: #eef4f1; }
+.megamenu__thumb[data-accent="refresh"] { background: #efeaf4; }
+.megamenu__thumb[data-accent="radiance"] { background: #f7ecec; }
+.megamenu__thumb img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.megamenu__text b { display: block; font-size: .98rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.megamenu__text small { color: var(--muted); font-size: .82rem; }
+.megamenu__all { display: flex; flex-direction: column; justify-content: space-between; gap: .5rem; background: var(--cream-soft); border: 1px solid var(--line); border-radius: 12px; padding: .9rem; }
+.megamenu__allimg { flex: 1; display: grid; place-items: center; min-height: 90px; }
+.megamenu__allimg img { max-width: 100%; max-height: 120px; width: auto; object-fit: contain; }
+.megamenu__alltext { font-weight: 800; color: var(--brand); font-size: .92rem; }
+@media (max-width: 620px) { .megamenu__grid { grid-template-columns: 1fr; } .megamenu__all { flex-direction: row; align-items: center; } .megamenu__allimg { min-height: 0; max-width: 90px; } }
+
 /* ============================================================
    Founding-list product chip
    Shows which product the visitor tapped "Notify me" on, so the

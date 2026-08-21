@@ -17,7 +17,32 @@
     <div class="wrap header__inner">
       <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="root+" /></a>
       <nav class="nav" aria-label="Primary">
-        <a href="index.html#collection" data-i18n="nav.collection">Collection</a>
+        <div class="nav-drop">
+          <a href="index.html#collection" class="nav-drop__trigger" data-i18n="nav.shop">Shop</a>
+          <div class="megamenu">
+            <div class="megamenu__grid">
+              <div class="megamenu__col">
+                <p class="megamenu__label" data-i18n="mega.shop">Shop root+</p>
+                <a class="megamenu__item" href="product.html?product=balance">
+                  <span class="megamenu__thumb" data-accent="balance"><img src="assets/img/product-balance.png" alt="" loading="lazy" /></span>
+                  <span class="megamenu__text"><b>Balance</b><small data-i18n="cardB.kicker">Stomach &amp; Gut Synbiotic</small></span>
+                </a>
+                <a class="megamenu__item" href="product.html?product=goodnight">
+                  <span class="megamenu__thumb" data-accent="refresh"><img src="assets/img/product-refresh.png" alt="" loading="lazy" /></span>
+                  <span class="megamenu__text"><b>Goodnight</b><small data-i18n="cardR.kicker">Gut-Brain Daily Synbiotic</small></span>
+                </a>
+                <a class="megamenu__item" href="product.html?product=radiance">
+                  <span class="megamenu__thumb" data-accent="radiance"><img src="assets/img/product-radiance.png" alt="" loading="lazy" /></span>
+                  <span class="megamenu__text"><b>Skin Radiance</b><small data-i18n="cardS.kicker">Gut-Skin Beauty Synbiotic</small></span>
+                </a>
+              </div>
+              <a class="megamenu__all" href="index.html#collection">
+                <span class="megamenu__allimg"><img src="assets/img/products-hero.png" alt="" loading="lazy" /></span>
+                <span class="megamenu__alltext" data-i18n="mega.all">Explore the collection →</span>
+              </a>
+            </div>
+          </div>
+        </div>
         <a href="index.html#science" data-i18n="nav.science">The Science</a>
         <a href="index.html#faq" data-i18n="nav.faq">FAQ</a>
       </nav>
