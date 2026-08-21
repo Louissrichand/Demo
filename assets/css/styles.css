@@ -589,6 +589,65 @@ details.faq__item summary::-webkit-details-marker { display: none; }
 .refer-side__note { font-size: .84rem; color: var(--muted); }
 @media (max-width: 680px) { .refer-grid { grid-template-columns: 1fr; } }
 
+/* ---------- Product detail page ---------- */
+.pdp { padding: clamp(1.5rem,4vw,2.5rem) 0 4rem; }
+.pdp__crumbs { display: flex; gap: .5rem; align-items: center; font-size: .85rem; color: var(--muted); margin-bottom: 1.5rem; flex-wrap: wrap; }
+.pdp__crumbs a:hover { color: var(--brand); }
+.pdp__crumbs b { color: var(--ink); }
+.pdp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem,4vw,3.5rem); align-items: start; }
+.pdp__stage { background: var(--cream-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); aspect-ratio: 1/1; display: grid; place-items: center; padding: 8%; position: sticky; top: 90px; }
+.pdp__stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 24px 40px rgba(11,11,13,.16)); }
+.pdp__stage[data-accent="balance"] { background: #eef4f1; }
+.pdp__stage[data-accent="refresh"] { background: #efeaf4; }
+.pdp__stage[data-accent="radiance"] { background: #f7ecec; }
+.pdp__iconrow { display: flex; gap: .5rem; margin-top: 1rem; flex-wrap: wrap; }
+.pdp__icon { flex: 1; min-width: 90px; text-align: center; font-size: .8rem; font-weight: 700; color: var(--charcoal); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: .8rem .5rem; }
+.pdp__badge { display: inline-block; background: var(--brand-tint); color: var(--brand); font-size: .76rem; font-weight: 800; letter-spacing: .03em; padding: .35em .8em; border-radius: 999px; margin-bottom: .8rem; }
+.pdp__title { font-family: var(--serif); font-weight: 600; font-size: clamp(2rem,5vw,3rem); line-height: 1.05; margin-bottom: .5rem; }
+.pdp__proof { font-size: .85rem; color: var(--muted); margin-bottom: 1rem; }
+.pdp__stars { color: #e2a83b; letter-spacing: .05em; }
+.pdp__kicker { font-size: .82rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; }
+.pdp__desc { font-size: 1.05rem; color: var(--charcoal); margin-bottom: 1.2rem; }
+.pdp__chips { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.5rem; }
+.pdp__buy { border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem; margin-bottom: 1.8rem; }
+.pdp__price { display: flex; align-items: baseline; gap: .6rem; margin-bottom: .3rem; }
+.pdp__price b { font-size: 1.6rem; font-weight: 800; }
+.pdp__price small { color: var(--muted); font-size: .9rem; }
+.pdp__launch { font-size: .85rem; color: var(--brand); font-weight: 700; margin-bottom: 1rem; }
+.pdp__buynote { font-size: .8rem; color: var(--muted); margin-top: .7rem; text-align: center; }
+.pdp__d { border-top: 1px solid var(--line); }
+.pdp__d:last-child { border-bottom: 1px solid var(--line); }
+.pdp__d summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.1rem 0; font-weight: 700; font-size: 1rem; cursor: pointer; list-style: none; }
+.pdp__d summary::-webkit-details-marker { display: none; }
+.pdp__ic { position: relative; width: 16px; height: 16px; flex: none; }
+.pdp__ic::before, .pdp__ic::after { content: ""; position: absolute; background: var(--brand); left: 50%; top: 50%; transform: translate(-50%,-50%); }
+.pdp__ic::before { width: 14px; height: 2px; }
+.pdp__ic::after { width: 2px; height: 14px; transition: transform .3s; }
+.pdp__d[open] .pdp__ic::after { transform: translate(-50%,-50%) scaleY(0); }
+.pdp__dbody { padding-bottom: 1.2rem; color: var(--muted); font-size: .95rem; line-height: 1.65; }
+ul.pdp__dbody { padding-left: 1.1rem; list-style: disc; }
+ul.pdp__dbody li { margin-bottom: .4rem; }
+.pdp__active { padding: .6rem 0; border-bottom: 1px dashed var(--line); }
+.pdp__active:last-child { border-bottom: none; }
+.pdp__active-name { color: var(--ink); font-weight: 700; font-size: .95rem; }
+.pdp__active-name span { font-weight: 500; color: var(--muted); }
+.pdp__active-note { font-size: .88rem; margin-top: .15rem; }
+.pdp__more { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--line); }
+.pdp__more-title { font-family: var(--serif); font-weight: 600; font-size: 1.6rem; margin-bottom: 1.5rem; }
+.pdp__more-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+.pdp__morecard { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius); transition: box-shadow .2s, transform .2s; }
+.pdp__morecard:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.pdp__morecard-media { width: 84px; height: 84px; flex: none; border-radius: 12px; display: grid; place-items: center; padding: 8px; }
+.pdp__morecard[data-accent="balance"] .pdp__morecard-media { background: #eef4f1; }
+.pdp__morecard[data-accent="refresh"] .pdp__morecard-media { background: #efeaf4; }
+.pdp__morecard[data-accent="radiance"] .pdp__morecard-media { background: #f7ecec; }
+.pdp__morecard-media img { max-width: 100%; max-height: 100%; width: auto; object-fit: contain; }
+.pdp__morecard-body b { display: block; font-size: 1.05rem; }
+.pdp__morecard-body small { color: var(--muted); font-size: .85rem; }
+a.pcard__media { display: block; }
+@media (max-width: 860px) { .pdp__grid { grid-template-columns: 1fr; } .pdp__stage { position: static; } }
+@media (max-width: 560px) { .pdp__more-grid { grid-template-columns: 1fr; } }
+
 /* ============================================================
    Founding-list product chip
    Shows which product the visitor tapped "Notify me" on, so the
