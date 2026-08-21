@@ -547,6 +547,48 @@ details.faq__item summary::-webkit-details-marker { display: none; }
 .crop-zoom input[type="range"] { flex: 1; accent-color: var(--brand); }
 .crop-actions { display: flex; gap: .6rem; justify-content: center; }
 
+/* ---------- My Account dashboard ---------- */
+.acct { padding: clamp(1.5rem,4vw,2.5rem) 0 4rem; }
+.acct-head { margin-bottom: 1.2rem; }
+.acct-head .pf-title { margin: .2rem 0 0; }
+.acct-tabs { display: flex; gap: .2rem; border-bottom: 1px solid var(--line); margin-bottom: 2rem; overflow-x: auto; }
+.acct-tab { position: relative; padding: .9em 1.1em; font: inherit; font-weight: 700; font-size: .95rem; color: var(--muted); background: transparent; white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .2s, border-color .2s; }
+.acct-tab:hover { color: var(--ink); }
+.acct-tab.is-active { color: var(--brand); border-bottom-color: var(--brand); }
+.acct-panel { animation: fadeIn .25s ease; }
+.acct-section { margin-top: 2.2rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+.acct-section__title { font-family: var(--sans); font-size: 1.05rem; font-weight: 800; margin-bottom: 1rem; }
+.acct-pw-btn { justify-content: flex-end; }
+.acct-pw-btn .btn { margin-top: auto; }
+.acct-rights__lead { font-size: .82rem; font-weight: 700; color: var(--charcoal); margin: 1.2rem 0 .5rem; }
+.acct-rights { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+
+.member-card { background: var(--brand); color: #f4f7f5; border-radius: var(--radius-lg); padding: clamp(1.6rem,4vw,2.6rem); max-width: 620px; }
+.member-badge { display: inline-block; background: rgba(255,255,255,.14); color: #fff; font-size: .78rem; font-weight: 700; letter-spacing: .04em; padding: .35em .8em; border-radius: 999px; margin-bottom: 1rem; }
+.member-card__title { font-family: var(--serif); font-weight: 600; font-size: clamp(1.5rem,3.4vw,2.1rem); color: #fff; margin-bottom: .5rem; }
+.member-card__sub { color: rgba(244,247,245,.82); margin-bottom: 1.4rem; }
+.member-meta { display: grid; gap: .2rem; margin-bottom: 1.6rem; }
+.member-meta li { display: flex; justify-content: space-between; gap: 1rem; font-size: .92rem; color: rgba(244,247,245,.72); border-bottom: 1px solid rgba(255,255,255,.12); padding: .55rem 0; }
+.member-meta b { color: #fff; font-weight: 700; text-align: right; }
+.member-card .btn--primary { background: #fff; color: var(--brand); }
+.member-card .btn--primary:hover { background: var(--cream); }
+
+.refer-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 2rem; align-items: start; }
+.refer__title { font-family: var(--serif); font-weight: 600; font-size: clamp(1.5rem,3.4vw,2.1rem); margin-bottom: .6rem; }
+.refer__sub { color: var(--muted); margin-bottom: 1.4rem; max-width: 46ch; }
+.refer-row { display: flex; gap: .5rem; max-width: 520px; margin-bottom: 1rem; }
+.refer-row input { flex: 1; min-width: 0; padding: .7em .9em; border: 1.5px solid var(--line); border-radius: 10px; font: inherit; font-size: .9rem; color: var(--ink); background: #fff; }
+.refer-share { display: flex; gap: .55rem; }
+.refer-share__btn { width: 44px; height: 44px; display: grid; place-items: center; border: 1.5px solid var(--line); border-radius: 10px; color: var(--ink); transition: background .2s, border-color .2s, color .2s; }
+.refer-share__btn:hover { background: var(--brand-tint); border-color: var(--brand); color: var(--brand); }
+.refer-note { margin-top: 1rem; min-height: 1.2em; font-weight: 700; font-size: .9rem; }
+.refer-note--ok { color: var(--brand); }
+.refer-side { background: var(--cream-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+.refer-side__label { font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--taupe); margin-bottom: .8rem; }
+.refer-side__badge { font-size: 3rem; line-height: 1; margin-bottom: .8rem; }
+.refer-side__note { font-size: .84rem; color: var(--muted); }
+@media (max-width: 680px) { .refer-grid { grid-template-columns: 1fr; } }
+
 /* ============================================================
    Founding-list product chip
    Shows which product the visitor tapped "Notify me" on, so the

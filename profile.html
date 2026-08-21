@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Profile | root+</title>
+  <title>My Account | root+</title>
   <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#0e232d" />
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
@@ -27,84 +27,167 @@
     </div>
   </header>
 
-  <main class="pfpage">
-    <!-- shown while checking / when signed out -->
-    <div class="pf-guard" id="authGuard" hidden>
+  <!-- signed-out guard -->
+  <main class="pfpage" id="authGuard" hidden>
+    <div class="pf-guard">
       <h1 class="pf-guard__title" data-i18n="pf.guard.title">Please sign in</h1>
-      <p class="pf-guard__sub" data-i18n="pf.guard.sub">You need to be signed in to edit your profile.</p>
+      <p class="pf-guard__sub" data-i18n="pf.guard.sub">You need to be signed in to view your account.</p>
       <a href="index.html" class="btn btn--primary" data-i18n="pf.guard.cta">Go to sign in</a>
     </div>
+  </main>
 
-    <!-- profile editor -->
-    <div class="pf-card" id="profileCard" hidden>
-      <p class="eyebrow" data-i18n="signup.eyebrow">Membership</p>
-      <h1 class="pf-title" data-i18n="pf.title">My profile</h1>
-
-      <div class="avatar-edit">
-        <span class="pf-avatar" id="pfAvatar" aria-hidden="true"></span>
-        <div class="avatar-edit__actions">
-          <input type="file" id="pfPhoto" accept="image/png,image/jpeg,image/webp" hidden />
-          <button type="button" class="btn btn--ghost btn--sm" id="pfPhotoBtn" data-i18n="pf.photo.change">Change photo</button>
-          <button type="button" class="btn btn--text btn--sm" id="pfPhotoRemove" data-i18n="pf.photo.remove">Remove</button>
-          <p class="avatar-edit__hint" data-i18n="pf.photo.hint">JPG, PNG or WebP · you can crop it</p>
-        </div>
+  <!-- account dashboard -->
+  <main class="acct" id="profileCard" hidden>
+    <div class="wrap">
+      <div class="acct-head">
+        <p class="eyebrow" data-i18n="acct.eyebrow">My account</p>
+        <h1 class="pf-title"><span data-i18n="acct.hi">Hi,</span> <span id="acctGreet"></span></h1>
       </div>
 
-      <form id="profileForm" novalidate>
-        <div class="field-row">
-          <div class="field">
-            <label for="pf-first" data-i18n="signup.firstname">First name</label>
-            <input id="pf-first" type="text" autocomplete="given-name" required />
-            <span class="field__err" data-i18n="signup.err.name">Please enter your first name.</span>
-          </div>
-          <div class="field">
-            <label for="pf-last" data-i18n="signup.lastname">Surname</label>
-            <input id="pf-last" type="text" autocomplete="family-name" required />
-            <span class="field__err" data-i18n="signup.err.surname">Please enter your surname.</span>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="pf-email" data-i18n="signup.email">Email</label>
-            <input id="pf-email" type="email" readonly disabled />
-            <span class="field__note" data-i18n="pf.email.note">Email can't be changed</span>
-          </div>
-          <div class="field">
-            <label for="pf-phone" data-i18n="signup.phone">Phone</label>
-            <input id="pf-phone" type="tel" autocomplete="tel" required />
-            <span class="field__err" data-i18n="signup.err.phone">Please enter a valid phone number.</span>
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="pf-dob" data-i18n="signup.dob">Date of birth <span class="opt">(optional)</span></label>
-            <input id="pf-dob" type="date" />
-          </div>
-          <div class="field">
-            <label for="pf-gender" data-i18n="signup.gender">Gender <span class="opt">(optional)</span></label>
-            <select id="pf-gender">
-              <option value="" data-i18n="signup.gender.choose">Choose…</option>
-              <option value="female" data-i18n="signup.gender.f">Female</option>
-              <option value="male" data-i18n="signup.gender.m">Male</option>
-              <option value="na" data-i18n="signup.gender.o">Prefer not to say</option>
-            </select>
-          </div>
-        </div>
-        <fieldset class="field">
-          <legend data-i18n="signup.interests">What are you interested in? <span class="opt">(optional)</span></legend>
-          <div class="checks">
-            <label class="check"><input type="checkbox" name="pf-interest" value="gut" /> <span data-i18n="signup.int.gut">Gut health</span></label>
-            <label class="check"><input type="checkbox" name="pf-interest" value="sleep" /> <span data-i18n="signup.int.sleep">Sleep &amp; mood</span></label>
-            <label class="check"><input type="checkbox" name="pf-interest" value="skin" /> <span data-i18n="signup.int.skin">Skin &amp; beauty</span></label>
-          </div>
-        </fieldset>
-        <label class="check"><input type="checkbox" id="pf-marketing" /> <span data-i18n="signup.marketing">Send me news, tips and member offers.</span></label>
+      <div class="acct-tabs" role="tablist">
+        <button class="acct-tab is-active" type="button" role="tab" data-tab="profile" data-i18n="acct.tab.profile">Profile</button>
+        <button class="acct-tab" type="button" role="tab" data-tab="membership" data-i18n="acct.tab.membership">Membership</button>
+        <button class="acct-tab" type="button" role="tab" data-tab="refer" data-i18n="acct.tab.refer">Refer a friend</button>
+      </div>
 
-        <div class="pf-actions">
-          <button type="submit" class="btn btn--primary" id="pfSave" data-i18n="pf.save">Save changes</button>
-          <p class="modal__ok" id="pfMsg" role="status"></p>
+      <!-- ============ PROFILE ============ -->
+      <section class="acct-panel" id="panel-profile">
+        <div class="avatar-edit">
+          <span class="pf-avatar" id="pfAvatar" aria-hidden="true"></span>
+          <div class="avatar-edit__actions">
+            <input type="file" id="pfPhoto" accept="image/png,image/jpeg,image/webp" hidden />
+            <button type="button" class="btn btn--ghost btn--sm" id="pfPhotoBtn" data-i18n="pf.photo.change">Change photo</button>
+            <button type="button" class="btn btn--text btn--sm" id="pfPhotoRemove" data-i18n="pf.photo.remove">Remove</button>
+            <p class="avatar-edit__hint" data-i18n="pf.photo.hint">JPG, PNG or WebP · you can crop it</p>
+          </div>
         </div>
-      </form>
+
+        <form id="profileForm" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="pf-first" data-i18n="signup.firstname">First name</label>
+              <input id="pf-first" type="text" autocomplete="given-name" required />
+              <span class="field__err" data-i18n="signup.err.name">Please enter your first name.</span>
+            </div>
+            <div class="field">
+              <label for="pf-last" data-i18n="signup.lastname">Surname</label>
+              <input id="pf-last" type="text" autocomplete="family-name" required />
+              <span class="field__err" data-i18n="signup.err.surname">Please enter your surname.</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="pf-email" data-i18n="signup.email">Email</label>
+              <input id="pf-email" type="email" readonly disabled />
+              <span class="field__note" data-i18n="pf.email.note">Email can't be changed</span>
+            </div>
+            <div class="field">
+              <label for="pf-phone" data-i18n="signup.phone">Phone</label>
+              <input id="pf-phone" type="tel" autocomplete="tel" required />
+              <span class="field__err" data-i18n="signup.err.phone">Please enter a valid phone number.</span>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="pf-dob" data-i18n="signup.dob">Date of birth <span class="opt">(optional)</span></label>
+              <input id="pf-dob" type="date" />
+            </div>
+            <div class="field">
+              <label for="pf-gender" data-i18n="signup.gender">Gender <span class="opt">(optional)</span></label>
+              <select id="pf-gender">
+                <option value="" data-i18n="signup.gender.choose">Choose…</option>
+                <option value="female" data-i18n="signup.gender.f">Female</option>
+                <option value="male" data-i18n="signup.gender.m">Male</option>
+                <option value="na" data-i18n="signup.gender.o">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+          <fieldset class="field">
+            <legend data-i18n="signup.interests">What are you interested in? <span class="opt">(optional)</span></legend>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="pf-interest" value="gut" /> <span data-i18n="signup.int.gut">Gut health</span></label>
+              <label class="check"><input type="checkbox" name="pf-interest" value="sleep" /> <span data-i18n="signup.int.sleep">Sleep &amp; mood</span></label>
+              <label class="check"><input type="checkbox" name="pf-interest" value="skin" /> <span data-i18n="signup.int.skin">Skin &amp; beauty</span></label>
+            </div>
+          </fieldset>
+          <label class="check"><input type="checkbox" id="pf-marketing" /> <span data-i18n="signup.marketing">Send me news, tips and member offers.</span></label>
+
+          <div class="pf-actions">
+            <button type="submit" class="btn btn--primary" id="pfSave" data-i18n="pf.save">Save changes</button>
+            <p class="modal__ok" id="pfMsg" role="status"></p>
+          </div>
+        </form>
+
+        <!-- Account & privacy -->
+        <div class="acct-section" id="secSecurity">
+          <h2 class="acct-section__title" data-i18n="acct.security">Password &amp; privacy</h2>
+          <div class="field-row" id="pwRow">
+            <div class="field">
+              <label for="pf-newpw" data-i18n="acct.newpw">New password</label>
+              <input id="pf-newpw" type="password" autocomplete="new-password" placeholder="••••••" />
+            </div>
+            <div class="field acct-pw-btn">
+              <button type="button" class="btn btn--ghost btn--sm" id="pfPwBtn" data-i18n="acct.updatepw">Update password</button>
+            </div>
+          </div>
+          <p class="modal__ok" id="pwMsg" role="status"></p>
+
+          <p class="acct-rights__lead" data-i18n="acct.rights.lead">Your data rights (PDPA):</p>
+          <div class="acct-rights">
+            <button type="button" class="btn btn--ghost btn--sm" id="pfDownload" data-i18n="acct.download">⭳ Download my data</button>
+            <a class="btn btn--text btn--sm" id="pfDelete" href="#" data-i18n="acct.delete">Delete my account</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MEMBERSHIP ============ -->
+      <section class="acct-panel" id="panel-membership" hidden>
+        <div class="member-card">
+          <span class="member-badge" data-i18n="acct.mb.badge">🌱 Founding member</span>
+          <h2 class="member-card__title" data-i18n="acct.mb.title">You're on the founding list</h2>
+          <p class="member-card__sub" data-i18n="acct.mb.sub">Early access and member pricing are reserved for you when root+ launches.</p>
+          <ul class="member-meta">
+            <li><span data-i18n="acct.mb.since">Member since</span> <b id="mbSince">—</b></li>
+            <li><span data-i18n="acct.mb.email">Email</span> <b id="mbEmail">—</b></li>
+            <li><span data-i18n="acct.mb.interests">Interests</span> <b id="mbInterests">—</b></li>
+          </ul>
+          <a href="index.html#collection" class="btn btn--primary" data-i18n="acct.mb.cta">Explore the collection</a>
+        </div>
+      </section>
+
+      <!-- ============ REFER ============ -->
+      <section class="acct-panel" id="panel-refer" hidden>
+        <div class="refer-grid">
+          <div class="refer-main">
+            <h2 class="refer__title" data-i18n="acct.rf.title">Share root+. Grow the roots.</h2>
+            <p class="refer__sub" data-i18n="acct.rf.sub">Invite friends to the founding list. When root+ launches, founding members get first access and member pricing — the more roots, the stronger the community. 🌱</p>
+            <div class="refer-row">
+              <input id="referLink" type="text" readonly aria-label="Your referral link" />
+              <button type="button" class="btn btn--primary btn--sm" id="referCopy" data-i18n="acct.rf.copy">Copy link</button>
+            </div>
+            <div class="refer-share" id="referShare" aria-label="Share">
+              <a id="shareEmail" class="refer-share__btn" target="_blank" rel="noopener" aria-label="Email">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              </a>
+              <a id="shareFb" class="refer-share__btn" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a id="shareLine" class="refer-share__btn" target="_blank" rel="noopener" aria-label="LINE">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0-4-3.6-7-8-7s-8 3-8 7c0 3.6 2.9 6.5 7 7v3l4-3c3-.7 5-3 5-7z"/></svg>
+              </a>
+              <a id="shareX" class="refer-share__btn" target="_blank" rel="noopener" aria-label="X">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2Zm-1.2 18h1.7L7.4 3.8H5.6L17.7 20Z"/></svg>
+              </a>
+            </div>
+            <p class="refer-note" id="referMsg" role="status"></p>
+          </div>
+          <aside class="refer-side">
+            <p class="refer-side__label" data-i18n="acct.rf.badgelabel">Your founding badge</p>
+            <div class="refer-side__badge">🌱</div>
+            <p class="refer-side__note" data-i18n="acct.rf.rewards">Referral rewards and tracking arrive together with the product launch. Every friend you invite now strengthens the founding community.</p>
+          </aside>
+        </div>
+      </section>
     </div>
   </main>
 

@@ -90,10 +90,91 @@
         $("pf-marketing").checked = !!p.marketing;
         avatarUrl = p.avatar_url || meta.avatar_url || meta.picture || "";
         renderAvatar((p.full_name || meta.full_name || ""));
+        populateAccount(p);
         showCard();
       });
     });
   }
+
+  /* ---------- account tabs ---------- */
+  var tabs = document.querySelectorAll(".acct-tab");
+  var panels = { profile: $("panel-profile"), membership: $("panel-membership"), refer: $("panel-refer") };
+  tabs.forEach(function (tb) {
+    tb.addEventListener("click", function () {
+      var name = tb.getAttribute("data-tab");
+      tabs.forEach(function (x) { x.classList.toggle("is-active", x === tb); });
+      Object.keys(panels).forEach(function (k) { if (panels[k]) panels[k].hidden = (k !== name); });
+    });
+  });
+
+  /* ---------- greeting / membership / referral ---------- */
+  function fmtDate(iso) {
+    if (!iso) return "—";
+    try { return new Date(iso).toLocaleDateString(lang() === "th" ? "th-TH" : "en-GB", { year: "numeric", month: "short", day: "numeric" }); }
+    catch (e) { return String(iso).slice(0, 10); }
+  }
+  var INT_LABEL = { gut: "signup.int.gut", sleep: "signup.int.sleep", skin: "signup.int.skin" };
+  var INT_EN = { gut: "Gut health", sleep: "Sleep & mood", skin: "Skin & beauty" };
+  function populateAccount(p) {
+    var meta = user.user_metadata || {};
+    var first = p.first_name || meta.first_name || (user.email || "").split("@")[0];
+    if ($("acctGreet")) $("acctGreet").textContent = first;
+    if ($("mbSince")) $("mbSince").textContent = fmtDate(p.created_at || user.created_at);
+    if ($("mbEmail")) $("mbEmail").textContent = user.email || "—";
+    var ints = (p.interests || []).map(function (v) { return INT_LABEL[v] ? t(INT_LABEL[v], INT_EN[v] || v) : v; });
+    if ($("mbInterests")) $("mbInterests").textContent = ints.length ? ints.join(", ") : "—";
+    var base = location.href.split("profile.html")[0];
+    var link = base + "?ref=" + user.id;
+    if ($("referLink")) $("referLink").value = link;
+    var e = encodeURIComponent, txt = t("acct.rf.sharetext", "Join me on the root+ founding list 🌱");
+    if ($("shareEmail")) $("shareEmail").href = "mailto:?subject=" + e("root+") + "&body=" + e(txt + " " + link);
+    if ($("shareFb")) $("shareFb").href = "https://www.facebook.com/sharer/sharer.php?u=" + e(link);
+    if ($("shareLine")) $("shareLine").href = "https://social-plugins.line.me/lineit/share?url=" + e(link);
+    if ($("shareX")) $("shareX").href = "https://twitter.com/intent/tweet?url=" + e(link) + "&text=" + e(txt);
+    var del = $("pfDelete");
+    if (del) del.href = "mailto:itd@srichand.co.th?subject=" + e("PDPA: Delete my account") + "&body=" + e("Please delete my root+ account and personal data.\nAccount email: " + (user.email || "") + "\nUser ID: " + user.id);
+    var provider = (user.app_metadata && user.app_metadata.provider) || "email";
+    if (provider !== "email" && $("pwRow")) $("pwRow").hidden = true;
+  }
+
+  /* ---------- referral copy ---------- */
+  var referCopy = $("referCopy");
+  if (referCopy) referCopy.addEventListener("click", function () {
+    var el = $("referLink"); if (!el) return;
+    el.select();
+    var done = function () { var m = $("referMsg"); if (m) { m.textContent = t("acct.rf.copied", "Link copied! ✓"); m.className = "refer-note refer-note--ok"; } };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(el.value).then(done, done);
+    else { try { document.execCommand("copy"); } catch (x) {} done(); }
+  });
+
+  /* ---------- change password ---------- */
+  function pwMsg(txt, kind) { var m = $("pwMsg"); if (m) { m.textContent = txt || ""; m.className = "modal__ok" + (kind ? " modal__ok--" + kind : ""); } }
+  var pwBtn = $("pfPwBtn");
+  if (pwBtn) pwBtn.addEventListener("click", function () {
+    if (!sb) return;
+    var v = $("pf-newpw").value || "";
+    if (v.length < 6) { pwMsg(t("auth.err.pwshort", "Password must be at least 6 characters."), "err"); return; }
+    pwMsg(t("acct.pw.saving", "Updating…"));
+    sb.auth.updateUser({ password: v }).then(function (res) {
+      if (res.error) { pwMsg(res.error.message, "err"); return; }
+      $("pf-newpw").value = "";
+      pwMsg(t("acct.pw.ok", "Password updated ✓"), "ok");
+    });
+  });
+
+  /* ---------- download my data (PDPA) ---------- */
+  var dl = $("pfDownload");
+  if (dl) dl.addEventListener("click", function () {
+    if (!sb || !user) return;
+    sb.from("profiles").select("*").eq("id", user.id).maybeSingle().then(function (r) {
+      var data = { account: { id: user.id, email: user.email, created_at: user.created_at, provider: (user.app_metadata && user.app_metadata.provider) }, profile: r.data || {} };
+      var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a"); a.href = url; a.download = "rootplus-my-data.json";
+      document.body.appendChild(a); a.click();
+      setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 100);
+    });
+  });
 
   /* ---------- avatar upload ---------- */
   var photoBtn = $("pfPhotoBtn"), photoInput = $("pfPhoto"), photoRemove = $("pfPhotoRemove");
