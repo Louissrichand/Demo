@@ -421,7 +421,7 @@ details.faq__item summary::-webkit-details-marker { display: none; }
 /* ---------- Footer ---------- */
 .footer { background: var(--brand); color: rgba(244,247,245,.78); padding-block: clamp(3rem,6vw,5rem) 2rem; }
 .footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 2.5rem; }
-.footer__brand img { height: 30px; filter: brightness(0) invert(1); margin-bottom: 1rem; }
+.footer__brand img { height: 30px; width: auto; filter: brightness(0) invert(1); margin-bottom: 1rem; }
 .footer__brand p { font-size: .92rem; max-width: 32ch; }
 .footer h4 { font-family: var(--sans); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cream); margin-bottom: 1rem; font-weight: 700; }
 .footer li { margin-bottom: .6rem; }
