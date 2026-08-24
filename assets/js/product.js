@@ -84,17 +84,40 @@
   };
 
   var ORDER = ["balance", "goodnight", "radiance"];
+
+  /* Each product has its own static page so crawlers and the LINE/Facebook
+     share bots — none of which run JavaScript — get a real title,
+     description and preview image. The page says which product it is via
+     a data-product attribute on <html>. */
+  var PAGES = { balance: "balance.html", goodnight: "goodnight.html", radiance: "radiance.html" };
+
   function currentId() {
-    var m = location.search.match(/[?&]product=([a-z]+)/i);
-    var id = m ? m[1].toLowerCase() : "balance";
+    /* The static page wins; ?product= is the fallback for legacy
+       product.html?product=… links that may still be shared. */
+    var id = (document.documentElement.getAttribute("data-product") || "").toLowerCase();
+    if (!PRODUCTS[id]) {
+      var m = location.search.match(/[?&]product=([a-z]+)/i);
+      id = m ? m[1].toLowerCase() : "balance";
+    }
     return PRODUCTS[id] ? id : "balance";
+  }
+
+  /* Carry the referral tag across page hops. shell.js rewrites the static
+     links; these are built afterwards, so they need it applied here. */
+  function withRef(url) {
+    var ref = window.rpReferralId;
+    return ref ? url + (url.indexOf("?") > -1 ? "&" : "?") + "ref=" + encodeURIComponent(ref) : url;
   }
 
   function chipText(c) { return c.k ? tk(c.k, c.en) : c.t; }
 
   function render() {
     var id = currentId(), p = PRODUCTS[id];
-    document.title = p.name + " | root+";
+    /* A static product page already has a fuller, SEO-written title in its
+       HTML — don't overwrite it. Only the legacy ?product= route needs one. */
+    if (!document.documentElement.getAttribute("data-product")) {
+      document.title = p.name + " | root+";
+    }
     $("pdCrumb").textContent = p.name;
     $("pdName").textContent = p.name;
     var img = $("pdImage"); img.src = p.image; img.alt = "root+ " + p.name;
@@ -114,11 +137,24 @@
     $("accHow").innerHTML = "<p>" + tx(HOWTO) + "</p>";
     $("accQuality").innerHTML = QUALITY.map(function (q) { return "<li>" + tx(q) + "</li>"; }).join("");
 
+    /* CTAs must carry the product, otherwise the founding-list signup
+       records product: null and we lose the very thing this page proves
+       they were interested in. */
+    document.querySelectorAll("[data-cta-waitlist]").forEach(function (a) {
+      a.setAttribute("href", withRef("index.html?product=" + id) + "#waitlist");
+      if (!a.__ctaBound) {
+        a.__ctaBound = true;
+        a.addEventListener("click", function () {
+          if (window.rpTrack) window.rpTrack("pdp_cta_click", { product: id });
+        });
+      }
+    });
+
     // other products
     $("pdMore").innerHTML = ORDER.filter(function (x) { return x !== id; }).map(function (x) {
       var q = PRODUCTS[x];
-      return '<a class="pdp__morecard" href="product.html?product=' + x + '" data-accent="' + q.accent + '">' +
-        '<span class="pdp__morecard-media"><img src="' + q.image + '" alt="root+ ' + q.name + '" loading="lazy" /></span>' +
+      return '<a class="pdp__morecard" href="' + withRef(PAGES[x]) + '" data-accent="' + q.accent + '">' +
+        '<span class="pdp__morecard-media"><img src="' + q.image + '" width="570" height="534" alt="root+ ' + q.name + '" loading="lazy" /></span>' +
         '<span class="pdp__morecard-body"><b>' + q.name + "</b><small>" + tk(q.kicker, "") + "</small></span></a>";
     }).join("");
   }
@@ -144,4 +180,8 @@
   });
 
   applyLang(L);
+
+  /* One view event per page load (applyLang re-renders on every toggle,
+     so this deliberately sits outside render()). */
+  if (window.rpTrack) window.rpTrack("view_product", { product: currentId() });
 })();

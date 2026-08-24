@@ -12,6 +12,8 @@ Landing page for the Root+ brand.
 ```
 .
 ├── index.html                    # main landing page
+├── balance.html / goodnight.html / radiance.html   # product pages (own SEO + OG card)
+├── product.html                  # redirect for legacy ?product= links
 ├── privacy.html                  # PDPA privacy policy (TH/EN)
 ├── profile.html                  # edit-profile page (auth required)
 ├── admin.html                    # local viewer for localStorage signups
@@ -22,9 +24,11 @@ Landing page for the Root+ brand.
 │   ├── img/
 │   └── js/
 │       ├── config.js             # <- the one file to edit for IDs / links / flags
+│       ├── shell.js              # shared chrome: mobile menu, mega-menu a11y, config links
 │       ├── analytics.js          # GA4 / GTM / Meta / Clarity / TikTok loader
 │       ├── i18n.js               # Thai dictionary
 │       ├── main.js               # page interactions + founding-list capture
+│       ├── product.js            # product page content (data-product on <html>)
 │       ├── auth.js               # Supabase Auth modal + account chip
 │       └── profile.js
 └── supabase-*.sql                # run these in Supabase -> SQL Editor
@@ -38,13 +42,16 @@ it ships to the browser. Never put a Supabase `service_role` key in it.
 ### 1. Database (run once each, in Supabase → SQL Editor)
 | File | Creates |
 |---|---|
-| `supabase-waitlist-setup.sql` | `public.waitlist` — the founding-list form **(required, not yet run)** |
+| `supabase-waitlist-setup.sql` | `public.waitlist` — the founding-list form — done |
+| `supabase-referral-setup.sql` | `referred_by` on `waitlist` + `profiles` — referral credit **(required, not yet run)** |
 | `supabase-auth-setup.sql` | `public.profiles` + auto-create trigger — done |
 | `supabase-storage-setup.sql` | `avatars` storage bucket for profile photos **(not yet run)** |
 | `supabase-setup.sql` | `public.members` — legacy anonymous lead form, superseded by accounts |
 
-Until `supabase-waitlist-setup.sql` is run, the founding-list form shows an error
-and keeps a localStorage-only copy of each email.
+Until `supabase-referral-setup.sql` is run, a signup that arrived through a
+referral link fails to insert — the payload carries a `referred_by` column the
+table does not have yet.
+
 
 ### 2. Analytics
 Paste an ID into `config.js` and that tool switches on; leave it `""` and the
@@ -56,7 +63,8 @@ metaPixelId: "1234567890",    // Meta / Facebook Pixel
 clarityId: "abcdefghij",      // Microsoft Clarity — free heatmaps + replay
 ```
 
-Events fired: `waitlist_submit`, `waitlist_duplicate`, `waitlist_error`,
+Events fired: `waitlist_submit`, `waitlist_duplicate`, `waitlist_error`, `view_product`,
+`pdp_cta_click`, `referral_copy`, `referral_share`,
 `notify_me_click`, `signup_complete`, `signin_complete`, `oauth_start`, `social_click`.
 With no tool connected they log to the console, so the funnel stays verifiable.
 

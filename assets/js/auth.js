@@ -32,10 +32,14 @@
   }
   function redirectTo() { return location.origin + location.pathname; }
 
-  /* ---------- modal open / close / tabs ---------- */
+  /* ---------- modal open / close / tabs ----------
+     Pages like the product detail pages carry the header and the account
+     chip but not the sign-in modal. Run in chip-only mode there: session
+     state and the header chip still work, everything modal-related is
+     skipped. Jump to the boot block at the bottom. */
   var modal = $("signupModal");
-  if (!modal) return;
-  var msg = $("authMsg");
+  var msg = modal ? $("authMsg") : null;
+  if (!modal) { bootAuth(); return; }
   var lastFocus = null;
 
   function setMsg(text, kind) {
@@ -159,6 +163,7 @@
       row.interests = pend.interests || [];
       row.marketing = !!pend.marketing;
       row.pdpa_consent = true;
+      if (pend.referredBy) row.referred_by = pend.referredBy;
     }
     sb.from("profiles").upsert(row, { onConflict: "id" }).then(function (res) {
       if (!res.error) clearPending();
@@ -257,7 +262,8 @@
         dob: ($("su-dob") || {}).value || "",
         gender: ($("su-gender") || {}).value || "",
         interests: interests,
-        marketing: !!(signupForm.querySelector('input[name="marketing"]') || {}).checked
+        marketing: !!(signupForm.querySelector('input[name="marketing"]') || {}).checked,
+        referredBy: window.rpReferralId || null
       });
       setMsg(t("auth.creating", "Creating your account…"));
       sb.auth.signUp({
@@ -287,9 +293,11 @@
     });
   }
 
-  /* ---------- header account chip ---------- */
-  var chip = $("accountChip");
-  var openBtns = document.querySelectorAll("#signupOpen, #signupOpenM");
+  /* ---------- header account chip ----------
+     Assigned in bootAuth() so chip-only pages (no modal) can set them up
+     before the rest of this file runs. */
+  var chip = null;
+  var openBtns = [];
 
   function renderAuth(session) {
     var user = session && session.user;
@@ -310,36 +318,43 @@
     }
   }
 
-  if (chip) {
-    var toggle = $("acctToggle");
-    if (toggle) toggle.addEventListener("click", function (e) { e.stopPropagation(); chip.classList.toggle("is-open"); });
-    document.addEventListener("click", function (e) { if (!chip.contains(e.target)) chip.classList.remove("is-open"); });
-    var signOut = $("signOutBtn");
-    if (signOut) signOut.addEventListener("click", function () {
-      if (!sb) return;
-      sb.auth.signOut().then(function () { chip.classList.remove("is-open"); renderAuth(null); });
-    });
-  }
+  bootAuth();
 
-  /* ---------- boot: current session + listen for changes ---------- */
-  if (sb) {
+  /* ---------- boot: account chip + current session + changes ----------
+     Declared (not assigned) so the chip-only early return at the top of
+     this file can call it before the modal code has run. */
+  function bootAuth() {
+    chip = $("accountChip");
+    openBtns = [].slice.call(document.querySelectorAll("#signupOpen, #signupOpenM"));
+
+    if (chip) {
+      var toggle = $("acctToggle");
+      if (toggle) toggle.addEventListener("click", function (e) { e.stopPropagation(); chip.classList.toggle("is-open"); });
+      document.addEventListener("click", function (e) { if (!chip.contains(e.target)) chip.classList.remove("is-open"); });
+      var signOut = $("signOutBtn");
+      if (signOut) signOut.addEventListener("click", function () {
+        if (!sb) return;
+        sb.auth.signOut().then(function () { chip.classList.remove("is-open"); renderAuth(null); });
+      });
+    }
+
+    if (!sb) { renderAuth(null); return; }
+
     sb.auth.getSession().then(function (res) { renderAuth(res.data.session); });
     sb.auth.onAuthStateChange(function (event, session) {
       renderAuth(session);
       if (event === "SIGNED_IN") {
         syncProfile(session);
-        if (!modal.hidden) {
-          /* Only a sign-in that happened in the modal is a conversion —
-             a restored session on page load isn't. */
+        /* Only a sign-in that happened in the modal is a conversion —
+           a restored session on page load isn't. */
+        if (modal && !modal.hidden) {
           var provider = (session.user.app_metadata || {}).provider || "email";
           if (window.rpTrack) window.rpTrack("signin_complete", { provider: provider });
           setMsg("");
           closeModal();
         }
       }
-      if (event === "PASSWORD_RECOVERY") { openModal("signin"); }
+      if (event === "PASSWORD_RECOVERY" && modal) { openModal("signin"); }
     });
-  } else {
-    renderAuth(null);
   }
 })();

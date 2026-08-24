@@ -8,61 +8,6 @@
   var yr = document.getElementById("year");
   if (yr) yr.textContent = new Date().getFullYear();
 
-  /* ============================================================
-     Config-driven links (config.js)
-     A social icon, the shop link and the location only render when
-     they actually point somewhere — no more dead "#" links.
-     ============================================================ */
-  (function applyConfigLinks() {
-    var cfg = window.ROOTPLUS || {};
-    var social = cfg.social || {};
-
-    var socialWrap = document.querySelector(".footer__social");
-    if (socialWrap) {
-      var live = 0;
-      socialWrap.querySelectorAll("[data-social]").forEach(function (a) {
-        var url = social[a.getAttribute("data-social")];
-        if (url) {
-          a.href = url;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.hidden = false;
-          live++;
-          a.addEventListener("click", function () {
-            if (window.rpTrack) window.rpTrack("social_click", { network: a.getAttribute("data-social") });
-          });
-        } else {
-          a.hidden = true;              /* nothing to link to → don't show it */
-        }
-      });
-      socialWrap.hidden = live === 0;
-    }
-
-    /* Contact email */
-    document.querySelectorAll("[data-contact-email]").forEach(function (a) {
-      var mail = cfg.contactEmail || "itd@srichand.co.th";
-      a.href = "mailto:" + mail;
-      a.textContent = mail;
-    });
-
-    /* Location: a link only if there's a map URL, otherwise plain text */
-    var loc = document.getElementById("footLocation");
-    if (loc && cfg.locationUrl) {
-      var a = document.createElement("a");
-      a.href = cfg.locationUrl;
-      a.target = "_blank";
-      a.rel = "noopener noreferrer";
-      a.setAttribute("data-i18n", loc.getAttribute("data-i18n") || "");
-      a.textContent = loc.textContent;
-      loc.replaceWith(a);
-    }
-
-    /* "Shop the range" points at the parent brand — hidden by default
-       while root+ itself isn't on sale. */
-    var shop = document.getElementById("shopLink");
-    if (shop) shop.hidden = !cfg.showShopLink;
-  })();
-
   /* Sticky header: transparent over hero, solid once scrolled past it */
   var header = document.getElementById("header");
   var hero = document.getElementById("hero");
@@ -80,30 +25,8 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* Mobile menu */
-  var toggle = document.getElementById("navToggle");
-  var menu = document.getElementById("mobileMenu");
-  var close = document.getElementById("menuClose");
-
-  function openMenu() {
-    menu.classList.add("open");
-    menu.setAttribute("aria-hidden", "false");
-    toggle.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden";
-  }
-  function closeMenu() {
-    menu.classList.remove("open");
-    menu.setAttribute("aria-hidden", "true");
-    toggle.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-  }
-  if (toggle) toggle.addEventListener("click", openMenu);
-  if (close) close.addEventListener("click", closeMenu);
-  if (menu) {
-    menu.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", closeMenu);
-    });
-  }
+  /* Mobile menu, mega-menu a11y and the config-driven links live in
+     shell.js, so the product pages get identical behaviour. */
 
   /* Reveal on scroll */
   var revealEls = document.querySelectorAll(".reveal");
@@ -312,6 +235,7 @@
         lang: document.documentElement.getAttribute("lang") || "en",
         source: "landing",
         referrer: document.referrer || null,
+        referred_by: window.rpReferralId || null,
         utm: (window.rpAttribution && Object.keys(window.rpAttribution).length) ? window.rpAttribution : null
       };
 
@@ -328,7 +252,7 @@
         done(tr(key, en));
         form.reset();
         setProduct(null);
-        if (window.rpTrack) window.rpTrack(event, { product: row.product });
+        if (window.rpTrack) window.rpTrack(event, { product: row.product, referred: !!row.referred_by });
       }
 
       /* No backend configured → keep the local copy only. */

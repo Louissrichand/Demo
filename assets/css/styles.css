@@ -789,3 +789,30 @@ button.authlink:hover,
   .footer ul a { padding-block: .5rem; }
   .account__item { min-height: 44px; }
 }
+
+/* ============================================================
+   Slim footer — product detail pages
+   The PDPs had no footer at all, which meant the Thai FDA disclaimer
+   was missing from the pages that make the most product claims.
+   ============================================================ */
+.footer--slim { padding-block: 3rem 2rem; }
+.footer__slimgrid {
+  display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem;
+  align-items: center; justify-content: space-between;
+  padding-bottom: 1.5rem;
+}
+.footer--slim .footer__brand img { width: 88px; height: auto; }
+.footer--slim .footer__social { margin-top: .9rem; }
+.footer__slimlinks {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: .4rem 1.5rem;
+  font-size: .88rem;
+}
+.footer__slimlinks a { display: inline-block; padding-block: .3rem; }
+@media (pointer: coarse) { .footer__slimlinks a { padding-block: .5rem; } }
+@media (max-width: 640px) {
+  .footer__slimgrid { flex-direction: column; align-items: flex-start; }
+}
+/* Breadcrumb links were 22px tall — give them a usable touch target. */
+.pdp__crumbs a { display: inline-block; padding-block: .35rem; }
+@media (pointer: coarse) { .pdp__crumbs a { padding-block: .55rem; } }

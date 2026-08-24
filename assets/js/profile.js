@@ -145,7 +145,18 @@
     var done = function () { var m = $("referMsg"); if (m) { m.textContent = t("acct.rf.copied", "Link copied! ✓"); m.className = "refer-note refer-note--ok"; } };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(el.value).then(done, done);
     else { try { document.execCommand("copy"); } catch (x) {} done(); }
+    if (window.rpTrack) window.rpTrack("referral_copy", { channel: "clipboard" });
   });
+
+  /* Which channel members actually share through — the input that decides
+     where referral effort is worth spending (LINE vs Facebook vs email). */
+  [["shareEmail", "email"], ["shareFb", "facebook"], ["shareLine", "line"], ["shareX", "x"]]
+    .forEach(function (pair) {
+      var el = $(pair[0]);
+      if (el) el.addEventListener("click", function () {
+        if (window.rpTrack) window.rpTrack("referral_share", { channel: pair[1] });
+      });
+    });
 
   /* ---------- change password ---------- */
   function pwMsg(txt, kind) { var m = $("pwMsg"); if (m) { m.textContent = txt || ""; m.className = "modal__ok" + (kind ? " modal__ok--" + kind : ""); } }

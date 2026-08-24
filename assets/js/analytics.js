@@ -129,4 +129,24 @@
       return saved || {};
     } catch (e) { return {}; }
   })();
+
+  /* ---------- Referral capture (first touch) ----------
+     My Account → Refer hands members a link ending in ?ref=<their user id>.
+     Hold it for the visit so the signup — which may happen several pages
+     later — can credit the person who invited them.
+     First touch wins: if they already arrived via someone's link, a later
+     ?ref= in the same visit does not steal the credit. */
+  window.rpReferralId = (function () {
+    var KEY = "rootplus-ref";
+    /* uuid only — the value goes to a uuid column, and this keeps junk
+       from a mangled shared link out of the database. */
+    var UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    try {
+      var saved = sessionStorage.getItem(KEY);
+      if (saved) return saved;
+      var v = (new URLSearchParams(location.search).get("ref") || "").trim();
+      if (UUID.test(v)) { sessionStorage.setItem(KEY, v); return v; }
+      return null;
+    } catch (e) { return null; }
+  })();
 })();
