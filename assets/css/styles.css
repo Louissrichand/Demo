@@ -442,7 +442,7 @@ details.faq__item summary::-webkit-details-marker { display: none; }
 .mobile-menu { position: fixed; inset: 0; z-index: 70; background: var(--brand); color: #f4f7f5; display: flex; flex-direction: column; padding: 1.5rem var(--gutter); transform: translateX(100%); transition: transform .35s var(--ease); }
 .mobile-menu.open { transform: none; }
 .mobile-menu__top { display: flex; justify-content: space-between; align-items: center; }
-.mobile-menu__top img { height: 28px; filter: brightness(0) invert(1); }
+.mobile-menu__top img { height: 28px; width: auto; filter: brightness(0) invert(1); }
 .mobile-menu__close { font-size: 2rem; width: 44px; height: 44px; }
 .mobile-menu nav { display: flex; flex-direction: column; gap: .5rem; margin-top: 2.5rem; }
 .mobile-menu nav a { font-family: var(--serif); font-size: 1.8rem; padding: .5rem 0; border-bottom: 1px solid rgba(250,239,231,.12); }

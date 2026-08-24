@@ -266,17 +266,21 @@
       ok.className = "form__ok";
       ok.textContent = "";
 
-      fetch(cfg.supabaseUrl + "/rest/v1/waitlist", {
-        method: "POST",
-        headers: {
-          "apikey": cfg.supabaseKey,
-          "Authorization": "Bearer " + cfg.supabaseKey,
-          "Content-Type": "application/json",
-          /* return=minimal is required: the anon key has INSERT but no SELECT. */
-          "Prefer": "return=minimal"
-        },
-        body: JSON.stringify(row)
-      }).then(function (res) {
+      function postWaitlist(payload) {
+        return fetch(cfg.supabaseUrl + "/rest/v1/waitlist", {
+          method: "POST",
+          headers: {
+            "apikey": cfg.supabaseKey,
+            "Authorization": "Bearer " + cfg.supabaseKey,
+            "Content-Type": "application/json",
+            /* return=minimal is required: the anon key has INSERT but no SELECT. */
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(payload)
+        });
+      }
+
+      function handle(res) {
         /* 409 = the unique email index fired. They already joined; not an error. */
         if (res.status === 409) {
           succeed("wait.already", "You're already on the founding list — see you at launch. 🌱", "waitlist_duplicate");
@@ -284,6 +288,23 @@
         }
         if (!res.ok) return res.text().then(function (t) { throw new Error(res.status + " " + t); });
         succeed("wait.ok", "You're on the list — welcome to the roots. 🌱", "waitlist_submit");
+      }
+
+      postWaitlist(row).then(function (res) {
+        /* A column the table doesn't have yet (PGRST204) must never cost us
+           the lead. Drop the optional field and retry — we lose the referral
+           credit, not the signup. Run supabase-referral-setup.sql to fix. */
+        if (res.status === 400 && row.referred_by) {
+          return res.text().then(function (body) {
+            if (!/PGRST204|referred_by/.test(body)) throw new Error("400 " + body);
+            console.warn("[waitlist] referred_by column missing — run supabase-referral-setup.sql. Retrying without it.");
+            if (window.rpTrack) window.rpTrack("waitlist_referral_column_missing", {});
+            var retry = {};
+            Object.keys(row).forEach(function (k) { if (k !== "referred_by") retry[k] = row[k]; });
+            return postWaitlist(retry).then(handle);
+          });
+        }
+        return handle(res);
       }).catch(function (err) {
         console.error("[waitlist] insert failed:", err);
         done(tr("wait.err", "Something went wrong on our side. Please try again, or email ") +
