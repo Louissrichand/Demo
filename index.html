@@ -202,6 +202,7 @@
     <!-- Hero -->
     <section class="hero" id="hero">
       <div class="hero__bg" aria-hidden="true"></div>
+      <video class="hero__video" id="heroVideo" muted loop playsinline preload="none" poster="assets/img/hero-bg.webp" aria-hidden="true" data-src="assets/video/hero-run.mp4"></video>
       <div class="hero__inner">
         <div class="hero__copy">
           <p class="eyebrow reveal" data-i18n="hero.eyebrow">Root-Cause Wellness System</p>
@@ -220,6 +221,25 @@
         </div>
       </div>
     </section>
+
+    <script>
+      /* Hero background video: desktop/tablet only (clip is ~21MB, so mobile
+         keeps the static image to save data) and never under reduced-motion. */
+      (function () {
+        var v = document.getElementById("heroVideo");
+        if (!v) return;
+        var big = window.matchMedia("(min-width: 768px)").matches;
+        var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (big && !still) {
+          v.src = v.getAttribute("data-src");
+          v.load();
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          v.hidden = true;
+        }
+      })();
+    </script>
 
     <!-- Principle -->
     <section class="bg-cream" id="principle">
