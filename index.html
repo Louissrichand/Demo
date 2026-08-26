@@ -202,7 +202,6 @@
     <!-- Hero -->
     <section class="hero" id="hero">
       <div class="hero__bg" aria-hidden="true"></div>
-      <video class="hero__video" id="heroVideo" muted loop playsinline preload="none" poster="assets/img/hero-bg.webp" aria-hidden="true" data-src="assets/video/hero-run.mp4"></video>
       <div class="hero__inner">
         <div class="hero__copy">
           <p class="eyebrow reveal" data-i18n="hero.eyebrow">Root-Cause Wellness System</p>
@@ -221,25 +220,6 @@
         </div>
       </div>
     </section>
-
-    <script>
-      /* Hero background video: desktop/tablet only (clip is ~21MB, so mobile
-         keeps the static image to save data) and never under reduced-motion. */
-      (function () {
-        var v = document.getElementById("heroVideo");
-        if (!v) return;
-        var big = window.matchMedia("(min-width: 768px)").matches;
-        var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (big && !still) {
-          v.src = v.getAttribute("data-src");
-          v.load();
-          var p = v.play();
-          if (p && p.catch) p.catch(function () {});
-        } else {
-          v.hidden = true;
-        }
-      })();
-    </script>
 
     <!-- Principle -->
     <section class="bg-cream" id="principle">
@@ -271,12 +251,25 @@
 
     <!-- Belief statement -->
     <section class="bg-navy statement">
+      <video class="belief__video" id="beliefVideo" muted loop playsinline preload="none" data-src="assets/video/hero-run.mp4" aria-hidden="true"></video>
       <div class="wrap">
         <blockquote class="reveal" data-i18n="belief.q">A good life starts with a <em>ready body.</em></blockquote>
         <p class="lead center reveal" style="max-width:44ch;margin-top:1.5rem;" data-i18n="belief.p">Feeling good each day is no surface level — it comes from the foundational systems working within. We care for them at the root, so you can live fully: today, and every day ahead.</p>
         <p class="attrib reveal" data-i18n="belief.attr">The root+ belief</p>
       </div>
     </section>
+
+    <script>
+      /* Belief background video: desktop only (mobile keeps the solid navy). */
+      (function () {
+        var v = document.getElementById("beliefVideo");
+        if (!v) return;
+        var big = window.matchMedia("(min-width: 768px)").matches;
+        var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (big && !still) { v.src = v.getAttribute("data-src"); v.load(); var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        else { v.hidden = true; }
+      })();
+    </script>
 
     <!-- Collection -->
     <section class="bg-soft" id="collection">
