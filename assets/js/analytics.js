@@ -76,6 +76,60 @@
     inject("https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=" + encodeURIComponent(cfg.tiktokPixelId) + "&lib=ttq");
   }
 
+  /* ---------- First-party events, stored in our own Supabase ----------
+     Works with no third-party tool connected at all. See
+     supabase-events-setup.sql for the table and the ready-made queries.
+
+     session_id is random per tab-session and is NOT a user id: it dies
+     with the tab and is never linked to an email, so the table stays
+     anonymous under PDPA. */
+  var SID_KEY = "rootplus-sid";
+
+  function sessionId() {
+    try {
+      var v = sessionStorage.getItem(SID_KEY);
+      if (!v) {
+        v = (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+        sessionStorage.setItem(SID_KEY, v);
+      }
+      return v;
+    } catch (e) {
+      /* Private mode with storage blocked — still record the event, just
+         without being able to stitch it to the rest of the visit. */
+      return "nostore";
+    }
+  }
+
+  var eventsOn = cfg.supabaseUrl && cfg.supabaseKey && cfg.trackToSupabase !== false;
+
+  function sendToSupabase(event, params) {
+    if (!eventsOn) return;
+    var utm = window.rpAttribution;
+    var body = {
+      session_id: sessionId(),
+      event: event,
+      props: (params && Object.keys(params).length) ? params : null,
+      path: location.pathname + location.search,
+      lang: document.documentElement.getAttribute("lang") || "en",
+      referrer: document.referrer || null,
+      utm: (utm && Object.keys(utm).length) ? utm : null
+    };
+    /* keepalive so an event fired as the visitor leaves still lands.
+       Fire-and-forget: analytics must never surface an error to a user,
+       and a missing `events` table should not look like a broken page. */
+    fetch(cfg.supabaseUrl + "/rest/v1/events", {
+      method: "POST",
+      keepalive: true,
+      headers: {
+        "apikey": cfg.supabaseKey,
+        "Authorization": "Bearer " + cfg.supabaseKey,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(body)
+    }).catch(function () {});
+  }
+
   /* ---------- One tracking call for the whole site ---------- */
   /* Map our event names onto each platform's standard events so the
      numbers line up with the ad managers without extra config. */
@@ -101,6 +155,7 @@
       }
       if (window.ttq && cfg.tiktokPixelId) window.ttq.track(TIKTOK_EVENTS[event] || event, params);
       if (window.clarity && cfg.clarityId) window.clarity("event", event);
+      sendToSupabase(event, params);
     } catch (e) { /* analytics must never break the page */ }
 
     /* Local visibility while no tool is connected yet — so you can still
@@ -149,4 +204,18 @@
       return null;
     } catch (e) { return null; }
   })();
+
+  /* ---------- page_view ----------
+     Without it there is no denominator: you can count signups but not what
+     share of visitors they are. Deferred to DOMContentLoaded because the
+     language toggle runs in main.js / product.js at the end of <body> —
+     firing earlier would record every Thai visitor as "en". */
+  function pageView() {
+    window.rpTrack("page_view", { referred: !!window.rpReferralId });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pageView);
+  } else {
+    pageView();
+  }
 })();

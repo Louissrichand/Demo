@@ -102,10 +102,25 @@
     loc.replaceWith(link);
   }
 
-  /* "Shop the range" points at the parent brand — hidden while root+
-     itself isn't on sale. */
+  /* "Shop now" — points at the local shop preview today, and at
+     srichand.com/root-plus/ once Srichand's dev team ships that page.
+     One config line switches it; an external URL opens in a new tab,
+     a local one stays in this one. */
   var shop = document.getElementById("shopLink");
-  if (shop) shop.hidden = !cfg.showShopLink;
+  if (shop) {
+    shop.hidden = !cfg.showShopLink;
+    var shopUrl = cfg.shopUrl || "shop.html";
+    if (shopUrl) {
+      shop.href = shopUrl;
+      if (/^https?:/i.test(shopUrl)) {
+        shop.target = "_blank";
+        shop.rel = "noopener noreferrer";
+      } else {
+        shop.removeAttribute("target");
+        shop.removeAttribute("rel");
+      }
+    }
+  }
 
   /* ---------- Keep the referral tag on internal links ----------
      Someone landing on a ?ref= link may click through to a product page

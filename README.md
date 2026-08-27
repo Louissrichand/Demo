@@ -43,14 +43,14 @@ it ships to the browser. Never put a Supabase `service_role` key in it.
 | File | Creates |
 |---|---|
 | `supabase-waitlist-setup.sql` | `public.waitlist` — the founding-list form — done |
-| `supabase-referral-setup.sql` | `referred_by` on `waitlist` + `profiles` — referral credit **(required, not yet run)** |
+| `supabase-referral-setup.sql` | `referred_by` on `waitlist` + `profiles` — referral credit — done |
+| `supabase-events-setup.sql` | `public.events` — first-party analytics **(required, not yet run)** |
 | `supabase-auth-setup.sql` | `public.profiles` + auto-create trigger — done |
 | `supabase-storage-setup.sql` | `avatars` storage bucket for profile photos **(not yet run)** |
 | `supabase-setup.sql` | `public.members` — legacy anonymous lead form, superseded by accounts |
 
-Until `supabase-referral-setup.sql` is run, a signup that arrived through a
-referral link fails to insert — the payload carries a `referred_by` column the
-table does not have yet.
+Until `supabase-events-setup.sql` is run, every `rpTrack` call still fires but its
+insert 404s (harmless, caught, invisible to visitors) — so no funnel data is kept.
 
 
 ### 2. Analytics

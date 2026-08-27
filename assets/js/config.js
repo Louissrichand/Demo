@@ -27,6 +27,13 @@ window.ROOTPLUS = {
   clarityId: "",
   tiktokPixelId: "",
 
+  /* First-party events, written into our own Supabase `events` table.
+     Works with none of the IDs above filled in — no third-party script,
+     no third-party cookie, data stays in the project you control.
+     Needs supabase-events-setup.sql to have been run.
+     Set to false to switch it off.                                      */
+  trackToSupabase: true,
+
   /* --- Social / contact ---------------------------------------
      Only the ones with a URL are rendered. Blank = icon hidden,
      so there are never dead "#" links in the footer.              */
@@ -52,5 +59,11 @@ window.ROOTPLUS = {
   /* Show the "Shop the range" link to srichand.com in the header.
      root+ isn't on sale yet, so this sends people to the parent
      brand — false keeps visitors focused on the founding list.    */
-  showShopLink: true
+  showShopLink: true,
+
+  /* Where "Shop now" goes.
+     Today: the local shop preview, so the design can be reviewed.
+     At launch: "https://srichand.com/root-plus/" — Srichand's dev team
+     builds that page; change this one line the day it goes live.       */
+  shopUrl: "shop.html"
 };

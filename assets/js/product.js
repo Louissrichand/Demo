@@ -47,7 +47,7 @@
     balance: {
       name: "Balance", image: "assets/img/product-balance.png", accent: "balance",
       kicker: "cardB.kicker", desc: "cardB.desc",
-      chips: [{ t: "6 strains · 31B CFU" }, { t: "+ Inulin / FOS" }, { k: "flavor.yogurt", en: "Yogurt" }],
+      chips: [{ t: "6 strains · 31B CFU" }, { t: "+ Inulin / FOS" }, { k: "flavor.yogurt", en: "Yogurt Pineapple" }],
       icons: [{ en: "Gut balance", th: "สมดุลลำไส้" }, { en: "Gut barrier", th: "เกราะลำไส้" }, { en: "Immunity & metabolism", th: "ภูมิ & เผาผลาญ" }],
       who: { en: "For anyone who wants to fix digestion at the source — bloating, irregularity, stomach discomfort, or a gut that just feels 'off'. Balance starts in the stomach and rebuilds microbiome balance from there.", th: "สำหรับคนที่อยากแก้ปัญหาการย่อยที่ต้นเหตุ — ท้องอืด ขับถ่ายไม่ปกติ ไม่สบายท้อง หรือรู้สึกลำไส้ไม่โอเค Balance เริ่มดูแลตั้งแต่กระเพาะ แล้วปรับสมดุลจุลินทรีย์จากตรงนั้น" },
       benefits: [
@@ -62,12 +62,12 @@
         { name: "spotB.a2", note: "spotB.a2p", stat: "−43%", statLabel: { en: "H. pylori · breath test*", th: "H. pylori · breath test*" } },
         { name: "spotB.a3", note: "spotB.a3p", stat: "+3×", statLabel: { en: "cellular energy · ATP*", th: "พลังงานระดับเซลล์ · ATP*" } }
       ],
-      launch: { en: "Ships Q2 2027", th: "เริ่มส่งไตรมาส 2 ปี 2027" }
+      launch: { en: "Ships 20 March 2027", th: "เริ่มส่ง 20 มีนาคม 2027" }
     },
     goodnight: {
       name: "Goodnight", image: "assets/img/product-refresh.png", accent: "refresh",
       kicker: "cardR.kicker", desc: "cardR.desc",
-      chips: [{ t: "Psychobiotics · 21B CFU" }, { t: "Delight TS™" }, { t: "+ Magnesium" }, { k: "flavor.grape", en: "Grape" }],
+      chips: [{ t: "Psychobiotics · 21B CFU" }, { t: "Delight TS™" }, { t: "+ Magnesium" }, { k: "flavor.mixedberry", en: "Mixed Berry" }],
       icons: [{ en: "Gut-brain axis", th: "แกนลำไส้-สมอง" }, { en: "Calm & mood", th: "ผ่อนคลาย & อารมณ์" }, { en: "Deeper sleep", th: "หลับลึกขึ้น" }],
       who: { en: "For busy minds and restless nights — when stress, mood and sleep are all tangled together. Goodnight works along the gut-brain axis to help you unwind and rest more deeply.", th: "สำหรับคนที่หัวไม่หยุดคิดและนอนไม่ค่อยหลับ — เมื่อความเครียด อารมณ์ และการนอนพันกันไปหมด Goodnight ทำงานบนแกนลำไส้-สมอง ช่วยให้ผ่อนคลายและหลับลึกขึ้น" },
       benefits: [
@@ -82,7 +82,7 @@
         { name: "spotR.a2", note: "spotR.a2p", stat: "−41%", statLabel: { en: "time to fall asleep*", th: "เวลาที่ใช้ในการหลับ*" } },
         { name: "spotR.a3", note: "spotR.a3p", stat: "100mg", statLabel: { en: "magnesium per serving", th: "แมกนีเซียมต่อหน่วยบริโภค" } }
       ],
-      launch: { en: "Ships Q2 2027", th: "เริ่มส่งไตรมาส 2 ปี 2027" }
+      launch: { en: "Ships 20 March 2027", th: "เริ่มส่ง 20 มีนาคม 2027" }
     }
   };
 
