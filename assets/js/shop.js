@@ -25,21 +25,15 @@
     couponSaved:{ en: "Coupon saved — it applies at checkout", th: "เก็บคูปองแล้ว ใช้ได้ตอนชำระเงิน" },
     couponTaken:{ en: "Saved ✓", th: "เก็บแล้ว ✓" },
     empty:      { en: "Your cart is empty.", th: "ยังไม่มีสินค้าในตะกร้า" },
-    box:        { en: "box", th: "กล่อง" },
-    boxes:      { en: "boxes", th: "กล่อง" },
     remove:     { en: "Remove", th: "นำออก" },
     freeYes:    { en: "Free shipping unlocked 🎉", th: "ได้ส่งฟรีแล้ว 🎉" },
     freeNo:     { en: "Add ฿{n} more for free shipping", th: "ซื้อเพิ่มอีก ฿{n} เพื่อรับส่งฟรี" },
     days:       { en: "d", th: "วัน" },
-    preorder:   { en: "Pre-order · ships 20 Mar 2027", th: "พรีออเดอร์ · ส่ง 20 มี.ค. 2027" },
     demoBuy:    { en: "This is a design preview — no real order is placed.", th: "หน้านี้เป็นตัวอย่างการออกแบบ ยังไม่มีการสั่งซื้อจริง" }
   };
   function t(key) { var p = S[key]; return p ? (L === "th" ? p.th : p.en) : ""; }
 
-  /* ---------- Catalogue ----------
-     Box price is the confirmed ฿890. Multi-box rows are plain multiples:
-     the real bundle discount is not decided yet, so nothing here invents
-     one — the page says so next to the selector. */
+  /* ---------- Catalogue ---------- */
   var BOX = 890;
   var PRODUCTS = {
     balance: {
@@ -61,18 +55,10 @@
       flavour: { en: "Mixed Berry", th: "รสมิกซ์เบอร์รี" }
     }
   };
-  var VARIANTS = [
-    { id: "1box", boxes: 1, price: BOX },
-    { id: "2box", boxes: 2, price: BOX * 2 },
-    { id: "3box", boxes: 3, price: BOX * 3 }
-  ];
-  function variantById(id) {
-    for (var i = 0; i < VARIANTS.length; i++) if (VARIANTS[i].id === id) return VARIANTS[i];
-    return VARIANTS[0];
-  }
-  function variantLabel(v) {
-    return v.boxes + " " + (v.boxes === 1 ? t("box") : t("boxes")) + " · " + (v.boxes * 15) + (L === "th" ? " ซอง" : " sachets");
-  }
+  /* One pack size at launch: the 15-sachet box at ฿890. Multi-box bundles
+     are not part of the launch, so there is no size picker to build. */
+  var PACK = { sachets: 15, price: BOX };
+  function packLabel() { return PACK.sachets + (L === "th" ? " ซอง" : " sachets"); }
   function baht(n) { return "฿" + n.toLocaleString("en-US"); }
 
   /* ---------- Cart state ---------- */
@@ -87,22 +73,22 @@
     return cart.reduce(function (n, l) { return n + l.qty; }, 0);
   }
   function cartTotal() {
-    return cart.reduce(function (n, l) { return n + l.qty * variantById(l.variant).price; }, 0);
+    return cart.reduce(function (n, l) { return n + l.qty * PACK.price; }, 0);
   }
-  function addToCart(productId, variantId, qty) {
+  function addToCart(productId, qty) {
     var p = PRODUCTS[productId];
     if (!p) return;
     var found = null;
     for (var i = 0; i < cart.length; i++) {
-      if (cart[i].product === productId && cart[i].variant === variantId) { found = cart[i]; break; }
+      if (cart[i].product === productId) { found = cart[i]; break; }
     }
-    if (found) found.qty += qty; else cart.push({ product: productId, variant: variantId, qty: qty });
+    if (found) found.qty += qty; else cart.push({ product: productId, qty: qty });
     saveCart();
     renderCart();
     openCart();
     toast(t("added") + " · " + p.name);
     if (window.rpTrack) {
-      window.rpTrack("demo_add_to_cart", { product: productId, variant: variantId, qty: qty });
+      window.rpTrack("demo_add_to_cart", { product: productId, qty: qty });
     }
   }
   function removeLine(index) {
@@ -169,21 +155,20 @@
     var html = "";
     cart.forEach(function (line, i) {
       var p = PRODUCTS[line.product];
-      var v = variantById(line.variant);
       if (!p) return;
       html +=
         '<div class="cartline">' +
           '<span class="cartline__img" data-accent="' + p.accent + '"><img src="' + p.image + '" alt="" width="68" height="68" /></span>' +
           '<div class="cartline__main">' +
             '<span class="cartline__name">root+ ' + p.name + "</span>" +
-            '<span class="cartline__var">' + variantLabel(v) + "</span>" +
+            '<span class="cartline__var">' + packLabel() + "</span>" +
             '<div class="cartline__row">' +
               '<span class="qty qty--sm">' +
                 '<button type="button" data-line="' + i + '" data-line-step="-1" aria-label="-">−</button>' +
                 "<output>" + line.qty + "</output>" +
                 '<button type="button" data-line="' + i + '" data-line-step="1" aria-label="+">+</button>' +
               "</span>" +
-              '<span class="cartline__price">' + baht(v.price * line.qty) + "</span>" +
+              '<span class="cartline__price">' + baht(PACK.price * line.qty) + "</span>" +
             "</div>" +
             '<button type="button" class="cartline__del" data-line="' + i + '" data-line-remove>' + t("remove") + "</button>" +
           "</div>" +
@@ -259,20 +244,7 @@
       var scope = btn.closest("[data-product-scope]");
       var pid = btn.getAttribute("data-add");
       var qtyEl = scope ? scope.querySelector("[data-qty] output") : null;
-      var varEl = scope ? scope.querySelector(".varbtn.is-on") : null;
-      addToCart(
-        pid,
-        varEl ? varEl.getAttribute("data-variant") : "1box",
-        qtyEl ? parseInt(qtyEl.textContent, 10) : 1
-      );
-      return;
-    }
-
-    /* variant picker */
-    if (btn.hasAttribute("data-variant")) {
-      btn.parentElement.querySelectorAll("[data-variant]").forEach(function (v) { v.classList.remove("is-on"); });
-      btn.classList.add("is-on");
-      updatePrice();
+      addToCart(pid, qtyEl ? parseInt(qtyEl.textContent, 10) : 1);
       return;
     }
 
@@ -324,20 +296,6 @@
     });
   }
 
-  /* ---------- Product-page price, tied to the variant picker ---------- */
-  function updatePrice() {
-    var on = document.querySelector(".varbtn.is-on");
-    var priceEl = document.getElementById("cpdpPrice");
-    var perEl = document.getElementById("cpdpPer");
-    if (!on || !priceEl) return;
-    var v = variantById(on.getAttribute("data-variant"));
-    priceEl.textContent = baht(v.price);
-    if (perEl) {
-      var perDay = Math.round(v.price / (v.boxes * 15));
-      perEl.textContent = (v.boxes * 15) + (L === "th" ? " ซอง · ~฿" : " sachets · ~฿") + perDay + (L === "th" ? "/วัน" : "/day");
-    }
-  }
-
   /* ---------- Language ----------
      Same contract as main.js: the English copy in the markup is the
      source, the Thai comes from i18n.js. main.js isn't loaded on these
@@ -360,25 +318,13 @@
     try { localStorage.setItem("rootplus-lang", L); } catch (e) {}
     renderCart();
     renderCountdown();
-    renderVariantLabels();
-    updatePrice();
   }
 
   document.querySelectorAll(".lang__opt").forEach(function (o) {
     o.addEventListener("click", function () { applyLang(o.getAttribute("data-lang")); });
   });
 
-  function renderVariantLabels() {
-    document.querySelectorAll("[data-variant]").forEach(function (b) {
-      var v = variantById(b.getAttribute("data-variant"));
-      var nameEl = b.querySelector("b");
-      var subEl = b.querySelector("small");
-      if (nameEl) nameEl.textContent = variantLabel(v);
-      if (subEl) subEl.textContent = baht(v.price);
-    });
-  }
-
   /* ---------- Boot ---------- */
-  applyLang(L);              /* also runs the first renderCart / countdown / prices */
+  applyLang(L);              /* also runs the first renderCart and countdown */
   setInterval(renderCountdown, 1000);
 })();
