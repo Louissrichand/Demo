@@ -16,11 +16,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://louissrichand.github.io/Demo/radiance.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://louissrichand.github.io/Demo/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

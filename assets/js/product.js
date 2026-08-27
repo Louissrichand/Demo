@@ -1,6 +1,7 @@
 /* ============================================================
    root+ — Product detail page (data-driven by ?product=)
    Pre-launch: CTA is the founding list, not a real cart.
+   Product facts align with the CLAIMS Probiotic Presentation (BOD 05/2026).
    ============================================================ */
 (function () {
   "use strict";
@@ -11,30 +12,22 @@
 
   /* English source strings for the shared keys (Thai comes from i18n.js) */
   var EN = {
-    "cardB.kicker": "Stomach & Gut Synbiotic",
-    "cardB.desc": "The stomach-first synbiotic. Balances the microbiome with an immune & metabolic bonus.",
-    "cardR.kicker": "Gut-Brain Daily Synbiotic",
-    "cardR.desc": "Lighter gut, brighter mood. Psychobiotic strains on the gut-brain axis for everyday freshness.",
-    "cardS.kicker": "Gut-Skin Beauty Synbiotic",
-    "cardS.desc": "Glow from within. Gut-skin axis strains support clarity and radiance from the inside out.",
-    "spotB.a1": "Pylopass® <span>L. reuteri DSM 17648 · 200mg</span>",
-    "spotB.a1p": "Binds and clears H. pylori to help restore a balanced stomach environment.",
-    "spotB.a2": "B. lactis Bl-04® <span>immune strain</span>",
-    "spotB.a2p": "A well-studied probiotic strain that backs everyday immune resilience.",
-    "spotB.a3": "TCI711 <span>metabolic support</span>",
-    "spotB.a3p": "Proprietary multi-strain support (ProBio-Ark + prebiotic fiber) for metabolic health.",
-    "spotR.a1": "Psychobiotic strains <span>L. plantarum / B. longum</span>",
-    "spotR.a1p": "Gut-brain axis strains that support daily mood and freshness.",
-    "spotR.a2": "Delight™ TS <span>Passiflora edulis seed extract</span>",
-    "spotR.a2p": "Botanical support to help you feel lighter and brighter.",
-    "spotR.a3": "Magnesium + GABA <span>calm support</span>",
-    "spotR.a3p": "Backs a calm, balanced nervous system for everyday ease.",
-    "spotS.a1": "TCK33 <span>HA producer</span>",
-    "spotS.a1p": "Skin-axis strain supporting hyaluronic acid for hydration and bounce.",
-    "spotS.a2": "TCK53 <span>sialic acid / EGF</span>",
-    "spotS.a2p": "Supports skin-renewal factors for a brighter, smoother look.",
-    "spotS.a3": "TCK77 <span>Antrodia cinnamomea</span>",
-    "spotS.a3p": "Helps calm blemish-prone skin from within."
+    "cardB.kicker": "Gut Health Synbiotic",
+    "cardB.desc": "The gut-health synbiotic — 6 clinically-studied strains at 31 billion CFU that restore gut balance, reinforce the gut barrier, and support everyday immunity and metabolism.",
+    "cardR.kicker": "Sleep & Mood Synbiotic",
+    "cardR.desc": "Better sleep starts in the gut. Psychobiotics, patented Delight TS™ and magnesium work along the gut-brain axis for calmer mood and deeper rest — 21 billion CFU.",
+    "spotB.a1": "TCI604 <span>B. animalis subsp. lactis · full dose</span>",
+    "spotB.a1p": "A gut-balance strain that supports a calmer gut-inflammation response and a healthier barrier.",
+    "spotB.a2": "TCI803 <span>Weizmannia coagulans · full dose</span>",
+    "spotB.a2p": "Helps keep H. pylori in balance (−43%, C-13 breath test) for everyday stomach comfort.",
+    "spotB.a3": "TCI-711 <span>Weizmannia coagulans · full dose</span>",
+    "spotB.a3p": "Backs the gut barrier and short-chain fatty-acid production along the gut-metabolic axis.",
+    "spotR.a1": "TCI973 <span>Psychobiotics · full dose</span>",
+    "spotR.a1p": "A gut-mood-sleep strain that lowers the stress index (−27.9%) and supports calming anandamide & serotonin pathways.",
+    "spotR.a2": "Delight TS™ <span>Passionflower + FOS + inulin</span>",
+    "spotR.a2p": "Patented prebiotic (Gold Medal, 2024 Seoul International Invention Fair) — helps you fall asleep faster and lengthen REM sleep.",
+    "spotR.a3": "Magnesium <span>100 mg</span>",
+    "spotR.a3p": "Supports GABA-driven relaxation and a calm nervous system for restful sleep."
   };
   function tk(key) { return (L === "th" && TH[key] != null) ? TH[key] : (EN[key] != null ? EN[key] : ""); } // by i18n key
   function tx(pair) { return pair ? ((L === "th" && pair.th != null) ? pair.th : pair.en) : ""; } // {en,th}
@@ -44,9 +37,9 @@
     th: "ฉีกซอง 3 กรัม เทลงลิ้นได้เลย ไม่ต้องผสม ไม่ต้องใช้น้ำ วันละครั้ง เมื่อไรก็ได้ — มีทั้งพรีไบโอติก โพรไบโอติก และโพสต์ไบโอติกในทุกซอง"
   };
   var QUALITY = [
-    { en: "30 billion CFU guaranteed through end of shelf life", th: "รับประกัน 30 พันล้าน CFU จนหมดอายุ" },
+    { en: "Clinically-studied strains at full, disclosed doses — no proprietary blends", th: "สายพันธุ์ที่มีงานวิจัยรองรับ ให้เต็มโดส เปิดเผยครบทุกตัว ไม่มีสูตรลับ" },
+    { en: "CFU count guaranteed through end of shelf life", th: "รับประกันปริมาณ CFU จนหมดอายุ" },
     { en: "Third-party tested with a Certificate of Analysis (COA)", th: "ตรวจสอบโดยแล็บอิสระ พร้อมใบ COA" },
-    { en: "Clinically-studied doses, fully disclosed — no proprietary blends", th: "โดสระดับคลินิก เปิดเผยครบทุกตัว ไม่มีสูตรลับ" },
     { en: "Vegan & Non-GMO · 3g direct-to-mouth sachet", th: "วีแกน & ปลอด GMO · ซอง 3 กรัม ทานตรงเข้าปาก" }
   ];
 
@@ -54,42 +47,44 @@
     balance: {
       name: "Balance", image: "assets/img/product-balance.png", accent: "balance",
       kicker: "cardB.kicker", desc: "cardB.desc",
-      chips: [{ t: "Pylopass®" }, { t: "B. lactis Bl-04®" }, { t: "TCI711" }, { k: "flavor.yogurt", en: "Yogurt" }],
-      icons: [{ en: "Gut balance", th: "สมดุลลำไส้" }, { en: "Immune support", th: "เสริมภูมิ" }, { en: "Metabolic health", th: "เมตาบอลิก" }],
-      who: { en: "For anyone who wants to fix digestion at the source — bloating, irregularity, or a gut that just feels 'off'. Balance starts in the stomach and rebuilds microbiome balance from there.", th: "สำหรับคนที่อยากแก้ปัญหาการย่อยที่ต้นเหตุ — ท้องอืด ขับถ่ายไม่ปกติ หรือรู้สึกลำไส้ไม่โอเค Balance เริ่มดูแลตั้งแต่กระเพาะ แล้วปรับสมดุลจุลินทรีย์จากตรงนั้น" },
-      benefits: [{ en: "Balances the gut microbiome from the stomach up", th: "ปรับสมดุลจุลินทรีย์ตั้งแต่กระเพาะ" }, { en: "Everyday immune support", th: "เสริมภูมิคุ้มกันในทุกวัน" }, { en: "Supports metabolic health", th: "สนับสนุนสุขภาพการเผาผลาญ" }],
+      chips: [{ t: "6 strains · 31B CFU" }, { t: "+ Inulin / FOS" }, { k: "flavor.yogurt", en: "Yogurt" }],
+      icons: [{ en: "Gut balance", th: "สมดุลลำไส้" }, { en: "Gut barrier", th: "เกราะลำไส้" }, { en: "Immunity & metabolism", th: "ภูมิ & เผาผลาญ" }],
+      who: { en: "For anyone who wants to fix digestion at the source — bloating, irregularity, stomach discomfort, or a gut that just feels 'off'. Balance starts in the stomach and rebuilds microbiome balance from there.", th: "สำหรับคนที่อยากแก้ปัญหาการย่อยที่ต้นเหตุ — ท้องอืด ขับถ่ายไม่ปกติ ไม่สบายท้อง หรือรู้สึกลำไส้ไม่โอเค Balance เริ่มดูแลตั้งแต่กระเพาะ แล้วปรับสมดุลจุลินทรีย์จากตรงนั้น" },
+      benefits: [
+        { en: "Restores gut balance with 6 clinically-studied strains (31B CFU)", th: "ปรับสมดุลลำไส้ด้วย 6 สายพันธุ์ที่มีงานวิจัยรองรับ (31 พันล้าน CFU)" },
+        { en: "Reinforces the gut barrier — tight-junction & mucus support", th: "เสริมเกราะลำไส้ — ดูแล tight junction และเมือกเคลือบลำไส้" },
+        { en: "Helps keep H. pylori in check for stomach comfort", th: "ช่วยคุมสมดุล H. pylori เพื่อความสบายกระเพาะ" },
+        { en: "Everyday immune support", th: "เสริมภูมิคุ้มกันในทุกวัน" },
+        { en: "Supports metabolic balance along the gut-liver axis", th: "สนับสนุนสมดุลการเผาผลาญบนแกนลำไส้-ตับ" }
+      ],
       actives: [["spotB.a1", "spotB.a1p"], ["spotB.a2", "spotB.a2p"], ["spotB.a3", "spotB.a3p"]],
       launch: { en: "Ships Q2 2027", th: "เริ่มส่งไตรมาส 2 ปี 2027" }
     },
     goodnight: {
       name: "Goodnight", image: "assets/img/product-refresh.png", accent: "refresh",
       kicker: "cardR.kicker", desc: "cardR.desc",
-      chips: [{ k: "chip.psychobiotics", en: "Psychobiotics" }, { t: "Magnesium + GABA" }, { k: "chip.cfu", en: "30 Bn CFU" }, { k: "flavor.grape", en: "Grape" }],
-      icons: [{ en: "Gut-brain axis", th: "แกนลำไส้-สมอง" }, { en: "Calm & mood", th: "ผ่อนคลาย & อารมณ์" }, { en: "Everyday freshness", th: "สดชื่นทุกวัน" }],
-      who: { en: "For busy minds and restless guts — when stress, mood and digestion are all tangled together. Goodnight works along the gut-brain axis to help you feel lighter and brighter.", th: "สำหรับคนที่หัวไม่หยุดคิดและลำไส้ไม่นิ่ง — เมื่อความเครียด อารมณ์ และการย่อยพันกันไปหมด Goodnight ทำงานบนแกนลำไส้-สมอง ช่วยให้รู้สึกเบาสบายและสดใส" },
-      benefits: [{ en: "Psychobiotic strains for the gut-brain axis", th: "ไซโคไบโอติกบนแกนลำไส้-สมอง" }, { en: "Supports a calm, balanced mood", th: "ช่วยให้อารมณ์สงบและสมดุล" }, { en: "Lighter gut, brighter days", th: "ลำไส้เบาสบาย วันสดใส" }],
+      chips: [{ t: "Psychobiotics · 21B CFU" }, { t: "Delight TS™" }, { t: "+ Magnesium" }, { k: "flavor.grape", en: "Grape" }],
+      icons: [{ en: "Gut-brain axis", th: "แกนลำไส้-สมอง" }, { en: "Calm & mood", th: "ผ่อนคลาย & อารมณ์" }, { en: "Deeper sleep", th: "หลับลึกขึ้น" }],
+      who: { en: "For busy minds and restless nights — when stress, mood and sleep are all tangled together. Goodnight works along the gut-brain axis to help you unwind and rest more deeply.", th: "สำหรับคนที่หัวไม่หยุดคิดและนอนไม่ค่อยหลับ — เมื่อความเครียด อารมณ์ และการนอนพันกันไปหมด Goodnight ทำงานบนแกนลำไส้-สมอง ช่วยให้ผ่อนคลายและหลับลึกขึ้น" },
+      benefits: [
+        { en: "Calmer mood — lower stress and restlessness", th: "อารมณ์สงบขึ้น — ลดความเครียดและความกระวนกระวาย" },
+        { en: "Fall asleep faster and lengthen REM sleep", th: "หลับเร็วขึ้นและเพิ่มช่วงหลับฝัน (REM)" },
+        { en: "Supports serotonin & melatonin along the gut-brain axis", th: "สนับสนุนเซโรโทนินและเมลาโทนินบนแกนลำไส้-สมอง" },
+        { en: "Magnesium for everyday relaxation", th: "แมกนีเซียมเพื่อการผ่อนคลายในทุกวัน" },
+        { en: "21B CFU psychobiotics with patented Delight TS™", th: "ไซโคไบโอติก 21 พันล้าน CFU พร้อม Delight TS™ ที่จดสิทธิบัตร" }
+      ],
       actives: [["spotR.a1", "spotR.a1p"], ["spotR.a2", "spotR.a2p"], ["spotR.a3", "spotR.a3p"]],
       launch: { en: "Ships Q2 2027", th: "เริ่มส่งไตรมาส 2 ปี 2027" }
-    },
-    radiance: {
-      name: "Skin Radiance", image: "assets/img/product-radiance.png", accent: "radiance",
-      kicker: "cardS.kicker", desc: "cardS.desc",
-      chips: [{ t: "TCK33 · TCK53 · TCK77" }, { k: "chip.biotin", en: "+ Biotin" }, { k: "chip.cfu", en: "30 Bn CFU" }, { k: "flavor.mixedberry", en: "Mixed Berry" }],
-      icons: [{ en: "Gut-skin axis", th: "แกนลำไส้-ผิว" }, { en: "Clarity & glow", th: "ใสกระจ่าง & ออร่า" }, { en: "+ Biotin", th: "+ ไบโอติน" }],
-      who: { en: "For skin that reflects your gut — dullness, breakouts, or a complexion that needs support from within. Radiance works along the gut-skin axis for clarity and glow.", th: "สำหรับผิวที่สะท้อนสุขภาพลำไส้ — หมองคล้ำ เป็นสิวง่าย หรืออยากให้ผิวได้รับการดูแลจากข้างใน Radiance ทำงานบนแกนลำไส้-ผิว เพื่อความใสกระจ่างและเปล่งประกาย" },
-      benefits: [{ en: "Gut-skin axis strains for a clearer complexion", th: "สายพันธุ์แกนลำไส้-ผิวเพื่อผิวใส" }, { en: "Supports hydration & radiance", th: "ช่วยผิวชุ่มชื้นและเปล่งประกาย" }, { en: "With added biotin", th: "เสริมไบโอติน" }],
-      actives: [["spotS.a1", "spotS.a1p"], ["spotS.a2", "spotS.a2p"], ["spotS.a3", "spotS.a3p"]],
-      launch: { en: "Ships Q4 2028", th: "เริ่มส่งไตรมาส 4 ปี 2028" }
     }
   };
 
-  var ORDER = ["balance", "goodnight", "radiance"];
+  var ORDER = ["balance", "goodnight"];
 
   /* Each product has its own static page so crawlers and the LINE/Facebook
      share bots — none of which run JavaScript — get a real title,
      description and preview image. The page says which product it is via
      a data-product attribute on <html>. */
-  var PAGES = { balance: "balance.html", goodnight: "goodnight.html", radiance: "radiance.html" };
+  var PAGES = { balance: "balance.html", goodnight: "goodnight.html" };
 
   function currentId() {
     /* The static page wins; ?product= is the fallback for legacy

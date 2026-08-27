@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="assets/css/styles.css" />
   <script>
     (function () {
-      var PAGES = { balance: "balance.html", goodnight: "goodnight.html", radiance: "radiance.html" };
+      var PAGES = { balance: "balance.html", goodnight: "goodnight.html" };
       var m = location.search.match(/[?&]product=([a-z]+)/i);
       var id = m ? m[1].toLowerCase() : "balance";
       var target = PAGES[id] || "balance.html";
@@ -28,8 +28,7 @@
     <p>
       Taking you to the product page…<br />
       <a href="balance.html">Balance</a> ·
-      <a href="goodnight.html">Goodnight</a> ·
-      <a href="radiance.html">Skin Radiance</a>
+      <a href="goodnight.html">Goodnight</a>
     </p>
   </main>
 </body>

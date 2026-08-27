@@ -328,7 +328,7 @@ fieldset.field { border: none; padding: 0; margin-bottom: 1rem; }
 .statement .attrib { margin-top: 1.8rem; font-size: .82rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(250,239,231,.6); font-weight: 700; }
 
 /* ---------- Products ---------- */
-.products__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 2.5vw, 2rem); }
+.products__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 420px)); justify-content: center; gap: clamp(1.25rem, 2.5vw, 2rem); }
 .pcard {
   background: #fff; border-radius: var(--radius); overflow: hidden;
   box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
