@@ -28,6 +28,29 @@
   /* Mobile menu, mega-menu a11y and the config-driven links live in
      shell.js, so the product pages get identical behaviour. */
 
+  /* Days to launch — 20 March 2027, 00:00 ICT. Days only: a ticking
+     seconds timer belongs on the shop page, not on a brand hero. */
+  (function daysToLaunch() {
+    var els = document.querySelectorAll("[data-countdown-days]");
+    if (!els.length) return;
+    var LAUNCH = Date.UTC(2027, 2, 20, 0, 0, 0) - 7 * 3600 * 1000;
+
+    function render() {
+      var days = Math.max(0, Math.ceil((LAUNCH - Date.now()) / 86400000));
+      var th = (document.documentElement.getAttribute("lang") || "en") === "th";
+      els.forEach(function (el) {
+        el.textContent = th ? ("อีก " + days + " วัน") : (days + " days to go");
+      });
+    }
+    render();
+
+    /* This text is written by JS, so it has no data-i18n key for the
+       language switch to swap — re-render it when the language changes. */
+    document.querySelectorAll(".lang__opt").forEach(function (o) {
+      o.addEventListener("click", function () { setTimeout(render, 0); });
+    });
+  })();
+
   /* Reveal on scroll */
   var revealEls = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window) {
