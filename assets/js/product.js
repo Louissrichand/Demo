@@ -57,7 +57,11 @@
         { en: "Everyday immune support", th: "เสริมภูมิคุ้มกันในทุกวัน" },
         { en: "Supports metabolic balance along the gut-liver axis", th: "สนับสนุนสมดุลการเผาผลาญบนแกนลำไส้-ตับ" }
       ],
-      actives: [["spotB.a1", "spotB.a1p"], ["spotB.a2", "spotB.a2p"], ["spotB.a3", "spotB.a3p"]],
+      actives: [
+        { name: "spotB.a1", note: "spotB.a1p", stat: "−50%", statLabel: { en: "gut-inflammation markers*", th: "ตัวชี้วัดการอักเสบในลำไส้*" } },
+        { name: "spotB.a2", note: "spotB.a2p", stat: "−43%", statLabel: { en: "H. pylori · breath test*", th: "H. pylori · breath test*" } },
+        { name: "spotB.a3", note: "spotB.a3p", stat: "+3×", statLabel: { en: "cellular energy · ATP*", th: "พลังงานระดับเซลล์ · ATP*" } }
+      ],
       launch: { en: "Ships Q2 2027", th: "เริ่มส่งไตรมาส 2 ปี 2027" }
     },
     goodnight: {
@@ -73,7 +77,11 @@
         { en: "Magnesium for everyday relaxation", th: "แมกนีเซียมเพื่อการผ่อนคลายในทุกวัน" },
         { en: "21B CFU psychobiotics with patented Delight TS™", th: "ไซโคไบโอติก 21 พันล้าน CFU พร้อม Delight TS™ ที่จดสิทธิบัตร" }
       ],
-      actives: [["spotR.a1", "spotR.a1p"], ["spotR.a2", "spotR.a2p"], ["spotR.a3", "spotR.a3p"]],
+      actives: [
+        { name: "spotR.a1", note: "spotR.a1p", stat: "−27.9%", statLabel: { en: "stress index · 4 weeks*", th: "ดัชนีความเครียด · 4 สัปดาห์*" } },
+        { name: "spotR.a2", note: "spotR.a2p", stat: "−41%", statLabel: { en: "time to fall asleep*", th: "เวลาที่ใช้ในการหลับ*" } },
+        { name: "spotR.a3", note: "spotR.a3p", stat: "100mg", statLabel: { en: "magnesium per serving", th: "แมกนีเซียมต่อหน่วยบริโภค" } }
+      ],
       launch: { en: "Ships Q2 2027", th: "เริ่มส่งไตรมาส 2 ปี 2027" }
     }
   };
@@ -124,13 +132,15 @@
     $("pdChips").innerHTML = p.chips.map(function (c) { return '<span class="chip">' + chipText(c) + "</span>"; }).join("");
     $("pdIcons").innerHTML = p.icons.map(function (ic) { return '<span class="pdp__icon">' + tx(ic) + "</span>"; }).join("");
 
-    $("accWho").innerHTML = "<p>" + tx(p.who) + "</p>";
-    $("accBenefits").innerHTML = p.benefits.map(function (b) { return "<li>" + tx(b) + "</li>"; }).join("");
-    $("accActives").innerHTML = p.actives.map(function (a) {
-      return '<div class="pdp__active"><p class="pdp__active-name">' + tk(a[0], "") + '</p><p class="pdp__active-note">' + tk(a[1], "") + "</p></div>";
+    if ($("pdWho")) $("pdWho").innerHTML = tx(p.who);
+    if ($("pdBenefits")) $("pdBenefits").innerHTML = p.benefits.map(function (b) {
+      return '<div class="pdp-benefit"><span class="pdp-benefit__ic" aria-hidden="true">✦</span><p>' + tx(b) + "</p></div>";
     }).join("");
-    $("accHow").innerHTML = "<p>" + tx(HOWTO) + "</p>";
-    $("accQuality").innerHTML = QUALITY.map(function (q) { return "<li>" + tx(q) + "</li>"; }).join("");
+    if ($("pdActives")) $("pdActives").innerHTML = p.actives.map(function (a) {
+      return '<div class="pdp-active"><div class="pdp-active__stat"><b>' + a.stat + "</b><small>" + tx(a.statLabel) + "</small></div>" +
+        '<div class="pdp-active__body"><h4>' + tk(a.name) + "</h4><p>" + tk(a.note) + "</p></div></div>";
+    }).join("");
+    if ($("pdQuality")) $("pdQuality").innerHTML = QUALITY.map(function (q) { return "<li>" + tx(q) + "</li>"; }).join("");
 
     /* CTAs must carry the product, otherwise the founding-list signup
        records product: null and we lose the very thing this page proves

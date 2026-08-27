@@ -171,37 +171,57 @@
             <p class="pdp__buynote" data-i18n="pdp.buynote">No payment now — reserve your spot on the founding list and we'll notify you first at launch.</p>
           </div>
 
-          <div class="pdp__acc">
-            <details class="pdp__d" open>
-              <summary><span data-i18n="pdp.acc.who">Who it's for</span><span class="pdp__ic"></span></summary>
-              <div class="pdp__dbody" id="accWho"></div>
-            </details>
-            <details class="pdp__d">
-              <summary><span data-i18n="pdp.acc.benefits">Benefits</span><span class="pdp__ic"></span></summary>
-              <ul class="pdp__dbody" id="accBenefits"></ul>
-            </details>
-            <details class="pdp__d">
-              <summary><span data-i18n="pdp.acc.actives">Key actives</span><span class="pdp__ic"></span></summary>
-              <div class="pdp__dbody" id="accActives"></div>
-            </details>
-            <details class="pdp__d">
-              <summary><span data-i18n="pdp.acc.how">How to use</span><span class="pdp__ic"></span></summary>
-              <div class="pdp__dbody" id="accHow"></div>
-            </details>
-            <details class="pdp__d">
-              <summary><span data-i18n="pdp.acc.quality">Quality &amp; certifications</span><span class="pdp__ic"></span></summary>
-              <ul class="pdp__dbody" id="accQuality"></ul>
-            </details>
-          </div>
+          <p class="pdp__who"><b data-i18n="pdp.acc.who">Who it's for</b> — <span id="pdWho"></span></p>
         </div>
       </div>
+    </div>
 
-      <!-- other products -->
-      <section class="pdp__more">
+    <!-- Benefits -->
+    <section class="pdp-band bg-soft">
+      <div class="wrap pdp-band__inner">
+        <p class="eyebrow center" data-i18n="pdp.sec.benefits">What it does</p>
+        <div class="benefit-grid" id="pdBenefits"></div>
+      </div>
+    </section>
+
+    <!-- Inside every sachet -->
+    <section class="pdp-band">
+      <div class="wrap pdp-band__inner">
+        <p class="eyebrow center" data-i18n="pdp.sec.inside">Inside every sachet</p>
+        <h2 class="h3 center" data-i18n="pdp.sec.insidehead">Full doses, fully disclosed.</h2>
+        <div class="active-grid" id="pdActives"></div>
+        <p class="pdp-caveat center" data-i18n="pdp.sec.caveat">*Figures reflect strain-level and preliminary studies; individual results vary. Not evaluated by the Thai FDA.</p>
+      </div>
+    </section>
+
+    <!-- Ritual -->
+    <section class="pdp-band bg-navy">
+      <div class="wrap pdp-band__inner center">
+        <p class="eyebrow center" data-i18n="ritual.eyebrow">The daily ritual</p>
+        <h2 class="h3" data-i18n="pdp.sec.how">One sachet a day — no water, no mixing.</h2>
+        <div class="ritual-3">
+          <div class="ritual-step"><span class="ritual-step__n">1</span><h4 data-i18n="ritual.t1">Tear</h4><p data-i18n="ritual.d1">Tear open one 3g direct-to-mouth stick — prebiotic, probiotic and postbiotic in every one.</p></div>
+          <div class="ritual-step"><span class="ritual-step__n">2</span><h4 data-i18n="ritual.t2">Pour</h4><p data-i18n="ritual.d2">Pour it straight onto your tongue. No water, no shaking, no mixing — anywhere, anytime.</p></div>
+          <div class="ritual-step"><span class="ritual-step__n">3</span><h4 data-i18n="ritual.t3">Feel alive</h4><p data-i18n="ritual.d3">Stay consistent day after day — foundational change starts at the root.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quality -->
+    <section class="pdp-band bg-soft">
+      <div class="wrap pdp-band__inner">
+        <p class="eyebrow center" data-i18n="pdp.sec.quality">Made right</p>
+        <ul class="quality-grid" id="pdQuality"></ul>
+      </div>
+    </section>
+
+    <!-- Other products -->
+    <section class="pdp__more">
+      <div class="wrap">
         <h2 class="pdp__more-title" data-i18n="pdp.more">Explore the collection</h2>
         <div class="pdp__more-grid" id="pdMore"></div>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 
   <!-- Footer -->
