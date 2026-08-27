@@ -52,5 +52,5 @@ window.ROOTPLUS = {
   /* Show the "Shop the range" link to srichand.com in the header.
      root+ isn't on sale yet, so this sends people to the parent
      brand — false keeps visitors focused on the founding list.    */
-  showShopLink: false
+  showShopLink: true
 };
