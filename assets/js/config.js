@@ -56,14 +56,20 @@ window.ROOTPLUS = {
     facebook: false                      // set true after AUTH-SETUP.md step 5
   },
 
-  /* Show the "Shop the range" link to srichand.com in the header.
-     root+ isn't on sale yet, so this sends people to the parent
-     brand — false keeps visitors focused on the founding list.    */
+  /* Show the "Shop now" button in the header. */
   showShopLink: true,
 
-  /* Where "Shop now" goes.
-     Today: the local shop preview, so the design can be reviewed.
-     At launch: "https://srichand.com/root-plus/" — Srichand's dev team
-     builds that page; change this one line the day it goes live.       */
+  /* --- Where buying happens ------------------------------------
+     root+ does not sell. Every buy action leaves this site for the
+     root+ page on srichand.com, which Srichand's dev team builds.
+
+     Today it points at the local design preview (shop.html) so that
+     team has something to build against. On launch day, replace it
+     with the real address — one line, nothing else to change:
+
+         shopUrl: "https://srichand.com/root-plus/"
+
+     An http(s) value opens in a new tab automatically; a local one
+     stays in this tab. See shell.js.                                */
   shopUrl: "shop.html"
 };

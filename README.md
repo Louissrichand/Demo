@@ -45,7 +45,6 @@ it ships to the browser. Never put a Supabase `service_role` key in it.
 | `supabase-waitlist-setup.sql` | `public.waitlist` — the founding-list form — done |
 | `supabase-referral-setup.sql` | `referred_by` on `waitlist` + `profiles` — referral credit — done |
 | `supabase-events-setup.sql` | `public.events` — first-party analytics — done |
-| `supabase-reservations-setup.sql` | `public.reservations` — cart reservations **(required, not yet run)** |
 | `supabase-auth-setup.sql` | `public.profiles` + auto-create trigger — done |
 | `supabase-storage-setup.sql` | `avatars` storage bucket for profile photos **(not yet run)** |
 | `supabase-setup.sql` | `public.members` — legacy anonymous lead form, superseded by accounts |
@@ -91,6 +90,7 @@ Flip one to `true` only **after** enabling that provider in Supabase
 - Fill the `[registered company name]` / address / DPO placeholders in `privacy.html`, then get legal review.
 - Cross-check every health claim against `Root_Plus_Marketing_Claims_TCI_V3.xlsx` for Thai FDA compliance.
 - Pricing is settled: **฿890 per 15-sachet box (~฿59/day)**, confirmed 2026-08-25 and consistent across every page, the Thai copy, the FAQ and the Product JSON-LD. The ฿1,790 / 30-sachet figure in `RootPlus_Marketing_Plan_2026.xlsx` is superseded.
+- **root+ does not sell.** Every buy action leaves for the root+ page on srichand.com; `config.shopUrl` is the single switch (`"shop.html"` today, `"https://srichand.com/root-plus/"` on launch day). The `shop*.html` pages are a design spec for the team building that page — the cart is a mockup that takes no order.
 - Canonical product pages are **`balance.html` / `goodnight.html`** (confirmed 2026-08-25). The `shop*.html` pages are a design preview of the shop Srichand will build at srichand.com and carry `noindex,follow`; they are not in `sitemap.xml`.
 - Decide whether the 2-box / 3-box tiers on the shop pages should carry a discount — they are currently exact multiples (฿1,780 / ฿2,670), so the selector offers no reason to size up.
 - Delete the test rows: `claude-e2e-test@srichand.co.th` in Auth → Users, and `source='test'` in `members`.

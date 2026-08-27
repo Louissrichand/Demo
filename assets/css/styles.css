@@ -949,43 +949,11 @@ body.lang-th .cred b { font-weight: 700; }
 }
 .lang-th .hero__launch { font-size: .9rem; }
 
-/* Entry point to the shop preview from the collection section */
-.coll__shop { text-align: center; margin: 2.5rem 0 0; }
-.coll__shop a {
-  display: inline-flex; align-items: center; gap: .5rem;
-  padding: .6rem .2rem;
-  font-weight: 600; font-size: .95rem;
-  color: var(--brand);
-  border-bottom: 1px solid currentColor;
-}
-.coll__shop a:hover { opacity: .75; }
 
 /* The product pages carried ★★★★★ with no rating behind it. Replaced
    with a mark that promises nothing it cannot back up. */
 .pdp__proofmark { font-size: 1rem; }
 
-/* ============================================================
-   Cart reservation
-   The cart's real ending until payment exists: it takes a reservation
-   rather than dead-ending on a toast.
-   ============================================================ */
-.cart__reserve { display: grid; gap: .7rem; margin-top: .9rem; }
-.cart__reserve-sub {
-  margin: 0; font-size: .84rem; line-height: 1.6; color: var(--muted);
-}
-.cart__reserve input {
-  width: 100%; padding: .8rem .95rem;
-  border: 1px solid var(--line); border-radius: 10px;
-  font: inherit; font-size: 1rem;   /* 16px keeps iOS from zooming on focus */
-  background: var(--bg); color: var(--ink);
-}
-.cart__reserve input:focus { outline: none; border-color: var(--brand); }
-.cart__reserve input:disabled { opacity: .6; }
-.cart__reserve-msg {
-  margin: 0; font-size: .86rem; font-weight: 600; color: var(--brand);
-  min-height: 1.2em;
-}
-.cart__reserve-msg.is-err { color: #a33329; }
 
 /* Visually hidden, still read aloud */
 .sr-only {

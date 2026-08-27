@@ -3,9 +3,9 @@
    Powers shop.html and the two commerce product pages. This is a
    PREVIEW of the buying experience Srichand's dev team will build at
    srichand.com/root-plus/ — the cart lives in localStorage and there is
-   no payment step. The cart does end somewhere real though: it takes a
-   reservation into public.reservations, because someone holding a full
-   basket is the strongest demand signal we get before production.
+   no payment step. No order is ever taken here: root+ does not sell —
+   srichand.com does. The cart exists to show that team what the buying
+   experience should look and feel like.
 
    Loads after config.js, analytics.js, shell.js and i18n.js.
    Every block is null-safe, so each page runs only the parts it has.
@@ -31,18 +31,7 @@
     freeYes:    { en: "Free shipping unlocked 🎉", th: "ได้ส่งฟรีแล้ว 🎉" },
     freeNo:     { en: "Add ฿{n} more for free shipping", th: "ซื้อเพิ่มอีก ฿{n} เพื่อรับส่งฟรี" },
     days:       { en: "d", th: "วัน" },
-    demoBuy:    { en: "This is a design preview — no real order is placed.", th: "หน้านี้เป็นตัวอย่างการออกแบบ ยังไม่มีการสั่งซื้อจริง" },
-
-    /* Reservation — the cart's real ending until payment exists */
-    reserve:    { en: "Reserve my boxes", th: "จองสิทธิ์ของฉัน" },
-    reserveSub: { en: "No payment today. We'll email you on 20 March 2027 when ordering opens, and hold this basket at ฿890 a box.",
-                  th: "ยังไม่ต้องจ่ายวันนี้ เราจะอีเมลหาคุณวันที่ 20 มีนาคม 2027 ตอนเปิดให้สั่งซื้อ และรักษาราคา ฿890 ต่อกล่องไว้ให้" },
-    confirm:    { en: "Confirm reservation", th: "ยืนยันการจอง" },
-    sending:    { en: "Reserving…", th: "กำลังจอง…" },
-    badEmail:   { en: "Please enter a valid email address.", th: "กรุณากรอกอีเมลให้ถูกต้อง" },
-    reserved:   { en: "Reserved — see you on 20 March 2027 🌱", th: "จองเรียบร้อย เจอกันวันที่ 20 มีนาคม 2027 🌱" },
-    reserveErr: { en: "Something went wrong on our side. Please try again, or email ",
-                  th: "ระบบขัดข้องชั่วคราว กรุณาลองใหม่ หรืออีเมลหาเราที่ " }
+    demoBuy:    { en: "This is a design preview — no real order is placed.", th: "หน้านี้เป็นตัวอย่างการออกแบบ ยังไม่มีการสั่งซื้อจริง" }
   };
   function t(key) { var p = S[key]; return p ? (L === "th" ? p.th : p.en) : ""; }
 
@@ -200,93 +189,16 @@
       : t("freeYes");
     var totalLabel = L === "th" ? "ยอดรวม" : "Total";
 
-    /* The cart ends in a reservation, not a fake checkout. Payment doesn't
-       exist until 20 March 2027, but the intent behind a full cart is real
-       and worth capturing — it is also the only forward view of demand we
-       have before production. */
+    /* root+ does not sell. Ordering happens on srichand.com, so this cart
+       is a mockup of the checkout entry point for whoever builds that page
+       — it takes no order and captures nothing. */
     cartFoot.innerHTML =
       '<p class="cart__ship">' + ship + "</p>" +
       '<div class="cart__row cart__row--total"><span>' + totalLabel + "</span><b>" + baht(total) + "</b></div>" +
-      '<button class="btn btn--primary btn--block" type="button" data-reserve-open>' + t("reserve") + "</button>" +
-      '<form class="cart__reserve" id="reserveForm" hidden novalidate>' +
-        '<p class="cart__reserve-sub">' + t("reserveSub") + "</p>" +
-        '<label class="sr-only" for="reserveEmail">Email</label>' +
-        '<input id="reserveEmail" type="email" inputmode="email" autocomplete="email" required placeholder="you@email.com" />' +
-        '<button class="btn btn--primary btn--block" type="submit">' + t("confirm") + "</button>" +
-        '<p class="cart__reserve-msg" id="reserveMsg" role="status"></p>' +
-      "</form>";
-
-    /* Rebuilt on every render, so the handler is bound here rather than
-       delegated — it dies with the markup it belongs to. */
-    var form = document.getElementById("reserveForm");
-    if (form) form.addEventListener("submit", submitReservation);
-  }
-
-  /* ---------- Reservation ---------- */
-  function submitReservation(e) {
-    e.preventDefault();
-    var form = e.currentTarget;
-    var input = document.getElementById("reserveEmail");
-    var msg = document.getElementById("reserveMsg");
-    var btn = form.querySelector('button[type="submit"]');
-    var email = (input.value || "").trim();
-
-    function say(text, bad) {
-      msg.textContent = text;
-      msg.className = "cart__reserve-msg" + (bad ? " is-err" : "");
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      say(t("badEmail"), true);
-      input.focus();
-      return;
-    }
-
-    var cfg = window.ROOTPLUS || {};
-    var items = cart.map(function (l) { return { product: l.product, qty: l.qty }; });
-    var total = cartTotal();
-
-    if (!cfg.supabaseUrl || !cfg.supabaseKey) {
-      say(t("reserved"));
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = t("sending");
-
-    fetch(cfg.supabaseUrl + "/rest/v1/reservations", {
-      method: "POST",
-      headers: {
-        "apikey": cfg.supabaseKey,
-        "Authorization": "Bearer " + cfg.supabaseKey,
-        "Content-Type": "application/json",
-        "Prefer": "return=minimal"
-      },
-      body: JSON.stringify({
-        email: email,
-        items: items,
-        total: total,
-        lang: L,
-        source: "shop_cart",
-        referrer: document.referrer || null,
-        referred_by: window.rpReferralId || null,
-        utm: (window.rpAttribution && Object.keys(window.rpAttribution).length) ? window.rpAttribution : null
-      })
-    }).then(function (res) {
-      if (!res.ok) return res.text().then(function (x) { throw new Error(res.status + " " + x); });
-      say(t("reserved"));
-      form.querySelector("input").disabled = true;
-      btn.hidden = true;
-      if (window.rpTrack) {
-        window.rpTrack("reservation_submit", { boxes: cartCount(), total: total, products: items.map(function (i) { return i.product; }).join("+") });
-      }
-    }).catch(function (err) {
-      console.error("[reservation] insert failed:", err);
-      btn.disabled = false;
-      btn.textContent = t("confirm");
-      say(t("reserveErr") + (cfg.contactEmail || "itd@srichand.co.th"), true);
-      if (window.rpTrack) window.rpTrack("reservation_error", {});
-    });
+      '<button class="btn btn--primary btn--block" type="button" data-checkout>' +
+        (L === "th" ? "ไปหน้าชำระเงิน" : "Go to checkout") +
+      "</button>" +
+      '<p class="cart__note">' + t("demoBuy") + "</p>";
   }
 
   /* ---------- Countdown to launch day ----------
@@ -314,17 +226,11 @@
     if (btn.hasAttribute("data-cart-open")) { e.preventDefault(); openCart(); return; }
     if (btn.hasAttribute("data-cart-close")) { closeCart(); return; }
 
-    /* Reveal the reservation form. Kept behind one click so the cart still
-       reads as a cart, and so "started to reserve" is measurable separately
-       from "finished". */
-    if (btn.hasAttribute("data-reserve-open")) {
-      var rf = document.getElementById("reserveForm");
-      if (rf) {
-        rf.hidden = false;
-        btn.hidden = true;
-        var em = document.getElementById("reserveEmail");
-        if (em) em.focus();
-      }
+    /* Checkout is a mockup — root+ takes no orders, srichand.com will.
+       Still worth tracking: it is the clearest read on buying intent this
+       preview can give whoever builds the real page. */
+    if (btn.hasAttribute("data-checkout")) {
+      toast(t("demoBuy"));
       if (window.rpTrack) window.rpTrack("begin_checkout", { boxes: cartCount(), total: cartTotal() });
       return;
     }

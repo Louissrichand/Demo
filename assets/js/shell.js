@@ -120,6 +120,11 @@
         shop.removeAttribute("rel");
       }
     }
+    /* Buying happens on srichand.com, so this click is the last step we
+       can measure. Without it the funnel stops at the door. */
+    shop.addEventListener("click", function () {
+      if (window.rpTrack) window.rpTrack("shop_click", { destination: shopUrl });
+    });
   }
 
   /* ---------- Keep the referral tag on internal links ----------
