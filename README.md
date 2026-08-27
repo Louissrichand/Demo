@@ -89,6 +89,7 @@ Flip one to `true` only **after** enabling that provider in Supabase
 ## Open items before a real launch
 - Fill the `[registered company name]` / address / DPO placeholders in `privacy.html`, then get legal review.
 - Cross-check every health claim against `Root_Plus_Marketing_Claims_TCI_V3.xlsx` for Thai FDA compliance.
-- Confirm product naming (Goodnight vs Refresh) and pricing (฿890 / 15 sachets vs ฿1,790 / 30).
+- Pricing is settled: **฿890 per 15-sachet box (~฿59/day)**, confirmed 2026-08-25 and consistent across every page, the Thai copy, the FAQ and the Product JSON-LD. The ฿1,790 / 30-sachet figure in `RootPlus_Marketing_Plan_2026.xlsx` is superseded.
+- Decide whether the 2-box / 3-box tiers on the shop pages should carry a discount — they are currently exact multiples (฿1,780 / ฿2,670), so the selector offers no reason to size up.
 - Delete the test rows: `claude-e2e-test@srichand.co.th` in Auth → Users, and `source='test'` in `members`.
 - Add a Terms of Service page.
