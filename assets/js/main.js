@@ -184,7 +184,7 @@
     return en;
   }
 
-  var PRODUCT_LABELS = { balance: "Balance", goodnight: "Goodnight", radiance: "Skin Radiance" };
+  var PRODUCT_LABELS = { balance: "Balance", goodnight: "Goodnight" };
 
   /* Which product sent them here — set by the "Notify me" buttons. */
   var pickedProduct = null;
