@@ -13,9 +13,9 @@
   /* English source strings for the shared keys (Thai comes from i18n.js) */
   var EN = {
     "cardB.kicker": "Gut Health Synbiotic",
-    "cardB.desc": "The gut-health synbiotic — 6 clinically-studied strains at 31 billion CFU that restore gut balance, reinforce the gut barrier, and support everyday immunity and metabolism.",
+    "cardB.desc": "The gut-health synbiotic — 10 strains at 30 billion CFU that restore gut balance, reinforce the gut barrier, and support everyday immunity and metabolism.",
     "cardR.kicker": "Sleep & Mood Synbiotic",
-    "cardR.desc": "Better sleep starts in the gut. Psychobiotics, patented Delight TS™ and magnesium work along the gut-brain axis for calmer mood and deeper rest — 21 billion CFU.",
+    "cardR.desc": "Better sleep starts in the gut. Psychobiotics and patented Delight TS™ work along the gut-brain axis for calmer mood and deeper rest — 20 billion CFU.",
     "spotB.a1": "TCI604 <span>B. animalis subsp. lactis · full dose</span>",
     "spotB.a1p": "A gut-balance strain that supports a calmer gut-inflammation response and a healthier barrier.",
     "spotB.a2": "TCI803 <span>Weizmannia coagulans · full dose</span>",
@@ -26,32 +26,32 @@
     "spotR.a1p": "A gut-mood-sleep strain that lowers the stress index (−27.9%) and supports calming anandamide & serotonin pathways.",
     "spotR.a2": "Delight TS™ <span>Passionflower + FOS + inulin</span>",
     "spotR.a2p": "Patented prebiotic (Gold Medal, 2024 Seoul International Invention Fair) — helps you fall asleep faster and lengthen REM sleep.",
-    "spotR.a3": "Magnesium <span>100 mg</span>",
-    "spotR.a3p": "Supports GABA-driven relaxation and a calm nervous system for restful sleep."
+    "spotR.a3": "10 strains <span>Spore-form · acid-resistant</span>",
+    "spotR.a3p": "Spore-form Bacillus coagulans rides through stomach acid alongside Lactobacillus, Bifidobacterium and S. boulardii strains."
   };
   function tk(key) { return (L === "th" && TH[key] != null) ? TH[key] : (EN[key] != null ? EN[key] : ""); } // by i18n key
   function tx(pair) { return pair ? ((L === "th" && pair.th != null) ? pair.th : pair.en) : ""; } // {en,th}
 
   var HOWTO = {
-    en: "Tear one 3g sachet and pour it straight onto your tongue — no water, no mixing. Once a day, any time. Prebiotic + probiotic + postbiotic in every sachet.",
-    th: "ฉีกซอง 3 กรัม เทลงลิ้นได้เลย ไม่ต้องผสม ไม่ต้องใช้น้ำ วันละครั้ง เมื่อไรก็ได้ — มีทั้งพรีไบโอติก โพรไบโอติก และโพสต์ไบโอติกในทุกซอง"
+    en: "Tear one 3.5g sachet, pour it straight into your mouth, then drink 1–2 glasses of water. Once a day, before a meal. Prebiotic + probiotic + postbiotic in every sachet.",
+    th: "ฉีกซอง 3.5 กรัม เทเข้าปาก แล้วดื่มน้ำตาม 1–2 แก้ว วันละครั้ง ก่อนอาหาร — มีทั้งพรีไบโอติก โพรไบโอติก และโพสต์ไบโอติกในทุกซอง"
   };
   var QUALITY = [
     { en: "Clinically-studied strains at full, disclosed doses — no proprietary blends", th: "สายพันธุ์ที่มีงานวิจัยรองรับ ให้เต็มโดส เปิดเผยครบทุกตัว ไม่มีสูตรลับ" },
     { en: "CFU count guaranteed through end of shelf life", th: "รับประกันปริมาณ CFU จนหมดอายุ" },
     { en: "Third-party tested with a Certificate of Analysis (COA)", th: "ตรวจสอบโดยแล็บอิสระ พร้อมใบ COA" },
-    { en: "Vegan & Non-GMO · 3g direct-to-mouth sachet", th: "วีแกน & ปลอด GMO · ซอง 3 กรัม ทานตรงเข้าปาก" }
+    { en: "No preservatives or artificial colours · nitrogen-sealed 3.5g sachet", th: "ไม่ใส่วัตถุกันเสียและสีสังเคราะห์ · ซอง 3.5 กรัม บรรจุไนโตรเจน" }
   ];
 
   var PRODUCTS = {
     balance: {
-      name: "Balance", image: "assets/img/product-balance.png", accent: "balance",
+      name: "Balance", image: "assets/img/pack-balance.png", accent: "balance",
       kicker: "cardB.kicker", desc: "cardB.desc",
-      chips: [{ t: "6 strains · 31B CFU" }, { t: "+ Inulin / FOS" }, { k: "flavor.yogurt", en: "Yogurt Pineapple" }],
+      chips: [{ t: "10 strains · 30B CFU" }, { t: "+ Inulin / FOS" }, { k: "flavor.yogurt", en: "Pineapple Yogurt" }],
       icons: [{ en: "Gut balance", th: "สมดุลลำไส้" }, { en: "Gut barrier", th: "เกราะลำไส้" }, { en: "Immunity & metabolism", th: "ภูมิ & เผาผลาญ" }],
       who: { en: "For anyone who wants to fix digestion at the source — bloating, irregularity, stomach discomfort, or a gut that just feels 'off'. Balance starts in the stomach and rebuilds microbiome balance from there.", th: "สำหรับคนที่อยากแก้ปัญหาการย่อยที่ต้นเหตุ — ท้องอืด ขับถ่ายไม่ปกติ ไม่สบายท้อง หรือรู้สึกลำไส้ไม่โอเค Balance เริ่มดูแลตั้งแต่กระเพาะ แล้วปรับสมดุลจุลินทรีย์จากตรงนั้น" },
       benefits: [
-        { en: "Restores gut balance with 6 clinically-studied strains (31B CFU)", th: "ปรับสมดุลลำไส้ด้วย 6 สายพันธุ์ที่มีงานวิจัยรองรับ (31 พันล้าน CFU)" },
+        { en: "Restores gut balance with 10 strains (30B CFU)", th: "ปรับสมดุลลำไส้ด้วย 10 สายพันธุ์ที่มีงานวิจัยรองรับ (30 พันล้าน CFU)" },
         { en: "Reinforces the gut barrier — tight-junction & mucus support", th: "เสริมเกราะลำไส้ — ดูแล tight junction และเมือกเคลือบลำไส้" },
         { en: "Helps keep H. pylori in check for stomach comfort", th: "ช่วยคุมสมดุล H. pylori เพื่อความสบายกระเพาะ" },
         { en: "Everyday immune support", th: "เสริมภูมิคุ้มกันในทุกวัน" },
@@ -65,22 +65,22 @@
       launch: { en: "Ships 20 March 2027", th: "เริ่มส่ง 20 มีนาคม 2027" }
     },
     goodnight: {
-      name: "Goodnight", image: "assets/img/product-refresh.png", accent: "refresh",
+      name: "Goodnight", image: "assets/img/pack-goodnight.png", accent: "refresh",
       kicker: "cardR.kicker", desc: "cardR.desc",
-      chips: [{ t: "Psychobiotics · 21B CFU" }, { t: "Delight TS™" }, { t: "+ Magnesium" }, { k: "flavor.mixedberry", en: "Mixed Berry" }],
+      chips: [{ t: "Psychobiotics · 20B CFU" }, { t: "Delight TS™" }, { t: "+ Inulin / FOS" }, { k: "flavor.mixedberry", en: "Berry Yogurt" }],
       icons: [{ en: "Gut-brain axis", th: "แกนลำไส้-สมอง" }, { en: "Calm & mood", th: "ผ่อนคลาย & อารมณ์" }, { en: "Deeper sleep", th: "หลับลึกขึ้น" }],
       who: { en: "For busy minds and restless nights — when stress, mood and sleep are all tangled together. Goodnight works along the gut-brain axis to help you unwind and rest more deeply.", th: "สำหรับคนที่หัวไม่หยุดคิดและนอนไม่ค่อยหลับ — เมื่อความเครียด อารมณ์ และการนอนพันกันไปหมด Goodnight ทำงานบนแกนลำไส้-สมอง ช่วยให้ผ่อนคลายและหลับลึกขึ้น" },
       benefits: [
         { en: "Calmer mood — lower stress and restlessness", th: "อารมณ์สงบขึ้น — ลดความเครียดและความกระวนกระวาย" },
         { en: "Fall asleep faster and lengthen REM sleep", th: "หลับเร็วขึ้นและเพิ่มช่วงหลับฝัน (REM)" },
         { en: "Supports serotonin & melatonin along the gut-brain axis", th: "สนับสนุนเซโรโทนินและเมลาโทนินบนแกนลำไส้-สมอง" },
-        { en: "Magnesium for everyday relaxation", th: "แมกนีเซียมเพื่อการผ่อนคลายในทุกวัน" },
-        { en: "21B CFU psychobiotics with patented Delight TS™", th: "ไซโคไบโอติก 21 พันล้าน CFU พร้อม Delight TS™ ที่จดสิทธิบัตร" }
+        { en: "10 strains, including spore-form, acid-resistant Bacillus coagulans", th: "10 สายพันธุ์ รวมถึง Bacillus coagulans ชนิดสปอร์ที่ทนกรด" },
+        { en: "20B CFU psychobiotics with patented Delight TS™", th: "ไซโคไบโอติก 20 พันล้าน CFU พร้อม Delight TS™ ที่จดสิทธิบัตร" }
       ],
       actives: [
         { name: "spotR.a1", note: "spotR.a1p", stat: "−27.9%", statLabel: { en: "stress index · 4 weeks*", th: "ดัชนีความเครียด · 4 สัปดาห์*" } },
         { name: "spotR.a2", note: "spotR.a2p", stat: "−41%", statLabel: { en: "time to fall asleep*", th: "เวลาที่ใช้ในการหลับ*" } },
-        { name: "spotR.a3", note: "spotR.a3p", stat: "100mg", statLabel: { en: "magnesium per serving", th: "แมกนีเซียมต่อหน่วยบริโภค" } }
+        { name: "spotR.a3", note: "spotR.a3p", stat: "10", statLabel: { en: "strains per sachet", th: "สายพันธุ์ต่อซอง" } }
       ],
       launch: { en: "Ships 20 March 2027", th: "เริ่มส่ง 20 มีนาคม 2027" }
     }
@@ -159,7 +159,7 @@
     $("pdMore").innerHTML = ORDER.filter(function (x) { return x !== id; }).map(function (x) {
       var q = PRODUCTS[x];
       return '<a class="pdp__morecard" href="' + withRef(PAGES[x]) + '" data-accent="' + q.accent + '">' +
-        '<span class="pdp__morecard-media"><img src="' + q.image + '" width="570" height="534" alt="root+ ' + q.name + '" loading="lazy" /></span>' +
+        '<span class="pdp__morecard-media"><img src="' + q.image + '" width="610" height="650" alt="root+ ' + q.name + '" loading="lazy" /></span>' +
         '<span class="pdp__morecard-body"><b>' + q.name + "</b><small>" + tk(q.kicker, "") + "</small></span></a>";
     }).join("");
   }

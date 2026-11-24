@@ -18,6 +18,12 @@
   --brand-700:   #081820;  /* darker for hovers / gradients */
   --brand-tint:  #e9eef0;  /* very light cool wash */
 
+  /* Pack colours (2026 Balance / Goodnight boxes) */
+  --pack-balance:      #0c4a40;  /* deep green box   */
+  --pack-balance-hi:   #d8f229;  /* lime highlight   */
+  --pack-goodnight:    #3e3085;  /* deep purple box  */
+  --pack-goodnight-hi: #b8a0e8;  /* lavender highlight */
+
   /* Derived tones */
   --cream-soft:  #fbf9f5;  /* whisper-warm off-white */
   --ink-2:       #17181a;
@@ -348,8 +354,10 @@ fieldset.field { border: none; padding: 0; margin-bottom: 1rem; }
 .pcard__price b { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; }
 .pcard__price small { display: block; color: var(--muted); font-size: .78rem; }
 .pcard__accent { height: 4px; }
-.pcard[data-accent="balance"]  .pcard__accent,
-.pcard[data-accent="refresh"]  .pcard__accent,
+.pcard__accent { background: var(--brand); }
+/* Product colours, taken from the 2026 packs */
+.pcard[data-accent="balance"] .pcard__accent { background: linear-gradient(90deg, var(--pack-balance) 70%, var(--pack-balance-hi) 70%); }
+.pcard[data-accent="refresh"] .pcard__accent { background: linear-gradient(90deg, var(--pack-goodnight) 70%, var(--pack-goodnight-hi) 70%); }
 .pcard[data-accent="radiance"] .pcard__accent { background: var(--brand); }
 
 /* ---------- Ingredient spotlight ---------- */
@@ -623,8 +631,8 @@ details.faq__item summary::-webkit-details-marker { display: none; }
 .pdp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem,4vw,3.5rem); align-items: start; }
 .pdp__stage { background: var(--cream-soft); border: 1px solid var(--line); border-radius: var(--radius-lg); aspect-ratio: 1/1; display: grid; place-items: center; padding: 8%; position: sticky; top: 90px; }
 .pdp__stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 24px 40px rgba(11,11,13,.16)); }
-.pdp__stage[data-accent="balance"] { background: #eef4f1; }
-.pdp__stage[data-accent="refresh"] { background: #efeaf4; }
+.pdp__stage[data-accent="balance"] { background: #edf2ee; }
+.pdp__stage[data-accent="refresh"] { background: #eeebf6; }
 .pdp__stage[data-accent="radiance"] { background: #f7ecec; }
 .pdp__iconrow { display: flex; gap: .5rem; margin-top: 1rem; flex-wrap: wrap; }
 .pdp__icon { flex: 1; min-width: 90px; text-align: center; font-size: .8rem; font-weight: 700; color: var(--charcoal); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: .8rem .5rem; }
@@ -664,8 +672,8 @@ ul.pdp__dbody li { margin-bottom: .4rem; }
 .pdp__morecard { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius); transition: box-shadow .2s, transform .2s; }
 .pdp__morecard:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
 .pdp__morecard-media { width: 84px; height: 84px; flex: none; border-radius: 12px; display: grid; place-items: center; padding: 8px; }
-.pdp__morecard[data-accent="balance"] .pdp__morecard-media { background: #eef4f1; }
-.pdp__morecard[data-accent="refresh"] .pdp__morecard-media { background: #efeaf4; }
+.pdp__morecard[data-accent="balance"] .pdp__morecard-media { background: #edf2ee; }
+.pdp__morecard[data-accent="refresh"] .pdp__morecard-media { background: #eeebf6; }
 .pdp__morecard[data-accent="radiance"] .pdp__morecard-media { background: #f7ecec; }
 .pdp__morecard-media img { max-width: 100%; max-height: 100%; width: auto; object-fit: contain; }
 .pdp__morecard-body b { display: block; font-size: 1.05rem; }
@@ -685,8 +693,8 @@ a.pcard__media { display: block; }
 .megamenu__item { display: flex; align-items: center; gap: .8rem; padding: .5rem .55rem; border-radius: 12px; transition: background .2s; }
 .megamenu__item:hover { background: var(--brand-tint); }
 .megamenu__thumb { width: 54px; height: 54px; flex: none; border-radius: 10px; display: grid; place-items: center; padding: 6px; }
-.megamenu__thumb[data-accent="balance"] { background: #eef4f1; }
-.megamenu__thumb[data-accent="refresh"] { background: #efeaf4; }
+.megamenu__thumb[data-accent="balance"] { background: #edf2ee; }
+.megamenu__thumb[data-accent="refresh"] { background: #eeebf6; }
 .megamenu__thumb[data-accent="radiance"] { background: #f7ecec; }
 .megamenu__thumb img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
 .megamenu__text b { display: block; font-size: .98rem; font-weight: 700; color: var(--ink); line-height: 1.2; }

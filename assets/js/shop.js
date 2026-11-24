@@ -42,19 +42,19 @@
       id: "balance",
       name: "Balance",
       accent: "balance",
-      image: "assets/img/product-balance.png",
+      image: "assets/img/pack-balance.png",
       page: "shop-balance.html",
       kicker: { en: "Gut Health Synbiotic", th: "ซินไบโอติกเพื่อสุขภาพลำไส้" },
-      flavour: { en: "Yogurt Pineapple", th: "รสโยเกิร์ตสับปะรด" }
+      flavour: { en: "Pineapple Yogurt", th: "รสโยเกิร์ตสับปะรด" }
     },
     goodnight: {
       id: "goodnight",
       name: "Goodnight",
       accent: "refresh",
-      image: "assets/img/product-refresh.png",
+      image: "assets/img/pack-goodnight.png",
       page: "shop-goodnight.html",
       kicker: { en: "Sleep & Mood Synbiotic", th: "ซินไบโอติกเพื่อการนอนและอารมณ์" },
-      flavour: { en: "Mixed Berry", th: "รสมิกซ์เบอร์รี" }
+      flavour: { en: "Berry Yogurt", th: "รสเบอร์รีโยเกิร์ต" }
     }
   };
   /* One pack size at launch: the 15-sachet box at ฿890. Multi-box bundles
