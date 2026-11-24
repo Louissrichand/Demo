@@ -454,3 +454,10 @@
 @media (max-width: 600px) {
   .scard__media { aspect-ratio: 1 / .7; }
 }
+
+/* 2026 pack theme — see the matching block at the end of styles.css */
+.shop-hero .eyebrow { color: var(--lime); }
+.shop-hero h1 em { font-style: normal; color: var(--ink); background: linear-gradient(transparent 10%, var(--lime) 10%, var(--lime) 92%, transparent 92%); padding: 0 .14em; }
+.shop-hero .btn--primary { background: var(--lime); color: var(--ink); }
+.scard__name, .cmore h2, .cart__head h2 { font-weight: 800; letter-spacing: -.02em; }
+.scard__price b, .pricebox__top b, .cartline__price, .cart__row--total b, .coupon b, .creviews__score b { font-weight: 800; }
