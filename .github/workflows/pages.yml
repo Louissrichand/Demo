@@ -1,0 +1,63 @@
+# Publishes GitHub Pages from two branches at once:
+#   main                   -> https://louissrichand.github.io/Demo/
+#   draft-2-design-system  -> https://louissrichand.github.io/Demo/draft-2/
+# Runs on every push to main, and (via workflow_run) whenever the draft
+# branch's "Draft preview trigger" workflow runs, i.e. on every push there.
+# workflow_run always runs in main's context, so the github-pages
+# environment's default-branch rule still lets it deploy.
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: ["Draft preview trigger"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main (site root)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site
+
+      - name: Check out draft 2 (/draft-2/)
+        uses: actions/checkout@v4
+        with:
+          ref: draft-2-design-system
+          path: site/draft-2
+
+      - name: Strip git data and mark the draft noindex
+        run: |
+          rm -rf site/.git site/.github site/draft-2/.git site/draft-2/.github
+          # Keep search engines off the draft; the canonical links still point at the main site.
+          find site/draft-2 -name '*.html' -exec sed -i 's#<head>#<head>\n  <meta name="robots" content="noindex,nofollow" />#' {} +
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
