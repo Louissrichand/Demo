@@ -1,0 +1,14 @@
+# Lives only on the draft branch. Each push here fires this tiny job;
+# main's "Deploy Pages" workflow listens for it (workflow_run) and
+# republishes the site with this branch at /Demo/draft-2/.
+name: Draft preview trigger
+
+on:
+  push:
+    branches: [draft-2-design-system]
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "draft-2 updated at ${{ github.sha }} - Deploy Pages will republish /draft-2/"
