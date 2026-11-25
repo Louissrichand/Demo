@@ -1,7 +1,7 @@
 /* ============================================================
    root+ — Root-Cause Wellness Platform
    Landing page styles
-   Brand palette: pack green · lime · purple · lavender, on ink / off-white (2026 packs)
+   Brand palette: Ink Black · Warm Cream · Stone Beige · Taupe · Charcoal (navy site tone); pack colours only on product touches
    ============================================================ */
 
 /* ---------- Design tokens ---------- */
@@ -14,9 +14,9 @@
   --charcoal:    #2b2e31;  /* Charcoal    */
 
   /* Brand accent (single source of truth, easy to tweak) */
-  --brand:       #0c4a40;  /* deep pack green (was navy #0e232d) */
-  --brand-700:   #083730;  /* darker green for hovers / gradients */
-  --brand-tint:  #e8f0ec;  /* very light green wash */
+  --brand:       #0e232d;  /* deep navy-teal */
+  --brand-700:   #081820;  /* darker for hovers / gradients */
+  --brand-tint:  #e9eef0;  /* very light cool wash */
 
   /* Pack colours (2026 Balance / Goodnight boxes) */
   --pack-balance:      #0c4a40;  /* deep green box   */
@@ -28,7 +28,7 @@
   --lavender:    var(--pack-goodnight-hi);
 
   /* Derived tones */
-  --cream-soft:  #f5f7f1;  /* cool off-white with a hint of green */
+  --cream-soft:  #fbf9f5;  /* whisper-warm off-white */
   --ink-2:       #17181a;
   --studio:      #5f5f5f;
   --accent:      var(--brand);
@@ -275,7 +275,7 @@ fieldset.field { border: none; padding: 0; margin-bottom: 1rem; }
 .hero__video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(rgba(8,55,48,.60), rgba(8,55,48,.74));
+  background: linear-gradient(rgba(14,35,45,.62), rgba(14,35,45,.72));
 }
 /* Staggered hero entrance — reveals eyebrow → title → sub → CTA → badges */
 .hero__copy .reveal:nth-child(1) { transition-delay: .06s; }
@@ -975,21 +975,13 @@ body.lang-th .cred b { font-weight: 700; }
 
 /* ============================================================
    2026 pack theme
-   Matches the Balance / Goodnight boxes: heavy geometric sans,
-   deep green, lime highlight bars, purple for Goodnight.
-   Kept as one block so Draft 1's look is easy to compare.
+   Heavy geometric sans like the Balance / Goodnight boxes, on
+   Draft 1's navy site tone. Pack green / purple only on product
+   cards and panels. One block so it's easy to compare with Draft 1.
    ============================================================ */
 h1, h2, h3, .display { font-weight: 800; letter-spacing: -.03em; line-height: 1.02; }
 .h3 { letter-spacing: -.02em; }
 body.lang-th .display, body.lang-th .h2, body.lang-th .h3, body.lang-th h1, body.lang-th h2, body.lang-th h3 { font-weight: 700; }
-
-/* The pack's "BALANCE" label bar: italic accents become a lime marker */
-.serif-i, .statement blockquote em {
-  font-style: normal; color: var(--ink);
-  background: linear-gradient(transparent 10%, var(--lime) 10%, var(--lime) 92%, transparent 92%);
-  padding: 0 .14em; -webkit-box-decoration-break: clone; box-decoration-break: clone;
-}
-.hero__title .serif-i { text-shadow: none; }
 
 /* Former serif display spots: heavy sans instead of light serif */
 .principle__num, .principle__eq, .principle__eq b, .pcard__price b, .active__dot, .pillar__k, .cred b,
@@ -997,20 +989,7 @@ body.lang-th .display, body.lang-th .h2, body.lang-th .h3, body.lang-th h1, body
 .statement blockquote { font-weight: 700; letter-spacing: -.025em; }
 .search__bar input { font-weight: 600; }
 
-/* Lime on dark green, like the pack copy */
-.bg-navy .eyebrow, .hero .eyebrow, .bg-navy .pillar__k { color: var(--lime); }
-.bg-navy .step__ic { border-color: var(--lime); color: var(--lime); background: rgba(216,242,41,.06); }
-.eyebrow { color: var(--brand); }
-
-/* Primary CTA on dark = lime bar with ink text */
-.bg-navy .btn--primary, .hero .btn--primary, .header--over .btn--primary, .mobile-menu .btn--primary,
-.member-card .btn--primary { background: var(--lime); color: var(--ink); }
-.bg-navy .btn--primary:hover, .hero .btn--primary:hover, .header--over .btn--primary:hover, .mobile-menu .btn--primary:hover,
-.member-card .btn--primary:hover { background: #e6fb57; }
-.btn--primary { box-shadow: 0 10px 26px -10px rgba(12,74,64,.55); }
-
-/* Chips read like the pack's uppercase labels */
-.chip { border-color: rgba(12,74,64,.18); }
+/* Site tone stays Draft 1 navy; pack colours appear only on product touches below. */
 
 /* Goodnight carries its own purple wherever a product colour shows */
 .pcard[data-accent="refresh"] .chip { background: #eeebf6; color: var(--purple); border-color: rgba(62,48,133,.2); }
